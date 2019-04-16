@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Document extends Model
 {
+
+    protected $table = 'documents';
+
     public function resource(){
         return $this->hasOne('Resource', 'resource_id');
     }
