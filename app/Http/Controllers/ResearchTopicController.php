@@ -39,6 +39,8 @@ class ResearchTopicController extends Controller
         $research_topic->research_topic = $request->research_topic;
         $research_topic->description = $request->description;
         $research_topic->save();
+
+        return view('research_topic.index');
     }
 
     /**
