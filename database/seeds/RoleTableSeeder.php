@@ -27,5 +27,13 @@ class RoleTableSeeder extends Seeder
         $role = new Role();
         $role->name = 'Gestor Documental';
         $role->save();
+
+        $role = new Role();
+        $role->name = 'Coordinador de proyectos alternativos';
+        $role->save();
+
+        $role = new Role();
+        $role->name = 'Cordinador Académico';
+        $role->save();
     }
 }

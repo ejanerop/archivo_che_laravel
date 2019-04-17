@@ -12,4 +12,8 @@ class ResourceType extends Model
      * @var string
      */
     protected $table = 'resource_type';
+
+    public function document_types(){
+        return $this->hasMany('App\DocumentType', 'resource_type_id');
+    }
 }

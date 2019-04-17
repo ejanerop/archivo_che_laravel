@@ -10,10 +10,10 @@ class Subtopic extends Model
     protected $table = 'subtopics';
 
     public function research_topic(){
-        return $this->belongsTo('ResearchTopic', 'research_topic_id');
+        return $this->belongsTo('App\ResearchTopic', 'research_topic_id');
     }
 
     public function documents(){
-        return $this->belongsToMany('Document', 'document_subtopic');
+        return $this->belongsToMany('App\Document', 'document_subtopic');
     }
 }

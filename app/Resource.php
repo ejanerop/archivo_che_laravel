@@ -10,6 +10,6 @@ class Resource extends Model
     protected $table = 'resources';
 
     public function document(){
-        return $this->belongsTo('Document', 'resource_id');
+        return $this->belongsTo('App\Document', 'resource_id');
     }
 }

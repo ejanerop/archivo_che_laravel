@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\DocumentType;
-use App\ResourceType;
+use App\ResearchTopic;
+use App\Subtopic;
 use Illuminate\Http\Request;
 
-class DocumentTypeController extends Controller
+class SubtopicController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class DocumentTypeController extends Controller
      */
     public function index()
     {
-        return view('document_type.index', ['document_types' => DocumentType::get()]);
+        return view('subtopic.index', ['subtopics' => Subtopic::get()]);
     }
 
     /**
@@ -25,7 +25,7 @@ class DocumentTypeController extends Controller
      */
     public function create()
     {
-        return view('document_type.create', ['resource_types' => ResourceType::get()]);
+        return view('subtopic.create', ['research_topics'=>ResearchTopic::get()]);
     }
 
     /**
@@ -42,10 +42,10 @@ class DocumentTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\DocumentType  $documentType
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(DocumentType $documentType)
+    public function show($id)
     {
         //
     }
@@ -53,33 +53,33 @@ class DocumentTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\DocumentType  $documentType
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(DocumentType $documentType)
+    public function edit($id)
     {
-        return view('document_type.edit',['document_type' => $documentType]);
+        return view('subtopic.edit');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\DocumentType  $documentType
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DocumentType $documentType)
+    public function update(Request $request, $id)
     {
-        //todo
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\DocumentType  $documentType
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DocumentType $documentType)
+    public function destroy($id)
     {
         //
     }

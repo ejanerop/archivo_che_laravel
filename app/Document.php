@@ -10,18 +10,18 @@ class Document extends Model
     protected $table = 'documents';
 
     public function resource(){
-        return $this->hasOne('Resource', 'resource_id');
+        return $this->hasOne('App\Resource', 'resource_id');
     }
 
     public function subtopics(){
-        return $this->belongsToMany('Subtopic', 'document_subtopic');
+        return $this->belongsToMany('App\Subtopic', 'document_subtopic');
     }
 
     public function document_type(){
-        return $this->belongsTo('DocumentType', 'document_type_id');
+        return $this->belongsTo('App\DocumentType', 'document_type_id');
     }
 
     public function access_level(){
-        return $this->belongsTo('AccessLevel', 'access_level_id');
+        return $this->belongsTo('App\AccessLevel', 'access_level_id');
     }
 }
