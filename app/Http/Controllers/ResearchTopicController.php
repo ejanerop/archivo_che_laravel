@@ -36,11 +36,11 @@ class ResearchTopicController extends Controller
     public function store(Request $request)
     {
         $research_topic = new ResearchTopic();
-        $research_topic->research_topic = $request->research_topic;
-        $research_topic->description = $request->description;
+        $research_topic->research_topic = $request->input('research_topic');
+        $research_topic->description = $request->input('description');
         $research_topic->save();
 
-        return view('research_topic.index');
+        return view('research_topic.index', ['research_topics'=> ResearchTopic::get()]);
     }
 
     /**

@@ -36,7 +36,13 @@ class DocumentTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //todo
+        $resource_type = ResourceType::where('resource_type', $request->input('resource_type'))->first();
+
+        $document_type = new DocumentType();
+        $document_type->document_type = $request->input('document_type');
+        $document_type->resource_type()->associate($resource_type);
+        $document_type->save();
+        return view('document_type.index', ['document_types' => DocumentType::get()]);
     }
 
     /**
