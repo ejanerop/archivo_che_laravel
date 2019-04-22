@@ -17,4 +17,24 @@ class UserController extends Controller
     {
         return view('user.create', ['roles' => Role::get()]);
     }
+
+    public function store(Request $request)
+    {
+        //todo
+    }
+
+    public function edit($id)
+    {
+        //todo
+    }
+
+    public function update(Request $request, $id)
+    {
+        //todo
+    }
+
+    public function destroy($id)
+    {
+        //todo
+    }
 }

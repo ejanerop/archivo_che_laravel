@@ -14,7 +14,7 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        return view('document.index', ['documents' => Document::with(['subtopics', 'resource', 'access_level','document_type'])]);
+        return view('document.index', ['documents' => Document::with(['subtopics', 'resource', 'access_level','document_type'])->get()]);
     }
 
     /**
@@ -35,7 +35,7 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //todo
     }
 
     /**
@@ -46,7 +46,7 @@ class DocumentController extends Controller
      */
     public function show($id)
     {
-        //
+        //todo
     }
 
     /**
@@ -57,7 +57,7 @@ class DocumentController extends Controller
      */
     public function edit($id)
     {
-        return view('document.edit');
+        return view('document.edit', ['document'=> Document::find($id) ]);
     }
 
     /**
@@ -69,7 +69,7 @@ class DocumentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //todo
     }
 
     /**
@@ -80,6 +80,6 @@ class DocumentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //todo
     }
 }

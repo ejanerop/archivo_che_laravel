@@ -15,7 +15,7 @@ class SubtopicController extends Controller
      */
     public function index()
     {
-        return view('subtopic.index', ['subtopics' => Subtopic::get()]);
+        return view('subtopic.index', ['subtopics' => Subtopic::with('research_topic')->get()]);
     }
 
     /**
@@ -36,7 +36,7 @@ class SubtopicController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //todo
     }
 
     /**
@@ -47,7 +47,7 @@ class SubtopicController extends Controller
      */
     public function show($id)
     {
-        //
+        //todo
     }
 
     /**
@@ -58,7 +58,7 @@ class SubtopicController extends Controller
      */
     public function edit($id)
     {
-        return view('subtopic.edit');
+        return view('subtopic.edit', ['subtopic'=>Subtopic::find($id), 'research_topics'=>ResearchTopic::get()]);
     }
 
     /**
@@ -70,7 +70,7 @@ class SubtopicController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //todo
     }
 
     /**
@@ -81,6 +81,6 @@ class SubtopicController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //todo
     }
 }

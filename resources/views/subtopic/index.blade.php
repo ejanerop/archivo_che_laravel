@@ -12,18 +12,21 @@
     <div class="container">
         <table class="table table-bordered">
             <tr class="active">
-                <th>Tema de investigación</th>
+                <th>Subtema</th>
                 <th>Descripción</th>
+                <th>Tema perteneciente</th>
                 <th>Cantidad de documentos</th>
                 <th>Acciones</th>
             </tr>
-
+            @foreach($subtopics as $topic)
                 <tr>
-                    <td>   </td>
-                    <td>   </td>
+                    <td>{{$topic->name}}</td>
+                    <td>{{$topic->description}} </td>
+                    <td>{{$topic->research_topic->research_topic}}</td>
                     <td>15</td>
                     <td> <button class="btn-outline-info">Modificar</button> <button class="btn-outline-danger">Eliminar</button> </td>
                 </tr>
+            @endforeach
 
         </table>
     </div>

@@ -51,7 +51,7 @@ class ResearchTopicController extends Controller
      */
     public function show(ResearchTopic $researchTopic)
     {
-        //
+        //todo
     }
 
     /**
@@ -62,7 +62,7 @@ class ResearchTopicController extends Controller
      */
     public function edit(ResearchTopic $researchTopic)
     {
-        //
+        return view('research_topic.edit', ['research_topic' => $researchTopic]);
     }
 
     /**
@@ -74,7 +74,7 @@ class ResearchTopicController extends Controller
      */
     public function update(Request $request, ResearchTopic $researchTopic)
     {
-        //
+        //todo
     }
 
     /**
@@ -85,6 +85,6 @@ class ResearchTopicController extends Controller
      */
     public function destroy(ResearchTopic $researchTopic)
     {
-        //
+        //todo
     }
 }

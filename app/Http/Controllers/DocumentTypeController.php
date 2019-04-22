@@ -36,7 +36,7 @@ class DocumentTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //todo
     }
 
     /**
@@ -47,7 +47,7 @@ class DocumentTypeController extends Controller
      */
     public function show(DocumentType $documentType)
     {
-        //
+        //todo
     }
 
     /**
@@ -58,7 +58,7 @@ class DocumentTypeController extends Controller
      */
     public function edit(DocumentType $documentType)
     {
-        return view('document_type.edit',['document_type' => $documentType]);
+        return view('document_type.edit',['document_type' => $documentType, 'resource_types' => ResourceType::get()]);
     }
 
     /**
@@ -81,6 +81,6 @@ class DocumentTypeController extends Controller
      */
     public function destroy(DocumentType $documentType)
     {
-        //
+        //todo
     }
 }

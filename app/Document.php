@@ -10,7 +10,7 @@ class Document extends Model
     protected $table = 'documents';
 
     public function resource(){
-        return $this->hasOne('App\Resource', 'resource_id');
+        return $this->belongsTo('App\Resource');
     }
 
     public function subtopics(){
