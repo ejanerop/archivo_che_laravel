@@ -9,6 +9,6 @@ class ResearchTopic extends Model
     protected $table = 'research_topic';
 
     public function subtopics(){
-        return $this->hasMany('App\ResearchTopic', 'research_topic_id');
+        return $this->hasMany('App\Subtopic', 'research_topic_id');
     }
 }

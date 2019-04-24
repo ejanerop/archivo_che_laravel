@@ -15,7 +15,7 @@ class DocumentTypeController extends Controller
      */
     public function index()
     {
-        return view('document_type.index', ['document_types' => DocumentType::get()]);
+        return view('document_type.index', ['document_types' => DocumentType::withCount('documents')->get()]);
     }
 
     /**
@@ -25,7 +25,7 @@ class DocumentTypeController extends Controller
      */
     public function create()
     {
-        return view('document_type.create', ['resource_types' => ResourceType::get()]);
+        return view('document_type.create', ['resource_types' => ResourceType::all()]);
     }
 
     /**
@@ -42,7 +42,7 @@ class DocumentTypeController extends Controller
         $document_type->document_type = $request->input('document_type');
         $document_type->resource_type()->associate($resource_type);
         $document_type->save();
-        return view('document_type.index', ['document_types' => DocumentType::get()]);
+        return view('document_type.index', ['document_types' => DocumentType::all()]);
     }
 
     /**
@@ -64,7 +64,7 @@ class DocumentTypeController extends Controller
      */
     public function edit(DocumentType $documentType)
     {
-        return view('document_type.edit',['document_type' => $documentType, 'resource_types' => ResourceType::get()]);
+        return view('document_type.edit',['document_type' => $documentType, 'resource_types' => ResourceType::all()]);
     }
 
     /**
@@ -87,6 +87,10 @@ class DocumentTypeController extends Controller
      */
     public function destroy(DocumentType $documentType)
     {
-        //todo
+        //TODO Que no tenga documentos aputando a el
+        //TODO Confirmación
+        $documentType->delete();
+
+        return view('document_type.index', ['document_types' => DocumentType::all()]);
     }
 }

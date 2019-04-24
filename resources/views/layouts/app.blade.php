@@ -1,81 +1,123 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.template')
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+        @section('header')
+        <script id="toggler">
+                function toggleToggler() {
+                    if( $('span#toggle').hasClass('glyphicon-backward')){
+                        $('span#toggle').removeClass('glyphicon-backward').addClass('glyphicon-forward');
+                    }else {
+                        $('span#toggle').removeClass('glyphicon-forward').addClass('glyphicon-backward');
+                    }
+                }
+            </script>
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+        <header class="main-header">
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/bootstrap.js') }}" defer></script>
+        <a class="logo" href="{{ url('/') }}">
+            <span class="logo-mini">CHE</span>
+            <span class="logo-lg">{{ config('app.name', 'Laravel') }}</span>
+        </a>
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+        <nav class="navbar navbar-static-top" role="navigation" style="max-height: 50px">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-</head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <!-- Sidebar toggle button-->
+                <a href="#" data-toggle="offcanvas" role="button" onclick="toggleToggler()">
+                    <span id="toggle" class="glyphicon glyphicon-backward" style="color: #ffffff"></span>
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                    </ul>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown user user-menu">
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
+
                         @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Inicio de sesión
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                                <a class="dropdown-item" href="{{ route('login') }}">{{ __('Login') }}</a>
                             @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
+                                <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
                             @endif
+                            </div>
+
                         @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->username }}  <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
                         @endguest
+                        </li>
                     </ul>
                 </div>
-            </div>
+
         </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
-</body>
-</html>
+        </header>
+
+        @endsection
+
+        @section('sidebar')
+
+        <aside class="main-sidebar">
+        <!-- Inner sidebar -->
+        <section class="sidebar">
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu">
+                <li class="active"><a href="/home"><span>Inicio</span> <span class="glyphicon glyphicon-home pull-right"></span></a></li>
+                <li class="header"> Gestión</li>
+                <li class="treeview">
+                    <a href="#"><span>Usuarios</span><span class="glyphicon glyphicon-user pull-right"></span></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/user/create">Nuevo Usuario</a></li>
+                        <li><a href="/user">Lista de usuarios</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#"><span>Documentos</span> <span class="glyphicon glyphicon-file pull-right"></span></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/document/create">Nuevo Documento</a></li>
+                        <li><a href="/document">Lista de documentos</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#"><span>Temas de investigación</span> <span class="glyphicon glyphicon-book pull-right"></span></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/research_topic/create">Nuevo tema de investigación</a></li>
+                        <li><a href="/research_topic">Lista de temas</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#"><span>Subtemas de investigación</span> <span class="glyphicon glyphicon-bookmark pull-right"></span></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/subtopic/create">Nuevo Subtema</a></li>
+                        <li><a href="/subtopic">Lista de subtemas</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#"><span>Tipos de documentos</span> <span class="glyphicon glyphicon-th-list pull-right"></span></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/document_type/create">Nuevo tipo de documento</a></li>
+                        <li><a href="/document_type">Lista de tipos de documento</a></li>
+                    </ul>
+                </li>
+            </ul><!-- /.sidebar-menu -->
+
+        </section><!-- /.sidebar -->
+    </aside>
+
+        @endsection
+

@@ -15,7 +15,7 @@ class SubtopicController extends Controller
      */
     public function index()
     {
-        return view('subtopic.index', ['subtopics' => Subtopic::with('research_topic')->get()]);
+        return view('subtopic.index', ['subtopics' => Subtopic::with('research_topic')->withCount('documents')->get()]);
     }
 
     /**
@@ -36,7 +36,15 @@ class SubtopicController extends Controller
      */
     public function store(Request $request)
     {
-        //todo
+        $research_topic = ResearchTopic::where('research_topic', $request->input('research_topic'))->first();
+
+        $subtopic = new Subtopic();
+        $subtopic->name = $request->input('name');
+        $subtopic->description = $request->input('description');
+        $subtopic->research_topic()->associate($research_topic);
+        $subtopic->save();
+
+        return view('subtopic.index', ['subtopics' => Subtopic::with('research_topic')->get()]);
     }
 
     /**

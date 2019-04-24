@@ -14,7 +14,7 @@ class ResearchTopicController extends Controller
      */
     public function index()
     {
-        return view('research_topic.index', ['research_topics'=> ResearchTopic::get()]);
+        return view('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()]);
     }
 
     /**
@@ -40,7 +40,7 @@ class ResearchTopicController extends Controller
         $research_topic->description = $request->input('description');
         $research_topic->save();
 
-        return view('research_topic.index', ['research_topics'=> ResearchTopic::get()]);
+        return view('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()]);
     }
 
     /**
@@ -75,6 +75,8 @@ class ResearchTopicController extends Controller
     public function update(Request $request, ResearchTopic $researchTopic)
     {
         //todo
+
+        return view('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()]);
     }
 
     /**
@@ -85,6 +87,8 @@ class ResearchTopicController extends Controller
      */
     public function destroy(ResearchTopic $researchTopic)
     {
-        //todo
+        $researchTopic->delete();
+
+        return view('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()]);
     }
 }

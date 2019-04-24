@@ -14,7 +14,7 @@
                         <div class="form-body">
                             <div class="form-group">
                                 <label for="subtopic">Nombre</label>
-                                <input type="text" id="subtopic" name="subtopic" class="form-control col-md-8" placeholder="Temática">
+                                <input type="text" id="name" name="name" class="form-control col-md-8" placeholder="Temática">
                             </div>
 
                             <div class="form-group">

@@ -9,7 +9,7 @@ class DocumentType extends Model
     protected $table = 'document_type';
 
     public function documents(){
-        return $this->hasMany('App\Documents','document_type_id');
+        return $this->hasMany('App\Document','document_type_id');
     }
 
     public function resource_type(){

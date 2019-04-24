@@ -2,33 +2,41 @@
 
 @section('content')
 
-    <div class="container">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="">Inicio</a></li>
-                <li class="breadcrumb-item"><a href="">Temas</a></li>
-                <li class="breadcrumb-item"><a href="">Crear</a></li>
-            </ol>
-    </div>
-    <div class="container">
-        <table class="table table-bordered">
-            <tr class="active">
-                <th>Subtema</th>
-                <th>Descripción</th>
-                <th>Tema perteneciente</th>
-                <th>Cantidad de documentos</th>
-                <th>Acciones</th>
-            </tr>
-            @foreach($subtopics as $topic)
-                <tr>
-                    <td>{{$topic->name}}</td>
-                    <td>{{$topic->description}} </td>
-                    <td>{{$topic->research_topic->research_topic}}</td>
-                    <td>15</td>
-                    <td> <button class="btn-outline-info">Modificar</button> <button class="btn-outline-danger">Eliminar</button> </td>
-                </tr>
-            @endforeach
+    <section class="content-header">
+        <div class="container">
+            <h1> Subtemas de investigación</h1>
+        </div>
+    </section>
 
-        </table>
-    </div>
+    <section class="content">
+        <div class="container">
+            <table class="table table-bordered">
+                <tr class="active">
+                    <th>Subtema</th>
+                    <th>Descripción</th>
+                    <th>Tema perteneciente</th>
+                    <th>Cantidad de documentos</th>
+                    <th>Acciones</th>
+                </tr>
+                @foreach($subtopics as $topic)
+                    <tr>
+                        <td>{{$topic->name}}</td>
+                        <td>{{$topic->description}} </td>
+                        <td>{{$topic->research_topic->research_topic}}</td>
+                        <td>{{$topic->documents_count}}</td>
+                        <td>
+                            <form action="/subtopic/{{$topic->id}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <a href="/subtopic/{{$topic->id}}/edit" class="btn btn-info">Modificar</a>
+                                <button type="submit" class="btn btn-danger"> Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+
+            </table>
+        </div>
+    </section>
 
 @endsection
