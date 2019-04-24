@@ -4,13 +4,12 @@
 
     <section class="content-header">
         <div class="container">
-            <h1> Temas de investigación <small> Lista </small></h1>
+            <h1>Temas de investigación</h1>
         </div>
     </section>
 
     <section class="content">
-        <div class="container">
-            <table class="table table-bordered">
+        <table class="table table-bordered">
                 <tr class="active">
                     <th>Tema de investigación</th>
                     <th>Descripción</th>
@@ -34,8 +33,6 @@
                 @endforeach
 
             </table>
-        </div>
-
     </section>
 
 @endsection

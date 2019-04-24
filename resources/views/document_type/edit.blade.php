@@ -2,38 +2,48 @@
 
 @section('content')
 
-    <div class="container">
+    <section class="content-header">
+        <div class="container">
+            <h2>Editar tipo de documeto</h2>
+        </div>
+    </section>
+
+    <section class="content">
         <div class="row justify-content-center">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">{{ __('Editar tipo de documento') }}</div>
-
-                    <div class="card-body">
-                        <form method="POST" action="" enctype="multipart/form-data">
-                            <div class="form-body">
-                                <div class="form-group">
-                                    <label for="name">Tipo de documento</label>
-                                    <input type="text" id="name" class="form-control col-md-10" value="{{$document_type->document_type}}" placeholder="Tipo">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="resource_type">Tipo de recurso</label>
-                                    <select id="resource_type" class="form-control col-md-10" rows="3">
-                                        @foreach($resource_types as $type)
-                                            <option id="{{$type->id}}"  {{$document_type->resource_type->id == $type->id ? 'selected' : ''}} >{{$type->resource_type}}</option>
-                                        @endforeach
-                                    </select>
+            <div class="col-md-5">
+                <div class="box box-primary">
+                    <div class="box-header"></div>
+                    <form method="POST" action="/document_type/{{$document_type->id}}">
+                        @csrf
+                        <div class="box-body">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" id="document_type" name="document_type" class="form-control" value="{{$document_type->document_type}}" placeholder="Tipo de documento">
                                 </div>
                             </div>
-                            <div class="">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
-                                <button type="button" class="btn btn-secondary">Cancelar</button>
+                            <div class="form-group">
+                                <label for="resource_type">Tipo de recurso</label>
+                                <select id="resource_type" name="resource_type" class="form-control">
+                                    @foreach($resource_types as $type)
+                                        <option id="{{$type->id}}">{{$type->resource_type}}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                        </form>
-                    </div>
+                            <div class="box-footer">
+                                <button type="button" class="btn btn-danger btn-flat pull-left">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                    {{ __('Cancelar') }}
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-flat pull-right">
+                                    <span class="glyphicon glyphicon-floppy-save"></span>
+                                    {{ __('Guardar') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
 @endsection

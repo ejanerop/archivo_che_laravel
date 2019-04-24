@@ -47,6 +47,7 @@
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/adminLTE/app.min.js')}}"></script>
     <script src="{{asset('iCheck/icheck.min.js')}}"></script>
+    <script src="{{asset('slimScroll/jquery.slimscroll.min.js')}}"></script>
     <script>
         $(function () {
             $('input').iCheck({

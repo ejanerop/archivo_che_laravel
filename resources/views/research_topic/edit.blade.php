@@ -2,34 +2,44 @@
 
 @section('content')
 
-    <div class="container">
+    <section class="content-header">
+        <div class="container">
+            <h2>Nuevo tema de investigación</h2>
+        </div>
+    </section>
+
+    <section class="content">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Editar Temática') }}</div>
-
-                    <div class="card-body">
-                        <form method="POST" action="" enctype="multipart/form-data">
-                            <div class="form-body">
-                                <div class="form-group">
-                                    <label for="research_topic">Temática de investigación</label>
-                                    <input type="text" id="research_topic" class="form-control col-md-8" placeholder="Temática" value="{{$research_topic->research_topic}}">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="description">Descripción</label>
-                                    <textarea id="description" class="form-control col-md-8" rows="3"></textarea>
-                                </div>
+            <div class="col-md-5">
+                <div class="box box-primary">
+                    <div class="box-header"></div>
+                    <form method="POST" action="/research_topic">
+                        @csrf
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="research_topic">Tema de investigación</label>
+                                <input type="text" id="research_topic" name="research_topic" class="form-control" placeholder="Nombre del tema de investigación" value="{{$research_topic->research_topic}}">
                             </div>
-                            <div class="">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
-                                <button type="button" class="btn btn-secondary">Cancelar</button>
+                            <div class="form-group">
+                                <label for="description">Descripción</label>
+                                <textarea id="description" name="description" class="form-control" rows="4" style="resize: none" placeholder="Descripción del tema"></textarea>
                             </div>
-                        </form>
-                    </div>
+                            <div class="box-footer">
+                                <button type="button" class="btn btn-danger btn-flat pull-left">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                    {{ __('Limpiar') }}
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-flat pull-right">
+                                    <span class="glyphicon glyphicon-floppy-save"></span>
+                                    {{ __('Guardar') }}
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
 @endsection
