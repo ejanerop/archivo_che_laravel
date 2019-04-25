@@ -9,13 +9,20 @@
     </section>
 
     <section class="content">
-        <table class="table table-bordered">
-            <tr class="active">
-                    <th>Tipo de documento</th>
-                    <th>Tipo de recurso</th>
-                    <th>Cantidad de documentos</th>
-                    <th>Acciones</th>
-                </tr>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header"></div>
+                    <div class="box-body">
+                        <table id="table" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tipo de documento</th>
+                        <th>Tipo de recurso</th>
+                        <th>Cantidad de documentos</th>
+                        <th>Acciones</th>
+                    </tr>
+                 </thead>
             @foreach($document_types as $type)
                 <tr>
                     <td>{{$type->document_type}}</td>
@@ -32,6 +39,16 @@
                     </tr>
             @endforeach
         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
+
+    <script>
+        $(function () {
+            $('#table').DataTable();
+        });
+    </script>
 
 @endsection

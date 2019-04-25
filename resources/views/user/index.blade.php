@@ -16,12 +16,12 @@
                     <div class="box-body">
                         <table id="table" class="table table-bordered table-striped">
                             <thead>
-                            <tr>
-                                <th>Usuario</th>
-                                <th>Correo</th>
-                                <th>Rol</th>
-                                <th>Acciones</th>
-                            </tr>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Correo</th>
+                                    <th>Rol</th>
+                                    <th>Acciones</th>
+                                </tr>
                             </thead>
                             <tbody>
                             @foreach($users as $user)
