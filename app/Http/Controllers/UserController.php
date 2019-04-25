@@ -25,7 +25,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        //todo
+        return view('user.edit', ['roles' => Role::get(), 'user' => User::with('roles')->find($id)]);
     }
 
     public function update(Request $request, $id)

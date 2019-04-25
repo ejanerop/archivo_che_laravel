@@ -8,8 +8,8 @@
         </div>
     </section>
 
-    <section class="content">
-        <div class="row justify-content-center">
+    <section class="content" style="justify-content: center">
+        <div class="row">
             <div class="col-md-5">
                 <div class="box box-primary">
                     <div class="box-header"></div>

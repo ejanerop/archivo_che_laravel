@@ -1,21 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+
+    <section class="content-header">
+        <div class="container">
+            <h2>Nuevo usuario</h2>
+        </div>
+    </section>
+
+    <section class="content">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Editar Usuario') }}</div>
-
-                    <div class="card-body">
-                        <form method="POST" action="">
-                            @csrf
-                            <div class="form-group row">
-                                <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('name') }}" required autofocus>
-
+            <div class="col-md-5">
+                <div class="box box-primary">
+                    <div class="box-header"></div>
+                    <form role="form" method="POST" action="/user">
+                        @csrf
+                        <div class="box-body">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon glyphicon glyphicon-user"></span>
+                                    <input id="username" type="text" class="form-control {{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" placeholder="Usuario" value="{{$user->username}}" required autofocus>
                                     @if ($errors->has('username'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('username') }}</strong>
@@ -23,13 +27,10 @@
                                     @endif
                                 </div>
                             </div>
-
-                            <div class="form-group row">
-                                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
-
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon glyphicon glyphicon-envelope"></span>
+                                    <input id="email" type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="Correo electrónico" value="{{$user->email}}" required>
                                     @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -37,13 +38,10 @@
                                     @endif
                                 </div>
                             </div>
-
-                            <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon glyphicon glyphicon-lock"></span>
+                                    <input id="password" type="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Nueva contraseña" required>
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -51,37 +49,37 @@
                                     @endif
                                 </div>
                             </div>
-
-                            <div class="form-group row">
-                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon glyphicon glyphicon-log-in"></span>
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Repetir contraseña" required>
                                 </div>
                             </div>
-
-                            <div class="form-group row">
-                                <label for="role" class="col-md-4 col-form-label text-md-right"> {{__('Rol')}}</label>
-                                <div class="col-md-6">
-                                    <select id="role" class="form-control">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><strong>Rol</strong></span>
+                                    <select id="role" name="role" class="form-control">
                                         @foreach($roles as $role)
-                                            <option id="{{$role->id}}">{{$role->name}}</option>
+                                            <option id="{{$role->id}}" {{$user->roles->id == $role->id ? 'selected' : ''}}>{{$role->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-
-                            <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Register') }}
-                                    </button>
-                                </div>
+                            <div class="box-footer">
+                                <button type="button" class="btn btn-danger btn-flat pull-left">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                    {{ __('Cancelar') }}
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-flat pull-right">
+                                    <span class="glyphicon glyphicon-floppy-save"></span>
+                                    {{ __('Guardar') }}
+                                </button>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
 @endsection

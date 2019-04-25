@@ -27,8 +27,8 @@
                     <form action="/subtopic/{{$topic->id}}" method="post">
                         @csrf
                         @method('DELETE')
-                        <a href="/subtopic/{{$topic->id}}/edit" class="btn btn-info">Modificar</a>
-                        <button type="submit" class="btn btn-danger"> Eliminar</button>
+                        <a href="/subtopic/{{$topic->id}}/edit" class="btn btn-info btn-flat">Modificar</a>
+                        <button type="submit" class="btn btn-danger btn-flat"> Eliminar</button>
                     </form>
                 </td>
             </tr>
