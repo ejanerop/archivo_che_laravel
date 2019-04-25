@@ -35,6 +35,10 @@ class ResearchTopicController extends Controller
      */
     public function store(Request $request)
     {
+        $validate = $request->validate([
+            'research_topic' => 'required|unique:research_topic',
+            'description' => 'nullable|max:255'
+        ]);
         $research_topic = new ResearchTopic();
         $research_topic->research_topic = $request->input('research_topic');
         $research_topic->description = $request->input('description');

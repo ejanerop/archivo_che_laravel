@@ -11,8 +11,8 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <!-- Bootstrap 3.3.5 -->
+
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('css/adminLTE/AdminLTE.min.css') }}">
@@ -23,6 +23,13 @@
     <link rel="stylesheet" href="{{ asset('iCheck/square/blue.css') }}">
 
     <link rel="stylesheet" href="{{ asset('datatables/datatables.bootstrap.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/micss.css') }}">
+
+    <style>
+        .glyphicon{top: 0}
+        .box-footer {padding: 10px 0}
+    </style>
 
 
     <!-- Scripts -->

@@ -1,0 +1,12 @@
+
+.glyphicon{top: 0}
+
+.box-footer {padding: 10px 0}
+
+.width-auto{width: auto}
+
+.form-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

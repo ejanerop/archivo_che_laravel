@@ -21,16 +21,19 @@
         <nav class="navbar navbar-static-top" role="navigation" style="max-height: 50px">
 
                 <!-- Sidebar toggle button-->
-                <a href="#" data-toggle="offcanvas" role="button" onclick="toggleToggler()">
-                    <span id="toggle" class="glyphicon glyphicon-backward" style="color: #ffffff"></span>
-                </a>
+            <ul class="nav navbar-nav pull-left">
+                <li>
+                    <a href="#" data-toggle="offcanvas" role="button" onclick="toggleToggler()">
+                        <span id="toggle" class="glyphicon glyphicon-backward" style="color: #ffffff"></span>
+                    </a>
+                </li>
+            </ul>
 
-                <div class="navbar-custom-menu">
+            <div class="navbar-custom-menu">
+
                     <ul class="nav navbar-nav">
                         <li class="dropdown user user-menu">
-
-
-                        @guest
+                            @guest
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 Inicio de sesión
                             </a>

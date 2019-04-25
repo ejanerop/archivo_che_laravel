@@ -38,6 +38,10 @@ class DocumentTypeController extends Controller
     {
         $resource_type = ResourceType::where('resource_type', $request->input('resource_type'))->first();
 
+        $validate = $request->validate([
+            'document_type' => 'required|unique:document_type'
+        ]);
+
         $document_type = new DocumentType();
         $document_type->document_type = $request->input('document_type');
         $document_type->resource_type()->associate($resource_type);

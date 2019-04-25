@@ -9,17 +9,20 @@
     </section>
 
     <section class="content">
-        <div class="row justify-content-center">
-                <div class="col-md-5">
-                    <div class="box box-primary">
+        <div class="row">
+                <div class="col-md-12 form-box">
+                    <div class="box box-primary width-auto">
                         <div class="box-header"></div>
                         <form method="POST" action="/research_topic">
                             @csrf
                             <div class="box-body">
-                                <div class="form-group">
+                                <div class="form-group has-feedback">
                                     <label for="research_topic">Tema de investigación</label>
-                                    <input type="text" id="research_topic" name="research_topic" class="form-control" placeholder="Nombre del tema de investigación">
-                                </div>
+                                    <input type="text" id="research_topic" name="research_topic" class="form-control" value="{{old('research_topic')}}" placeholder="Nombre del tema de investigación" style="display: inline-block">
+                                    @if($errors->has('research_topic'))
+                                        <span class="text-red" role="alert">{{$errors->first('research_topic')}}</span>
+                                    @endif
+                                    </div>
                                 <div class="form-group">
                                     <label for="description">Descripción</label>
                                     <textarea id="description" name="description" class="form-control" rows="4" style="resize: none" placeholder="Descripción del tema"></textarea>

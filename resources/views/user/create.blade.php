@@ -8,10 +8,10 @@
         </div>
     </section>
 
-    <section class="content" style="justify-content: center">
+    <section class="content">
         <div class="row">
-            <div class="col-md-5">
-                <div class="box box-primary">
+            <div class="col-md-12 form-box" >
+                <div class="box box-primary width-auto">
                     <div class="box-header"></div>
                     <form role="form" method="POST" action="/user">
                         @csrf
