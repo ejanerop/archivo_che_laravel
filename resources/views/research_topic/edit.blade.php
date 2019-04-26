@@ -10,15 +10,16 @@
 
     <section class="content">
         <div class="row justify-content-center">
-            <div class="col-md-5">
-                <div class="box box-primary">
+            <div class="col-md-12 form-box">
+                <div class="box box-primary width-auto">
                     <div class="box-header"></div>
-                    <form method="POST" action="/research_topic">
+                    <form method="POST" action="/research_topic/{{$research_topic->id}}">
+                        @method('PUT')
                         @csrf
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="research_topic">Tema de investigación</label>
-                                <input type="text" id="research_topic" name="research_topic" class="form-control" placeholder="Nombre del tema de investigación" value="{{$research_topic->research_topic}}">
+                                <input type="text" id="research_topic" name="research_topic" class="form-control" placeholder="Nombre del tema de investigación" value="{{$research_topic->research_topic}}" style="display: inline-block" required>
                             </div>
                             <div class="form-group">
                                 <label for="description">Descripción</label>

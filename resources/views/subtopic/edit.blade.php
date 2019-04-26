@@ -10,23 +10,19 @@
 
     <section class="content">
         <div class="row justify-content-center">
-            <div class="col-md-5">
-                <div class="box box-primary">
+            <div class="col-md-12 form-box">
+                <div class="box box-primary width-auto">
                     <div class="box-header"></div>
                     <form method="POST" action="/subtopic">
                         @csrf
                         <div class="box-body">
                             <div class="form-group">
-                                <div class="input-group">
-                                    <label for="subtopic">Nombre</label>
-                                    <input type="text" id="name" name="name" class="form-control" value="{{$subtopic->name}}" placeholder="Temática">
-                                </div>
+                                <label for="name">Nombre</label>
+                                <input type="text" id="name" name="name" class="form-control" value="{{$subtopic->name}}" placeholder="Temática" style="display: inline-block" required>
                             </div>
                             <div class="form-group">
-                                <div class="input-group">
                                     <label for="description">Descripción</label>
-                                    <textarea id="description" name="description" class="form-control" rows="3" placeholder="Descripción del tema" style="resize: none"></textarea>
-                                </div>
+                                    <textarea id="description" name="description" class="form-control" rows="3" placeholder="Descripción del tema" style="resize: none; display: inline-block"></textarea>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">

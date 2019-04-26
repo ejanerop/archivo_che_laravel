@@ -46,7 +46,7 @@ class DocumentTypeController extends Controller
         $document_type->document_type = $request->input('document_type');
         $document_type->resource_type()->associate($resource_type);
         $document_type->save();
-        return view('document_type.index', ['document_types' => DocumentType::all()]);
+        return redirect()->route('document_type.index', ['document_types' => DocumentType::all()]);
     }
 
     /**

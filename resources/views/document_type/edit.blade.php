@@ -10,14 +10,15 @@
 
     <section class="content">
         <div class="row justify-content-center">
-            <div class="col-md-5">
-                <div class="box box-primary">
+            <div class="col-md-12 form-box">
+                <div class="box box-primary width-auto">
                     <div class="box-header"></div>
                     <form method="POST" action="/document_type/{{$document_type->id}}">
                         @csrf
                         <div class="box-body">
                             <div class="form-group">
                                 <div class="input-group">
+                                    <label for="document_type"> Tipo de documento</label>
                                     <input type="text" id="document_type" name="document_type" class="form-control" value="{{$document_type->document_type}}" placeholder="Tipo de documento">
                                 </div>
                             </div>

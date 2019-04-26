@@ -18,10 +18,7 @@
                         <div class="box-body">
                             <div class="form-group {{$errors->has('document_type')?"has-error":""}}">
                                     <label for="document_type">Tipo de documento</label>
-                                    <input type="text" id="document_type" name="document_type" class="form-control" placeholder="Tipo de documento" style="display: inline-block">
-                                    @if($errors->has('document_type'))
-                                        <span class="text-red" role="alert">{{$errors->first('document_type')}}</span>
-                                    @endif
+                                    <input type="text" id="document_type" name="document_type" class="form-control" placeholder="Tipo de documento" style="display: inline-block" required>
                             </div>
                             <div class="form-group">
                                 <label for="resource_type">Tipo de recurso</label>

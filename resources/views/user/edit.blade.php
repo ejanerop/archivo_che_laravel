@@ -4,28 +4,29 @@
 
     <section class="content-header">
         <div class="container">
-            <h2>Nuevo usuario</h2>
+            <h2>Editar usuario usuario</h2>
         </div>
     </section>
 
     <section class="content">
         <div class="row justify-content-center">
-            <div class="col-md-5">
-                <div class="box box-primary">
+            <div class="col-md-12 form-box">
+                <div class="box box-primary width-auto">
                     <div class="box-header"></div>
-                    <form role="form" method="POST" action="/user">
+                    <form role="form" method="POST" action="/user/{{$user->id}}">
+                        @method('PUT')
                         @csrf
                         <div class="box-body">
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon glyphicon glyphicon-user"></span>
                                     <input id="username" type="text" class="form-control {{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" placeholder="Usuario" value="{{$user->username}}" required autofocus>
-                                    @if ($errors->has('username'))
-                                        <span class="invalid-feedback" role="alert">
+                                </div>
+                                @if ($errors->has('username'))
+                                    <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('username') }}</strong>
                                     </span>
-                                    @endif
-                                </div>
+                                @endif
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
@@ -41,7 +42,7 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon glyphicon glyphicon-lock"></span>
-                                    <input id="password" type="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Nueva contraseña" required>
+                                    <input id="password" type="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Nueva contraseña">
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -52,7 +53,7 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon glyphicon glyphicon-log-in"></span>
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Repetir contraseña" required>
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Repetir contraseña">
                                 </div>
                             </div>
                             <div class="form-group">

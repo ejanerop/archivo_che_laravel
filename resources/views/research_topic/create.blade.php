@@ -16,13 +16,10 @@
                         <form method="POST" action="/research_topic">
                             @csrf
                             <div class="box-body">
-                                <div class="form-group has-feedback">
+                                <div class="form-group {{$errors->has('research_topic')?"has-error":""}}">
                                     <label for="research_topic">Tema de investigación</label>
-                                    <input type="text" id="research_topic" name="research_topic" class="form-control" value="{{old('research_topic')}}" placeholder="Nombre del tema de investigación" style="display: inline-block">
-                                    @if($errors->has('research_topic'))
-                                        <span class="text-red" role="alert">{{$errors->first('research_topic')}}</span>
-                                    @endif
-                                    </div>
+                                    <input type="text" id="research_topic" name="research_topic" class="form-control" value="{{old('research_topic')}}" placeholder="Nombre del tema de investigación" style="display: inline-block" required>
+                                </div>
                                 <div class="form-group">
                                     <label for="description">Descripción</label>
                                     <textarea id="description" name="description" class="form-control" rows="4" style="resize: none" placeholder="Descripción del tema"></textarea>

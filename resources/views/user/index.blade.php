@@ -4,7 +4,6 @@
 
     <section class="content-header">
         <div class="container">
-            <h1>Usuarios</h1>
         </div>
     </section>
 
@@ -12,7 +11,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-primary">
-                    <div class="box-header"></div>
+                    <div class="box-header"><h3>Usuarios</h3></div>
                     <div class="box-body">
                         <table id="table" class="table table-bordered table-striped">
                             <thead>

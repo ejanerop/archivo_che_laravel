@@ -3,10 +3,10 @@
         @section('header')
         <script id="toggler">
                 function toggleToggler() {
-                    if( $('span#toggle').hasClass('glyphicon-backward')){
-                        $('span#toggle').removeClass('glyphicon-backward').addClass('glyphicon-forward');
+                    if( $('span#toggle').hasClass('glyphicon-chevron-left')){
+                        $('span#toggle').removeClass('glyphicon-chevron-left').addClass('glyphicon-chevron-right');
                     }else {
-                        $('span#toggle').removeClass('glyphicon-forward').addClass('glyphicon-backward');
+                        $('span#toggle').removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-left');
                     }
                 }
             </script>
@@ -24,7 +24,7 @@
             <ul class="nav navbar-nav pull-left">
                 <li>
                     <a href="#" data-toggle="offcanvas" role="button" onclick="toggleToggler()">
-                        <span id="toggle" class="glyphicon glyphicon-backward" style="color: #ffffff"></span>
+                        <span id="toggle" class="glyphicon glyphicon-chevron-left" style="color: #ffffff"></span>
                     </a>
                 </li>
             </ul>
@@ -34,7 +34,7 @@
                     <ul class="nav navbar-nav">
                         <li class="dropdown user user-menu">
                             @guest
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 Inicio de sesión
                             </a>
 
@@ -51,17 +51,29 @@
                                 {{ Auth::user()->username }}  <span class="caret"></span>
                             </a>
 
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li class="user-header">
+                                    <img src="user.png" class="img-circle" alt="User Image">
+                                    <p>
+                                        {{Auth::user()->username}}
+                                        <small>{{\App\User::where('username', Auth::user()->username)->first()->roles->name}}</small>
+                                    </p>
+                                </li>
+                                <li class="user-body"></li>
+                                <li class="user-footer">
+                                    <div class="pull-left"></div>
+                                    <div class="pull-right">
+                                        <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
+                                           onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                            </div>
+                                            {{ __('Cerrar sesión') }}
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                    </div>
+                                </li>
+                            </ul>
                         @endguest
                         </li>
                     </ul>

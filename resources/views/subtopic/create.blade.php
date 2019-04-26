@@ -16,9 +16,13 @@
                 <form method="POST" action="/subtopic">
                     @csrf
                     <div class="box-body">
-                        <div class="form-group">
-                            <label for="subtopic">Nombre</label>
-                            <input type="text" id="name" name="name" class="form-control" placeholder="Temática">
+                        <div class="form-group {{$errors->has('name')?'has-error':''}}">
+                            <label for="name">Nombre</label>
+                            <input type="text" id="name" name="name" class="form-control" placeholder="Temática" required>
+                            @if($errors->has('name'))
+                                <span class="text-red" role="alert">{{$errors->first('name')}}</span>
+                            @endif
+
                         </div>
                         <div class="form-group">
                                 <label for="description">Descripción</label>

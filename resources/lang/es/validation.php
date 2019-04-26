@@ -105,7 +105,8 @@ return [
 
     'attributes' => [
         'research_topic' => 'tema de investigación',
-        'document_type' => 'tipo de documento'
+        'document_type' => 'tipo de documento',
+        'name' => 'nombre'
     ],
 
 ];
