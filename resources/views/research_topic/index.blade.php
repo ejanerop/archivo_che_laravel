@@ -11,6 +11,20 @@
     <section class="content">
         <div class="row">
             <div class="col-md-12">
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4><span class="glyphicon glyphicon-ok"></span></h4>
+                        <strong>{{ session('success') }}</strong>
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4></h4>
+                        <strong>{{ session('error') }}</strong>
+                    </div>
+                @endif
                 <div class="box box-primary">
                     <div class="box-header"></div>
                     <div class="box-body">
@@ -19,7 +33,7 @@
                                 <tr>
                                     <th>Tema de investigación</th>
                                     <th>Descripción</th>
-                                    <th>Cantidad de documentos</th>
+                                    <th>Cantidad de subtemas</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>

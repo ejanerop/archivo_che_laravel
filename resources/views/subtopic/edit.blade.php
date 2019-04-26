@@ -13,7 +13,8 @@
             <div class="col-md-12 form-box">
                 <div class="box box-primary width-auto">
                     <div class="box-header"></div>
-                    <form method="POST" action="/subtopic">
+                    <form method="POST" action="/subtopic/{{$subtopic->id}}">
+                        @method('PUT')
                         @csrf
                         <div class="box-body">
                             <div class="form-group">
@@ -51,5 +52,9 @@
             </div>
         </div>
     </section>
+
+    <script>
+        $("textarea#description").val("{{$subtopic->description}}");
+    </script>
 
 @endsection

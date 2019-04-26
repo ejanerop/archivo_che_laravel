@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\ResearchTopic;
 use App\Subtopic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class SubtopicController extends Controller
 {
@@ -83,7 +85,21 @@ class SubtopicController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //todo
+
+        $validate = Validator::make($request->all(),[
+            'name' => ['required', 'string', Rule::unique('subtopics')->ignore($id)],
+            'description' => ['nullable','string']
+        ])->validate();
+
+        $research_topic = ResearchTopic::where('research_topic', $request->input('research_topic'))->first();
+
+        $subtopic = Subtopic::find($id);
+        $subtopic->name = $request->input('name');
+        $subtopic->description = $request->input('description');
+        $subtopic->research_topic()->associate($research_topic);
+        $subtopic->save();
+
+        return redirect()->route('subtopic.index', ['subtopics' => Subtopic::with('research_topic')->get()]);
     }
 
     /**

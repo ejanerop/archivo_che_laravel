@@ -4,15 +4,31 @@
 
     <section class="content-header">
         <div class="container">
-            <h1> Subtemas de investigación</h1>
+            <h3> Subtemas de investigación</h3>
         </div>
     </section>
 
     <section class="content">
         <div class="row">
             <div class="col-md-12">
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4><span class="glyphicon glyphicon-ok"></span></h4>
+                        <strong>{{ session('success') }}</strong>
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4></h4>
+                        <strong>{{ session('error') }}</strong>
+                    </div>
+                @endif
                 <div class="box box-primary">
-                    <div class="box-header"></div>
+                    <div class="box-header">
+                        <a href="{{route('subtopic.create')}}" class="btn btn-flat btn-success pull-right"><span class="glyphicon glyphicon-plus"></span>Nuevo</a>
+                    </div>
                     <div class="box-body">
                         <table id="table" class="table table-bordered table-striped">
                             <thead>

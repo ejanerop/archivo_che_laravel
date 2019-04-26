@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\DocumentType;
 use App\ResourceType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class DocumentTypeController extends Controller
 {
@@ -80,7 +82,18 @@ class DocumentTypeController extends Controller
      */
     public function update(Request $request, DocumentType $documentType)
     {
-        //todo
+
+        $validate = Validator::make($request->all(),[
+            'document_type' => ['required', Rule::unique('document_type')->ignore($documentType->id)]
+        ])->validate();
+
+        $resource_type = ResourceType::where('resource_type', $request->input('resource_type'))->first();
+
+        $documentType->document_type = $request->input('document_type');
+        $documentType->resource_type()->associate($resource_type);
+        $documentType->save();
+        return redirect()->route('document_type.index', ['document_types' => DocumentType::all()]);
+
     }
 
     /**
@@ -91,10 +104,14 @@ class DocumentTypeController extends Controller
      */
     public function destroy(DocumentType $documentType)
     {
-        //TODO Que no tenga documentos aputando a el
-        //TODO Confirmación
-        $documentType->delete();
+        if($documentType->documents()->count() != 0){
+            return redirect()->route('document_type.index', ['document_types' => DocumentType::all()])->with('error', 'No se puede eliminar. Existen documentos de este tipo.');
+        }else{
+            $documentType->delete();
+            return redirect()->route('document_type.index', ['document_types' => DocumentType::all()])->with('success', 'Eliminado correctamente');
 
-        return view('document_type.index', ['document_types' => DocumentType::all()]);
+        }
+
+
     }
 }

@@ -28,7 +28,7 @@
                             <div class="box-footer">
                                 <button type="button" class="btn btn-danger btn-flat pull-left">
                                     <span class="glyphicon glyphicon-remove"></span>
-                                    {{ __('Limpiar') }}
+                                    {{ __('Cancelar') }}
                                 </button>
                                 <button type="submit" class="btn btn-primary btn-flat pull-right">
                                     <span class="glyphicon glyphicon-floppy-save"></span>
@@ -42,5 +42,9 @@
             </div>
         </div>
     </section>
+
+    <script>
+        $("textarea#description").val("{{$research_topic->description}}");
+    </script>
 
 @endsection

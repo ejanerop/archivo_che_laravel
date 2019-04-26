@@ -14,6 +14,7 @@
                 <div class="box box-primary width-auto">
                     <div class="box-header"></div>
                     <form method="POST" action="/document_type/{{$document_type->id}}">
+                        @method('PUT')
                         @csrf
                         <div class="box-body">
                             <div class="form-group">

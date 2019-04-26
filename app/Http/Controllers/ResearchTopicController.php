@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\ResearchTopic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ResearchTopicController extends Controller
 {
@@ -78,21 +80,34 @@ class ResearchTopicController extends Controller
      */
     public function update(Request $request, ResearchTopic $researchTopic)
     {
-        //todo
+        $validate = Validator::make($request->all(),[
+            'research_topic' => ['required', Rule::unique('research_topic')->ignore($researchTopic->id)],
+            'description' => ['nullable', 'max:255']
+        ])->validate();
 
-        return view('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()]);
+        $researchTopic->research_topic = $request->input('research_topic');
+        $researchTopic->description = $request->input('description');
+        $researchTopic->save();
+
+        return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ResearchTopic  $researchTopic
+     * @param  \App\ResearchTopic $researchTopic
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(ResearchTopic $researchTopic)
     {
-        $researchTopic->delete();
 
-        return view('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()]);
+        if($researchTopic->subtopics()->count() != 0){
+            return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()])->with('error', 'No se puede eliminar, existen subtemas pertenecientes a este tema.');
+        }else{
+            $researchTopic->delete();
+            return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()])->with('success', 'Eliminado correctamente');
+
+        }
     }
 }
