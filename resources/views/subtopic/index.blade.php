@@ -21,13 +21,13 @@
                 @if (session('error'))
                     <div class="alert alert-danger alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h4></h4>
+                        <h4><span class="glyphicon glyphicon-ban-circle"></span></h4>
                         <strong>{{ session('error') }}</strong>
                     </div>
                 @endif
                 <div class="box box-primary">
                     <div class="box-header">
-                        <a href="{{route('subtopic.create')}}" class="btn btn-flat btn-success pull-right"><span class="glyphicon glyphicon-plus"></span>Nuevo</a>
+                        <a href="{{route('subtopic.create')}}" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus"></span></a>
                     </div>
                     <div class="box-body">
                         <table id="table" class="table table-bordered table-striped">
@@ -50,8 +50,8 @@
                                         <form action="/subtopic/{{$topic->id}}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <a href="/subtopic/{{$topic->id}}/edit" class="btn btn-info btn-flat">Modificar</a>
-                                            <button type="submit" class="btn btn-danger btn-flat"> Eliminar</button>
+                                            <a href="/subtopic/{{$topic->id}}/edit" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-edit" style="margin-right: 2px"></span> Editar</a>
+                                            <button type="submit" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove" style="margin-right: 2px"></span> Eliminar</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -68,5 +68,8 @@
         $(function () {
             $('#table').DataTable();
         });
+        $('li.li').removeClass('active');
+        $('li#subtopic').addClass('active');
+        $('li#subtopicList').addClass('active');
     </script>
 @endsection

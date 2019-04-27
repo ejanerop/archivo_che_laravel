@@ -23,7 +23,7 @@
                             </div>
                             <div class="form-group">
                                     <label for="description">Descripción</label>
-                                    <textarea id="description" name="description" class="form-control" rows="3" placeholder="Descripción del tema" style="resize: none; display: inline-block"></textarea>
+                                    <textarea id="description" name="description" class="form-control" rows="3" placeholder="Descripción del tema" style="resize: none; display: inline-block">{{$subtopic->description}}</textarea>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
@@ -54,7 +54,9 @@
     </section>
 
     <script>
-        $("textarea#description").val("{{$subtopic->description}}");
+        $('li.li').removeClass('active');
+        $('li#subtopic').addClass('active');
+        $('li#subtopicList').addClass('active');
     </script>
 
 @endsection

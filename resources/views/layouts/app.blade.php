@@ -1,17 +1,8 @@
 @extends('layouts.template')
 
         @section('header')
-        <script id="toggler">
-                function toggleToggler() {
-                    if( $('span#toggle').hasClass('glyphicon-chevron-left')){
-                        $('span#toggle').removeClass('glyphicon-chevron-left').addClass('glyphicon-chevron-right');
-                    }else {
-                        $('span#toggle').removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-left');
-                    }
-                }
-            </script>
 
-        <header class="main-header">
+            <header class="main-header">
 
         <a class="logo" href="{{ url('/') }}">
             <span class="logo-mini">CHE</span>
@@ -53,7 +44,7 @@
 
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li class="user-header">
-                                    <img src="user.png" class="img-circle" alt="User Image">
+                                    <img src="/user.png" class="img-circle" alt="User Image">
                                     <p>
                                         {{Auth::user()->username}}
                                         <small>{{\App\User::where('username', Auth::user()->username)->first()->roles->name}}</small>
@@ -83,56 +74,66 @@
 
         </header>
 
+            <script id="toggler">
+                function toggleToggler() {
+                    if( $('span#toggle').hasClass('glyphicon-chevron-left')){
+                        $('span#toggle').removeClass('glyphicon-chevron-left').addClass('glyphicon-chevron-right');
+                    }else {
+                        $('span#toggle').removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-left');
+                    }
+                }
+            </script>
+
         @endsection
 
         @section('sidebar')
 
-        <aside class="main-sidebar">
-        <!-- Inner sidebar -->
-        <section class="sidebar">
-            <!-- Sidebar Menu -->
-            <ul class="sidebar-menu">
-                <li class="active"><a href="/home"><span>Inicio</span> <span class="glyphicon glyphicon-home pull-right"></span></a></li>
-                <li class="header"> Gestión</li>
-                <li class="treeview">
-                    <a href="#"><span>Usuarios</span><span class="glyphicon glyphicon-user pull-right"></span></a>
-                    <ul class="treeview-menu">
-                        <li><a href="/user/create">Nuevo Usuario</a></li>
-                        <li><a href="/user">Lista de usuarios</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#"><span>Documentos</span> <span class="glyphicon glyphicon-file pull-right"></span></a>
-                    <ul class="treeview-menu">
-                        <li><a href="/document/create">Nuevo Documento</a></li>
-                        <li><a href="/document">Lista de documentos</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#"><span>Temas de investigación</span> <span class="glyphicon glyphicon-book pull-right"></span></a>
-                    <ul class="treeview-menu">
-                        <li><a href="/research_topic/create">Nuevo tema de investigación</a></li>
-                        <li><a href="/research_topic">Lista de temas</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#"><span>Subtemas de investigación</span> <span class="glyphicon glyphicon-bookmark pull-right"></span></a>
-                    <ul class="treeview-menu">
-                        <li><a href="/subtopic/create">Nuevo Subtema</a></li>
-                        <li><a href="/subtopic">Lista de subtemas</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#"><span>Tipos de documentos</span> <span class="glyphicon glyphicon-th-list pull-right"></span></a>
-                    <ul class="treeview-menu">
-                        <li><a href="/document_type/create">Nuevo tipo de documento</a></li>
-                        <li><a href="/document_type">Lista de tipos de documento</a></li>
-                    </ul>
-                </li>
-            </ul><!-- /.sidebar-menu -->
+            <aside class="main-sidebar">
+            <!-- Inner sidebar -->
+            <section class="sidebar">
+                <!-- Sidebar Menu -->
+                <ul class="sidebar-menu">
+                    <li id="start" class="li active"><a href="/home"><span>Inicio</span> <span class="glyphicon glyphicon-home pull-right"></span></a></li>
+                    <li class="header"> Gestión</li>
+                    <li id="user" class="li treeview">
+                        <a href="#"><span>Usuarios</span><span class="glyphicon glyphicon-user pull-right"></span></a>
+                        <ul class="treeview-menu">
+                            <li id="userCreate"><a href="/user/create">Nuevo Usuario <span class="glyphicon glyphicon-plus pull-right"></span></a></li>
+                            <li id="userList"><a href="/user">Lista de usuarios <span class="glyphicon glyphicon-list pull-right"></span></a></li>
+                        </ul>
+                    </li>
+                    <li id="document" class="li treeview">
+                        <a href="#"><span>Documentos</span> <span class="glyphicon glyphicon-file pull-right"></span></a>
+                        <ul class="treeview-menu">
+                            <li id="documentCreate"><a href="/document/create">Nuevo Documento <span class="glyphicon glyphicon-plus pull-right"></span></a></li>
+                            <li id="documentList"><a href="/document">Lista de documentos <span class="glyphicon glyphicon-list pull-right"></span></a></li>
+                        </ul>
+                    </li>
+                    <li id="topic" class="li treeview">
+                        <a href="#"><span>Temas de investigación</span> <span class="glyphicon glyphicon-book pull-right"></span></a>
+                        <ul class="treeview-menu">
+                            <li id="topicCreate"><a href="/research_topic/create">Nuevo tema <span class="glyphicon glyphicon-plus pull-right"></span></a></li>
+                            <li id="topicList"><a href="/research_topic">Lista de temas <span class="glyphicon glyphicon-list pull-right"></span></a></li>
+                        </ul>
+                    </li>
+                    <li id="subtopic" class="li treeview">
+                        <a href="#"><span>Subtemas de investigación</span> <span class="glyphicon glyphicon-bookmark pull-right"></span></a>
+                        <ul class="treeview-menu">
+                            <li id="subtopicCreate"><a href="/subtopic/create">Nuevo Subtema <span class="glyphicon glyphicon-plus pull-right"></span></a></li>
+                            <li id="subtopicList"><a href="/subtopic">Lista de subtemas <span class="glyphicon glyphicon-list pull-right"></span></a></li>
+                        </ul>
+                    </li>
+                    <li id="document_type" class="li treeview">
+                        <a href="#"><span>Tipos de documentos</span> <span class="glyphicon glyphicon-list-alt pull-right"></span></a>
+                        <ul class="treeview-menu">
+                            <li id="typeCreate"><a href="/document_type/create">Nuevo tipo de documento<span class="glyphicon glyphicon-plus pull-right"></span></a></li>
+                            <li id="typeList"><a href="/document_type">Lista de tipos <span class="glyphicon glyphicon-list pull-right"></span></a></li>
+                        </ul>
+                    </li>
+                </ul><!-- /.sidebar-menu -->
 
-        </section><!-- /.sidebar -->
-    </aside>
+            </section><!-- /.sidebar -->
+        </aside>
 
         @endsection
 

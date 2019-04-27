@@ -21,12 +21,14 @@
                 @if (session('error'))
                     <div class="alert alert-danger alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h4></h4>
+                        <h4><span class="glyphicon glyphicon-ban-circle"></span></h4>
                         <strong>{{ session('error') }}</strong>
                     </div>
                 @endif
                 <div class="box box-primary">
-                    <div class="box-header"></div>
+                    <div class="box-header">
+                        <a href="{{route('research_topic.create')}}" class="btn btn-flat btn-success pull-right"><span class="glyphicon glyphicon-plus"></span>Nuevo</a>
+                    </div>
                     <div class="box-body">
                         <table id="table" class="table table-bordered">
                             <thead>
@@ -64,6 +66,9 @@
         $(function () {
             $('#table').DataTable();
         });
+        $('li.li').removeClass('active');
+        $('li#topic').addClass('active');
+        $('li#topicList').addClass('active');
     </script>
 
 @endsection

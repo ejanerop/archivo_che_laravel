@@ -41,4 +41,10 @@
                 </div>
         </div>
     </section>
+
+    <script>
+        $('li.li').removeClass('active');
+        $('li#topic').addClass('active');
+        $('li#topicCreate').addClass('active');
+    </script>
 @endsection

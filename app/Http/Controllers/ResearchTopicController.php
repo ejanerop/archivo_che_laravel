@@ -46,7 +46,7 @@ class ResearchTopicController extends Controller
         $research_topic->description = $request->input('description');
         $research_topic->save();
 
-        return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()]);
+        return redirect()->route('research_topic.index')->with('success', 'Tema de investigación creado correctamente.');
     }
 
     /**

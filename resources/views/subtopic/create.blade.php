@@ -55,4 +55,11 @@
     </div>
 </section>
 
+
+<script>
+    $('li.li').removeClass('active');
+    $('li#subtopic').addClass('active');
+    $('li#subtopicCreate').addClass('active');
+</script>
+
 @endsection

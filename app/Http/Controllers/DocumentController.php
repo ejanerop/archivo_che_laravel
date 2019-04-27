@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\AccessLevel;
 use App\Document;
+use App\DocumentType;
+use App\ResearchTopic;
+use App\ResourceType;
+use App\Subtopic;
 use Illuminate\Http\Request;
 
 class DocumentController extends Controller
@@ -24,7 +29,11 @@ class DocumentController extends Controller
      */
     public function create()
     {
-        return view('document.create');
+        return view('document.create', [
+            'resource_types' => ResourceType::with('document_types')->get(),
+            'topics' => ResearchTopic::with('subtopics')->get(),
+            'access_levels' => AccessLevel::all()
+        ]);
     }
 
     /**

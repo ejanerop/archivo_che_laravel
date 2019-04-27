@@ -10,7 +10,7 @@
 
     <section class="content">
         <div class="row">
-            <div class="col-md-12">
+            <div id="alert-div" class="col-md-12">
                 @if (session('success'))
                 <div class="alert alert-success alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -21,7 +21,7 @@
                 @if (session('error'))
                     <div class="alert alert-danger alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h4></h4>
+                        <h4><span class="glyphicon glyphicon-ban-circle"></span></h4>
                         <strong>{{ session('error') }}</strong>
                     </div>
                 @endif
@@ -66,6 +66,9 @@
     <script>
         $(function () {
             $('#table').DataTable();
+            $('li.li').removeClass('active');
+            $('li#document_type').addClass('active');
+            $('li#typeList').addClass('active');
         });
     </script>
 

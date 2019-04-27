@@ -21,7 +21,7 @@
                 @if (session('error'))
                     <div class="alert alert-danger alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h4></h4>
+                        <h4><span class="glyphicon glyphicon-ban-circle"></span></h4>
                         <strong>{{ session('error') }}</strong>
                     </div>
                 @endif
@@ -70,6 +70,9 @@
 
     <script>
         $('#table').DataTable();
+        $('li.li').removeClass('active');
+        $('li#document').addClass('active');
+        $('li#documentList').addClass('active');
     </script>
 
 @endsection

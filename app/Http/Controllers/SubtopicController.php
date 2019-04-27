@@ -51,7 +51,7 @@ class SubtopicController extends Controller
         $subtopic->research_topic()->associate($research_topic);
         $subtopic->save();
 
-        return redirect()->route('subtopic.index', ['subtopics' => Subtopic::with('research_topic')->get()]);
+        return redirect()->route('subtopic.index')->with('success','El subtema fue creado correctamente.');
     }
 
     /**
@@ -99,17 +99,26 @@ class SubtopicController extends Controller
         $subtopic->research_topic()->associate($research_topic);
         $subtopic->save();
 
-        return redirect()->route('subtopic.index', ['subtopics' => Subtopic::with('research_topic')->get()]);
+        return redirect()->route('subtopic.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        //todo
+
+        $subtopic = Subtopic::with('documents')->find($id);
+        if($subtopic->documents()->count() != 0){
+            return redirect()->route('subtopic.index', ['subtopics' => Subtopic::with('research_topic')->get()])->with('error', 'No se puede eliminar, existen documentos pertenecientes a este tema.');
+        }else{
+            $subtopic->delete();
+            return redirect()->route('subtopic.index', ['subtopics' => Subtopic::with('research_topic')->get()])->with('success', 'Eliminado correctamente');
+
+        }
     }
 }

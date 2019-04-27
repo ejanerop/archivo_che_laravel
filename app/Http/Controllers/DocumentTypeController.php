@@ -48,7 +48,7 @@ class DocumentTypeController extends Controller
         $document_type->document_type = $request->input('document_type');
         $document_type->resource_type()->associate($resource_type);
         $document_type->save();
-        return redirect()->route('document_type.index', ['document_types' => DocumentType::all()]);
+        return redirect()->route('document_type.index')->with('success', 'Tipo de documento creado correctamente.');
     }
 
     /**
@@ -99,8 +99,9 @@ class DocumentTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\DocumentType  $documentType
+     * @param  \App\DocumentType $documentType
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(DocumentType $documentType)
     {

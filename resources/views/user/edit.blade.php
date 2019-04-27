@@ -83,4 +83,10 @@
         </div>
     </section>
 
+    <script>
+        $('li.li').removeClass('active');
+        $('li#user').addClass('active');
+        $('li#userList').addClass('active');
+    </script>
+
 @endsection

@@ -23,7 +23,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="description">Descripción</label>
-                                <textarea id="description" name="description" class="form-control" rows="4" style="resize: none" placeholder="Descripción del tema"></textarea>
+                                <textarea id="description" name="description" class="form-control" rows="4" style="resize: none" placeholder="Descripción del tema">{{$research_topic->description}}</textarea>
                             </div>
                             <div class="box-footer">
                                 <button type="button" class="btn btn-danger btn-flat pull-left">
@@ -44,7 +44,9 @@
     </section>
 
     <script>
-        $("textarea#description").val("{{$research_topic->description}}");
+        $('li.li').removeClass('active');
+        $('li#topic').addClass('active');
+        $('li#topicList').addClass('active');
     </script>
 
 @endsection

@@ -15,7 +15,6 @@
 
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('css/adminLTE/AdminLTE.min.css') }}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset('css/adminLTE/skins/_all-skins.min.css') }}">
@@ -23,6 +22,9 @@
     <link rel="stylesheet" href="{{ asset('iCheck/square/blue.css') }}">
 
     <link rel="stylesheet" href="{{ asset('datatables/datatables.bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/adminLTE/AdminLTE.min.css') }}">
+
 
     <link rel="stylesheet" href="{{ asset('css/micss.css') }}">
 
@@ -64,7 +66,6 @@
     <script src="{{asset('datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('datatables/dataTables.bootstrap.min.js')}}"></script>
     <script src="{{asset('fastclick/fastclick.min.js')}}"></script>
-
 </head>
 <body class="hold-transition fixed skin-blue">
 <div class="wrapper">

@@ -45,4 +45,10 @@
         </div>
     </section>
 
+    <script>
+        $('li.li').removeClass('active');
+        $('li#document_type').addClass('active');
+        $('li#typeCreate').addClass('active');
+    </script>
+
 @endsection

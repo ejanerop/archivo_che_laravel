@@ -48,4 +48,10 @@
         </div>
     </section>
 
+    <script>
+        $('li.li').removeClass('active');
+        $('li#document_type').addClass('active');
+        $('li#typeList').addClass('active');
+    </script>
+
 @endsection
