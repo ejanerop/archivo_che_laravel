@@ -13,7 +13,7 @@
                 <div class="col-md-12 form-box">
                     <div class="box box-primary width-auto">
                         <div class="box-header"></div>
-                        <form method="POST" action="/research_topic">
+                        <form id="topic" method="POST" action="/research_topic">
                             @csrf
                             <div class="box-body">
                                 <div class="form-group {{$errors->has('research_topic')?"has-error":""}}">
@@ -46,5 +46,19 @@
         $('li.li').removeClass('active');
         $('li#topic').addClass('active');
         $('li#topicCreate').addClass('active');
+        $('#topic').validate({
+            rules: {
+                research_topic: {
+                    required: true,
+                    maxlength: 191
+                }
+            },
+            messages: {
+                research_topic: {
+                    required: "Debe llenar este campo",
+                    maxlength: "El nombre del tema no puede exceder los 191 caracteres"
+                }
+            }
+        });
     </script>
 @endsection

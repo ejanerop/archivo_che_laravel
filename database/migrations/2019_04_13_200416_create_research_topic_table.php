@@ -16,7 +16,7 @@ class CreateResearchTopicTable extends Migration
         Schema::create('research_topic', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('research_topic');
-            $table->string('description');
+            $table->string('description')->nullable($value = true);
             $table->timestamps();
         });
     }

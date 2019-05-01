@@ -53,7 +53,7 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon glyphicon glyphicon-log-in"></span>
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Repetir contraseña">
+                                    <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" placeholder="Repetir contraseña">
                                 </div>
                             </div>
                             <div class="form-group">

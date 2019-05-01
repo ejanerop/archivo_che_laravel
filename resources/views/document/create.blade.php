@@ -12,7 +12,8 @@
         <div class="box box-primary">
             <div class="box-header"></div>
             <div class="box-body">
-                <form>
+                <form method="POST" action="/document" enctype="multipart/form-data">
+                    @csrf
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -63,8 +64,21 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <img src="/user.png">
-                            <input id="name" name="name" type="file" class="form-control"  accept="image/*">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="image"> facsimil</label>
+                                        <input id="image" name="image" type="file" class="form-control" accept="image/*">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="image"> facsimil</label>
+                                        <input id="image" name="image" type="file" class="form-control" accept="image/*">
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <div class="box-footer">

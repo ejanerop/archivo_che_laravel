@@ -66,6 +66,8 @@
     <script src="{{asset('datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('datatables/dataTables.bootstrap.min.js')}}"></script>
     <script src="{{asset('fastclick/fastclick.min.js')}}"></script>
+    <script src="{{asset('js/jquery.validate.min.js')}}"></script>
+
 </head>
 <body class="hold-transition fixed skin-blue">
 <div class="wrapper">

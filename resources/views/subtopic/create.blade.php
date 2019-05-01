@@ -13,7 +13,7 @@
         <div class="col-md-12 form-box">
             <div class="box box-primary width-auto">
                 <div class="box-header"></div>
-                <form method="POST" action="/subtopic">
+                <form id="topic" method="POST" action="/subtopic">
                     @csrf
                     <div class="box-body">
                         <div class="form-group {{$errors->has('name')?'has-error':''}}">
@@ -60,6 +60,20 @@
     $('li.li').removeClass('active');
     $('li#subtopic').addClass('active');
     $('li#subtopicCreate').addClass('active');
+    $('#topic').validate({
+        rules: {
+            name: {
+                required: true,
+                maxlength: 191
+            }
+        },
+        messages: {
+            name: {
+                required: "Debe llenar este campo",
+                maxlength: "El nombre del subtema no puede exceder los 191 caracteres"
+            }
+        }
+    });
 </script>
 
 @endsection

@@ -9,6 +9,7 @@ use App\ResearchTopic;
 use App\ResourceType;
 use App\Subtopic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
@@ -44,7 +45,12 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        //todo
+        if($request->hasFile('image')){
+            $path = $request->file('image')->store('public');
+            echo Storage::url($path);
+        }else{
+            return $request;
+        }
     }
 
     /**

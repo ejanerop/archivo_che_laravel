@@ -16,7 +16,7 @@ class CreateSubtopicsTable extends Migration
         Schema::create('subtopics', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable($value = true);
             $table->unsignedBigInteger('research_topic_id');
             $table->foreign('research_topic_id')->references('id')->on('research_topic');
             $table->timestamps();

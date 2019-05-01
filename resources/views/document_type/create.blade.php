@@ -13,7 +13,7 @@
             <div class="col-md-12 form-box">
                 <div class="box box-primary width-auto">
                     <div class="box-header"></div>
-                    <form method="POST" action="/document_type">
+                    <form id="doctype" method="POST" action="/document_type">
                         @csrf
                         <div class="box-body">
                             <div class="form-group {{$errors->has('document_type')?"has-error":""}}">
@@ -49,6 +49,20 @@
         $('li.li').removeClass('active');
         $('li#document_type').addClass('active');
         $('li#typeCreate').addClass('active');
+        $('#doctype').validate({
+            rules: {
+                document_type: {
+                    required: true,
+                    maxlength: 191
+                }
+            },
+            messages: {
+                name: {
+                    required: "Debe llenar este campo",
+                    maxlength: "El tipo de documento no puede exceder los 191 caracteres"
+                }
+            }
+        });
     </script>
 
 @endsection
