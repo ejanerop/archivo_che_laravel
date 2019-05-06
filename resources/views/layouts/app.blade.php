@@ -52,7 +52,11 @@
                                 </li>
                                 <li class="user-body"></li>
                                 <li class="user-footer">
-                                    <div class="pull-left"></div>
+                                    <div class="pull-left">
+                                        <a class="btn btn-default btn-flat" href="/profile/{{Auth::user()->id}}">
+                                            {{ __('Pefil') }}
+                                        </a>
+                                    </div>
                                     <div class="pull-right">
                                         <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
                                            onclick="event.preventDefault();
@@ -94,7 +98,8 @@
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">
                     <li id="start" class="li active"><a href="/home"><span>Inicio</span> <span class="glyphicon glyphicon-home pull-right"></span></a></li>
-                    <li class="header"> Gestión</li>
+                    @if(\Illuminate\Support\Facades\Auth::user()->hasRole('admin'))
+                    <li class="header">Administración</li>
                     <li id="user" class="li treeview">
                         <a href="#"><span>Usuarios</span><span class="glyphicon glyphicon-user pull-right"></span></a>
                         <ul class="treeview-menu">
@@ -102,6 +107,9 @@
                             <li id="userList"><a href="/user">Lista de usuarios <span class="glyphicon glyphicon-list pull-right"></span></a></li>
                         </ul>
                     </li>
+                    @endif
+                    @if(\Illuminate\Support\Facades\Auth::user()->hasRole('manager'))
+                    <li class="header">Gestión</li>
                     <li id="document" class="li treeview">
                         <a href="#"><span>Documentos</span> <span class="glyphicon glyphicon-file pull-right"></span></a>
                         <ul class="treeview-menu">
@@ -130,6 +138,7 @@
                             <li id="typeList"><a href="/document_type">Lista de tipos <span class="glyphicon glyphicon-list pull-right"></span></a></li>
                         </ul>
                     </li>
+                    @endif
                 </ul><!-- /.sidebar-menu -->
 
             </section><!-- /.sidebar -->

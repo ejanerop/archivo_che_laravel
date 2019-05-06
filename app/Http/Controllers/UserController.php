@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+
     public function index()
     {
         return view('user.index', ['users'=> User::with('roles')->get()]);
@@ -60,13 +61,13 @@ class UserController extends Controller
         $user = User::find($id);
         $user->username = $request->input('username');
         $user->email = $request->input('email');
-        if(!($request->has('password'))){
+        if($request->has('password')){
             $user->password = Hash::make($request->input('password'));
         }
         $user->roles()->associate($role);
         $user->save();
 
-        return redirect()->route('user.index');
+        return redirect()->route('user.index')->with('success','El usuario fue modificado correctamente.');
     }
 
     public function destroy($id)
@@ -76,5 +77,23 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('user.index')->with('success','El usuario ha sido eliminado correctamente.');
+    }
+
+    public function profile($id){
+        return view('user.profile', ['user' => User::with('roles')->find($id)]);
+    }
+
+    public function changePassword(Request $request, $id){
+
+        $validator = Validator::make($request->all(),[
+            'old_password' => ['required','string','min:8'],
+            'password' => 'required|string|min:8|confirmed'
+        ])->validate();
+
+        $user = User::find($id);
+        $user->password = Hash::make($request->input('password'));
+
+        return view('user.profile', ['user' => User::with('roles')->find($id)]);
+
     }
 }

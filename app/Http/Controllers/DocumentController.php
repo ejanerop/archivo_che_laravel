@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('user.has.role:manager');
+    }
+
+
     /**
      * Display a listing of the resource.
      *

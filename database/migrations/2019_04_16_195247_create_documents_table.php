@@ -17,6 +17,7 @@ class CreateDocumentsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description')->nullable($value = true);
+            $table->date('date');
             $table->unsignedBigInteger('document_type_id');
             $table->unsignedBigInteger('access_level_id');
             $table->unsignedBigInteger('resource_id');
@@ -24,6 +25,7 @@ class CreateDocumentsTable extends Migration
             $table->foreign('access_level_id')->references('id')->on('access_levels');
             $table->foreign('resource_id')->references('id')->on('resources');
             $table->timestamps();
+
         });
     }
 

@@ -18,17 +18,17 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Nombre</label>
-                                <input id="name" name="name" type="text" class="form-control">
+                                <input id="name" name="name" type="text" class="form-control" placeholder="Título del documento">
                             </div>
                             <div class="form-group">
                                 <label for="description">Descripción</label>
-                                <textarea id="description" name="description" class="form-control" style="resize:none" placeholder="Descripción"></textarea>
+                                <textarea id="description" name="description" rows="5" class="form-control" style="resize:none" placeholder="Descripción"></textarea>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="document_type">Tipo de documento</label>
-                                        <select id="document_type"  name="document_type" class="form-control">
+                                        <select id="document_type"  name="document_type" class="form-control" onchange="modifyResource()">
                                             @foreach($resource_types as $resType)
                                                 <optgroup label="{{$resType->resource_type}}">
                                                     @foreach($resType->document_types as $docType)
@@ -54,7 +54,7 @@
                                 <label for="subtopics">Subtemas de investigación</label>
                                 <select id="subtopics" name="subtopics" class="form-control select2" multiple = "multiple" data-placeholder="Selecciona los temas de investigación" style="width: 100%">
                                     @foreach($topics as $topic)
-                                        <optgroup label="{{$topic->research_topic}}">
+                                        <optgroup class="optgroup" label="{{$topic->research_topic}}">
                                             @foreach($topic->subtopics as $subtopic)
                                                 <option id="{{$subtopic->id}}">{{$subtopic->name}}</option>
                                             @endforeach
@@ -65,16 +65,27 @@
                         </div>
                         <div class="col-md-6">
                             <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="date">Fecha</label>
+                                        <input type="date" id="date" name="date" class="form-control">
+                                    </div>
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="image"> facsimil</label>
-                                        <input id="image" name="image" type="file" class="form-control" accept="image/*">
+                                        <label for="resource">Recurso</label>
+                                        <input id="resource" name="resource" type="file" class="form-control" accept="image/*">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="image"> facsimil</label>
-                                        <input id="image" name="image" type="file" class="form-control" accept="image/*">
+                                        <input id="hasFacsim" name="hasFacsim" type="checkbox" class="form-control">
+                                        <label for="hasFacsim">Tiene facsimil</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="image">Facsimil</label>
+                                        <input id="facsim" name="facsim" type="file" class="form-control" accept="image/*" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -107,6 +118,18 @@
         $('li.li').removeClass('active');
         $('li#document').addClass('active');
         $('li#documentCreate').addClass('active');
+
+        $('#hasFacsim').on('ifToggled',function () {
+            $('input#facsim').attr("disabled", !this.checked);
+        });
+
+        function modifyResource() {
+            if($('#document_type')){
+
+            }
+        }
+
+
     </script>
 
 @endsection

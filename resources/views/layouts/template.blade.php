@@ -55,11 +55,12 @@
     <script src="{{asset('iCheck/icheck.min.js')}}"></script>
     <script src="{{asset('slimScroll/jquery.slimscroll.min.js')}}"></script>
     <script>
+
         $(function () {
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
-                increaseArea: '20%' // optional
+                increaseArea: '70%' // optional
             });
         });
     </script>

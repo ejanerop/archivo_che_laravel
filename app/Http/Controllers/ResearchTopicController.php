@@ -9,6 +9,11 @@ use Illuminate\Validation\Rule;
 
 class ResearchTopicController extends Controller
 {
+    
+    public function __construct() {
+        $this->middleware('user.has.role:manager');
+    }
+
     /**
      * Display a listing of the resource.
      *

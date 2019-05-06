@@ -24,10 +24,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('research_topic', 'ResearchTopicController');
 
-Route::resource('user', 'UserController');
+Route::resource('user', 'UserController')->middleware('user.has.role:admin');
 
 Route::resource('document', 'DocumentController');
 
 Route::resource('document_type', 'DocumentTypeController');
 
 Route::resource('subtopic', 'SubtopicController');
+
+Route::get('/profile/{id}', 'UserController@profile');
+
+Route::post('/pass_change/{id}', 'UserController@changePassword');

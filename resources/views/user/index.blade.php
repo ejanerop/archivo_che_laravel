@@ -49,8 +49,8 @@
                                         <form action="/user/{{$user->id}}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <a href="/user/{{$user->id}}/edit" class="btn btn-info btn-flat">Modificar</a>
-                                            <button type="submit" class="btn btn-danger btn-flat"> Eliminar</button>
+                                            <a href="/user/{{$user->id}}/edit" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-edit" style="margin-right: 2px"></span> Editar</a>
+                                            <button type="submit" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove" style="margin-right: 2px"></span> Eliminar</button>
                                         </form>
                                     </td>
                                 </tr>
