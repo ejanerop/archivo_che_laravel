@@ -9,8 +9,8 @@ class Document extends Model
 
     protected $table = 'documents';
 
-    public function resource(){
-        return $this->belongsTo('App\Resource');
+    public function resources(){
+        return $this->hasMany('App\Resource');
     }
 
     public function subtopics(){

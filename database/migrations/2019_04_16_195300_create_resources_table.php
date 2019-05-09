@@ -17,8 +17,11 @@ class CreateResourcesTable extends Migration
             $table->bigIncrements('id');
             $table->string('type');
             $table->string('src');
-            $table->string('src_facsim')->nullable($value = true);
             $table->string('description')->nullable($value = true);
+            $table->unsignedBigInteger('document_id');
+            $table->unsignedBigInteger('text_id')->nullable($value = true);
+            $table->foreign('document_id')->references('id')->on('documents');
+            $table->foreign('text_id')->references('id')->on('texts');
             $table->timestamps();
         });
     }

@@ -30,9 +30,9 @@
                                         <label for="document_type">Tipo de documento</label>
                                         <select id="document_type"  name="document_type" class="form-control" onchange="modifyResource()">
                                             @foreach($resource_types as $resType)
-                                                <optgroup label="{{$resType->resource_type}}">
+                                                <optgroup class="optgroup" label="{{$resType->resource_type}}">
                                                     @foreach($resType->document_types as $docType)
-                                                        <option id="{{$docType->id}}">{{$docType->document_type}}</option>
+                                                        <option class="opt" id="{{$docType->id}}">{{$docType->document_type}}</option>
                                                     @endforeach
                                                 </optgroup>
                                             @endforeach
@@ -54,7 +54,7 @@
                                 <label for="subtopics">Subtemas de investigación</label>
                                 <select id="subtopics" name="subtopics" class="form-control select2" multiple = "multiple" data-placeholder="Selecciona los temas de investigación" style="width: 100%">
                                     @foreach($topics as $topic)
-                                        <optgroup class="optgroup" label="{{$topic->research_topic}}">
+                                        <optgroup label="{{$topic->research_topic}}">
                                             @foreach($topic->subtopics as $subtopic)
                                                 <option id="{{$subtopic->id}}">{{$subtopic->name}}</option>
                                             @endforeach
@@ -124,9 +124,11 @@
         });
 
         function modifyResource() {
-            if($('#document_type')){
+            $('.optgroup').each(function () {
+                console.log(arguments);
+            })
 
-            }
+            
         }
 
 
