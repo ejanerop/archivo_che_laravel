@@ -24,7 +24,9 @@
     <link rel="stylesheet" href="{{ asset('datatables/datatables.bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('select2/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/adminLTE/AdminLTE.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('richtext/richtext.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/micss.css') }}">
 
@@ -68,6 +70,7 @@
     <script src="{{asset('datatables/dataTables.bootstrap.min.js')}}"></script>
     <script src="{{asset('fastclick/fastclick.min.js')}}"></script>
     <script src="{{asset('js/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('richtext/jquery.richtext.min.js')}}"></script>
 
 </head>
 <body class="hold-transition fixed skin-blue">

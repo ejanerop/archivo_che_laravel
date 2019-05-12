@@ -97,7 +97,7 @@
             <section class="sidebar">
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">
-                    <li id="start" class="li active"><a href="/home"><span>Inicio</span> <span class="glyphicon glyphicon-home pull-right"></span></a></li>
+                    <li id="start" class="li active"><a href="/home"><span>Inicio</span><span class="glyphicon glyphicon-home pull-right"></span></a></li>
                     @if(\Illuminate\Support\Facades\Auth::user()->hasRole('admin'))
                     <li class="header">Administración</li>
                     <li id="user" class="li treeview">

@@ -10,10 +10,20 @@
 
 
         <div class="box box-primary">
-            <div class="box-header"></div>
+            <form method="POST" action="{{route('document.index')}}" enctype="multipart/form-data">
+                @csrf
+            <div class="box-header">
+                <button type="reset" class="btn btn-warning btn-flat pull-left">
+                    <span class="glyphicon glyphicon-erase"></span>
+                    {{ __('Limpiar') }}
+                </button>
+                <button type="submit" class="btn btn-primary btn-flat pull-right">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    {{ __('Crear') }}
+                </button>
+            </div>
             <div class="box-body">
-                <form method="POST" action="/document" enctype="multipart/form-data">
-                    @csrf
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -32,7 +42,7 @@
                                             @foreach($resource_types as $resType)
                                                 <optgroup class="optgroup" label="{{$resType->resource_type}}">
                                                     @foreach($resType->document_types as $docType)
-                                                        <option class="opt" id="{{$docType->id}}">{{$docType->document_type}}</option>
+                                                        <option class="opt {{$resType->resource_type}}" id="{{$docType->id}}">{{$docType->document_type}}</option>
                                                     @endforeach
                                                 </optgroup>
                                             @endforeach
@@ -68,7 +78,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="date">Fecha</label>
-                                        <input type="date" id="date" name="date" class="form-control">
+                                        <input type="text" id="date" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
                                     </div>
                                 </div>
 
@@ -93,42 +103,60 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="reset" class="btn btn-warning btn-flat pull-left">
-                            <span class="glyphicon glyphicon-erase"></span>
-                            {{ __('Limpiar') }}
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-flat pull-right">
-                            <span class="glyphicon glyphicon-plus"></span>
-                            {{ __('Crear') }}
-                        </button>
+                        <label for="text">Texto</label>
+                        <textarea id="text" name="text" class="text_area"></textarea>
                     </div>
 
-                </form>
-
-
             </div>
-
-
+            </form>
         </div>
     </section>
 
     <script src="{{asset('select2/select2.full.min.js')}}"></script>
+    <script src="{{asset('input-mask/jquery.inputmask.js')}}"></script>
+    <script src="{{asset('input-mask/jquery.inputmask.date.extensions.js')}}"></script>
+    <script src="{{asset('input-mask/jquery.inputmask.extensions.js')}}"></script>
     <script>
+        $('.text_area').richText();
         $('#subtopics').select2();
         $('li.li').removeClass('active');
         $('li#document').addClass('active');
         $('li#documentCreate').addClass('active');
+
+        $("[data-mask]").inputmask();
+        $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
 
         $('#hasFacsim').on('ifToggled',function () {
             $('input#facsim').attr("disabled", !this.checked);
         });
 
         function modifyResource() {
-            $('.optgroup').each(function () {
-                console.log(arguments);
-            })
-
-            
+            var textArea = $('.box-footer');
+            var inputResources = $('input#resource');
+            var optSelected = $('.opt:selected');
+            var hasFacsim = $('#hasFacsim');
+            var facsim = $('input#facsim');
+            if(optSelected.hasClass('Texto')){
+                textArea.attr('hidden', false);
+                inputResources.attr("disabled", true);
+                hasFacsim.iCheck('enable');
+                hasFacsim.iCheck('uncheck');
+            }else{
+                textArea.attr('hidden', 'hidden');
+                inputResources.attr("disabled", false);
+                hasFacsim.iCheck('disable');
+                facsim.attr('disabled', 'disabled');
+                if(optSelected.hasClass('Imagen')){
+                    inputResources.removeAttr('accepts');
+                    inputResources.attr("accept", "image/*");
+                }else if (optSelected.hasClass('Audio')) {
+                    inputResources.removeAttr('accepts');
+                    inputResources.attr("accept", "audio/*");
+                }else {
+                    inputResources.removeAttr('accepts');
+                    inputResources.attr("accept", "video/*");
+                }
+            }
         }
 
 

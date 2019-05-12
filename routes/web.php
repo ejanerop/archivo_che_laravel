@@ -22,6 +22,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::post('/test', 'DocumentController@test')->name('test');
+
 Route::resource('research_topic', 'ResearchTopicController');
 
 Route::resource('user', 'UserController')->middleware('user.has.role:admin');

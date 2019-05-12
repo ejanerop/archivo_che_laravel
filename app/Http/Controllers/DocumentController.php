@@ -103,4 +103,9 @@ class DocumentController extends Controller
     {
         //todo
     }
+
+    public function test(Request $request)
+    {
+        return $request;
+    }
 }
