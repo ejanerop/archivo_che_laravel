@@ -9,11 +9,12 @@
     </section>
 
 <section class="content">
-    <div class="row justify-content-center">
-        <div class="col-md-12 form-box">
-            <div class="box box-primary width-auto">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="box box-primary">
                 <div class="box-header"></div>
-                <form id="topic" method="POST" action="/subtopic">
+                <form id="topic" method="POST" action="{{route('subtopic.store')}}">
                     @csrf
                     <div class="box-body">
                         <div class="form-group {{$errors->has('name')?'has-error':''}}">
@@ -40,11 +41,11 @@
                         </div>
                         <div class="box-footer">
                             <button type="reset" class="btn btn-warning btn-flat pull-left">
-                                <span class="glyphicon glyphicon-erase"></span>
+                                <span class="fa fa-eraser"></span>
                                 {{ __('Limpiar') }}
                             </button>
                             <button type="submit" class="btn btn-primary btn-flat pull-right">
-                                <span class="glyphicon glyphicon-plus"></span>
+                                <span class="fa fa-plus"></span>
                                 {{ __('Crear') }}
                             </button>
                         </div>
@@ -52,6 +53,7 @@
                 </form>
             </div>
         </div>
+        <div class="col-md-4"></div>
     </div>
 </section>
 

@@ -59,6 +59,7 @@ return [
     "regex"            => "El formato de :attribute es inválido.",
     "required"         => "El campo :attribute es obligatorio.",
     "required_if"      => "El campo :attribute es obligatorio cuando :other es :value.",
+    "required_unless"  => "El campo :attribute es requerido mientras no sea :values",
     "required_with"    => "El campo :attribute es obligatorio cuando :values está presente.",
     "required_with_all" => "El campo :attribute es obligatorio cuando :values está presente.",
     "required_without" => "El campo :attribute es obligatorio cuando :values no está presente.",
@@ -87,8 +88,9 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'resource' => [
+            'required_unless' => 'El archivo de recurso es requerido mientras no sea de tipo texto',
+            'mimetypes' => 'El archivo de recursos debe ser un audio, imagen o video'
         ],
     ],
 
@@ -106,7 +108,9 @@ return [
     'attributes' => [
         'research_topic' => 'tema de investigación',
         'document_type' => 'tipo de documento',
-        'name' => 'nombre'
+        'name' => 'nombre',
+        'subtopics' => 'subtemas',
+        'date' => 'fecha'
     ],
 
 ];

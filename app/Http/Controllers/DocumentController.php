@@ -6,10 +6,15 @@ use App\AccessLevel;
 use App\Document;
 use App\DocumentType;
 use App\ResearchTopic;
+use App\Resource;
 use App\ResourceType;
+use App\Rules\DateString;
 use App\Subtopic;
+use App\Text;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class DocumentController extends Controller
 {
@@ -26,7 +31,7 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        return view('document.index', ['documents' => Document::with(['subtopics', 'resource', 'access_level','document_type'])->get()]);
+        return view('document.index', ['documents' => Document::with(['subtopics', 'resources', 'access_level','document_type'])->get()]);
     }
 
     /**
@@ -51,12 +56,60 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->hasFile('image')){
-            $path = $request->file('image')->store('public');
-            echo Storage::url($path);
-        }else{
-            return $request;
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'subtopics' => 'required',
+            'date' =>['required' , new DateString()],
+            'facsim' => 'required_with:hasFacsim|mimetypes:image/*',
+            'resource' => 'required_unless:type,text|mimetypes:video/*,audio/*,image/*'
+        ])->validate();
+
+
+        $accessLevel = AccessLevel::where('name', $request->input('access_level'))->first();
+        $documentType = DocumentType::where('document_type', $request->input('document_type'))->first();
+        $subtopics = $request->input('subtopics');
+        $resource = new Resource();
+
+        $document = new Document();
+        $document->name = $request->input('name');
+        $document->date = date('Y-m-d', strtotime($request->input('date')));
+        $document->access_level()->associate($accessLevel);
+        $document->document_type()->associate($documentType);
+                if($request->has('description')){
+            $document->description = $request->input('description');
         }
+        $document->save();
+        foreach ($subtopics as $topic){
+            $subtopic = Subtopic::where('name', $topic)->first();
+            $document->subtopics()->attach($subtopic);
+        }
+        $resource->document()->associate($document);
+        $resource->type = $request->input('type');
+
+        $type = $request->input('type');
+        if($type == 'text'){
+            $text = new Text();
+            $text->text = $request->input('text');
+            $text->save();
+            $resource->type = 'text';
+            $resource->text()->associate($text);
+            $resource->save();
+            if($request->hasFile('facsim')){
+                $pathFacsim = $request->file('facsim')->store('public');
+                $facsim = new Resource();
+                $facsim->type = 'facsim';
+                $facsim->src = $pathFacsim;
+                $facsim->document()->associate($document);
+                $facsim->save();
+            }
+        }else{
+            $path = $request->file('resource')->store('public');
+            $resource->src = $path;
+        }
+        $resource->save();
+
+        return redirect()->route('document.index')->with('success','El documento fue creado correctamente.');
+
     }
 
     /**
@@ -67,7 +120,10 @@ class DocumentController extends Controller
      */
     public function show($id)
     {
-        //todo
+        $document = Document::find($id);
+        $document->load('subtopics', 'resources', 'access_level','document_type');
+        return view('document.show',['document' => $document]);
+
     }
 
     /**
@@ -101,7 +157,8 @@ class DocumentController extends Controller
      */
     public function destroy($id)
     {
-        //todo
+        //TODO
+        echo 'TO-DO Borrar';
     }
 
     public function test(Request $request)

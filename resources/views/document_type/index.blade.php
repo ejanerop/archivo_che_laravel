@@ -14,14 +14,14 @@
                 @if (session('success'))
                 <div class="alert alert-success alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <h4><span class="glyphicon glyphicon-ok"></span></h4>
+                    <h4><span class="fa fa-ok"></span></h4>
                     <strong>{{ session('success') }}</strong>
                 </div>
                 @endif
                 @if (session('error'))
                     <div class="alert alert-danger alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h4><span class="glyphicon glyphicon-ban-circle"></span></h4>
+                        <h4><span class="fa fa-ban"></span></h4>
                         <strong>{{ session('error') }}</strong>
                     </div>
                 @endif
@@ -29,7 +29,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <a href="{{route('document_type.create')}}" class="btn btn-flat btn-success pull-right"><span class="glyphicon glyphicon-plus"></span>Nuevo</a>
+                        <a href="{{route('document_type.create')}}" class="btn btn-success pull-right"><span class="fa fa-plus"></span></a>
                     </div>
                     <div class="box-body">
                         <table id="table" class="table table-bordered">
@@ -47,11 +47,11 @@
                     <td>{{$type->resource_type->resource_type}}</td>
                     <td>{{$type->documents_count}}</td>
                     <td>
-                        <form action="/document_type/{{$type->id}}" method="post">
+                        <form action="{{route('document_type.destroy', ['document_type' =>  $type->id])}}" method="post">
                             @csrf
                             @method('DELETE')
-                            <a href="/document_type/{{$type->id}}/edit" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-edit" style="margin-right: 2px"></span> Editar</a>
-                            <button type="submit" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove" style="margin-right: 2px"></span> Eliminar</button>
+                            <a href="{{route('document_type.edit', ['document_type' =>  $type->id])}}" class="btn btn-xs btn-info"><span class="fa fa-edit" style="margin-right: 2px"></span> Editar</a>
+                            <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-remove" style="margin-right: 2px"></span> Eliminar</button>
                         </form>
                     </td>
                     </tr>

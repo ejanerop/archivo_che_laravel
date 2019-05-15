@@ -36,4 +36,4 @@ Route::resource('subtopic', 'SubtopicController');
 
 Route::get('/profile/{id}', 'UserController@profile');
 
-Route::post('/pass_change/{id}', 'UserController@changePassword');
+Route::post('/pass_change/{id}', 'UserController@changePassword')->name('pass.change');

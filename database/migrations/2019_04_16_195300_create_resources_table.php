@@ -16,7 +16,7 @@ class CreateResourcesTable extends Migration
         Schema::create('resources', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('type');
-            $table->string('src');
+            $table->string('src')->nullable($value = true);
             $table->string('description')->nullable($value = true);
             $table->unsignedBigInteger('document_id');
             $table->unsignedBigInteger('text_id')->nullable($value = true);

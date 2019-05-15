@@ -9,11 +9,12 @@
     </section>
 
     <section class="content">
-        <div class="row justify-content-center">
-            <div class="col-md-12 form-box">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
                 <div class="box box-primary width-auto">
                     <div class="box-header"></div>
-                    <form method="POST" action="/research_topic/{{$research_topic->id}}">
+                    <form method="POST" action="{{route('research_topic.update', ['research_topic' => $research_topic->id])}}">
                         @method('PUT')
                         @csrf
                         <div class="box-body">
@@ -27,11 +28,11 @@
                             </div>
                             <div class="box-footer">
                                 <button type="button" class="btn btn-danger btn-flat pull-left">
-                                    <span class="glyphicon glyphicon-remove"></span>
+                                    <span class="fa fa-remove"></span>
                                     {{ __('Cancelar') }}
                                 </button>
                                 <button type="submit" class="btn btn-primary btn-flat pull-right">
-                                    <span class="glyphicon glyphicon-floppy-save"></span>
+                                    <span class="fa fa-save"></span>
                                     {{ __('Guardar') }}
                                 </button>
                             </div>
@@ -40,6 +41,7 @@
                     </form>
                 </div>
             </div>
+            <div class="col-md-4"></div>
         </div>
     </section>
 

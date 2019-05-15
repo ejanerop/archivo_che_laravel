@@ -27,7 +27,7 @@
                 @endif
                 <div class="box box-primary">
                     <div class="box-header">
-                        <a href="{{route('document.create')}}" class="btn btn-flat btn-success pull-right"><span class="glyphicon glyphicon-plus"></span>Nuevo</a>
+                        <a href="{{route('document.create')}}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Nuevo</a>
                     </div>
                     <div class="box-body">
                         <table id="table" class="table table-bordered">
@@ -49,11 +49,12 @@
                                     <td>{{$document->document_type->resource_type->resource_type}}</td>
                                     <td>{{$document->access_level->name}}</td>
                                     <td>
-                                        <form action="/document/{{$document->id}}" method="post">
+                                        <form action="{{route('document.destroy', ['document' => $document->id])}}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <a href="/document/{{$document->id}}/edit" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-edit" style="margin-right: 2px"></span> Editar</a>
-                                            <button type="submit" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove" style="margin-right: 2px"></span> Eliminar</button>
+                                            <a href="{{route('document.show', ['document' => $document->id])}}" class="btn btn-xs btn-success"><span class="fa fa-eye" style="margin-right: 2px"></span> Mostrar</a>
+                                            <a href="{{route('document.edit', ['document' => $document->id])}}" class="btn btn-xs btn-info"><span class="fa fa-edit" style="margin-right: 2px"></span> Editar</a>
+                                            <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-remove" style="margin-right: 2px"></span> Eliminar</button>
                                         </form>
                                     </td>
 

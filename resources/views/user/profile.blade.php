@@ -28,7 +28,7 @@
                 <div class="box box-primary">
                     <div class="box-header">Cambiar contraseña</div>
                     <div class="box-body">
-                    <form method="POST" action="/pass_change/{{$user->id}}">
+                    <form method="POST" action="{{route('pass.change',['id' => $user->id])}}">
                         @csrf
                         <div class="form-group">
                             <div class="input-group">

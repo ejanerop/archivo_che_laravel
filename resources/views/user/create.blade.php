@@ -10,39 +10,40 @@
 
     <section class="content">
         <div class="row">
-            <div class="col-md-12 form-box" >
-                <div class="box box-primary width-auto">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="box box-primary">
                     <div class="box-header"></div>
-                    <form id="user" role="form" method="POST" action="/user">
+                    <form id="user" role="form" method="POST" action="{{route('user.store')}}">
                         @csrf
                         <div class="box-body">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon glyphicon glyphicon-user"></span>
+                                    <span class="input-group-addon"><i class="fa fa-user" style="width: 14px; height: 14px"></i></span>
                                     <input id="username" type="text" class="form-control" name="username" placeholder="Usuario" required autofocus>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon glyphicon glyphicon-envelope"></span>
+                                    <span class="input-group-addon"><i class="fa fa-envelope" style="width: 14px; height: 14px"></i></span>
                                     <input id="email" type="email" class="form-control" name="email" placeholder="Correo electrónico" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon glyphicon glyphicon-lock"></span>
+                                    <span class="input-group-addon"><i class="fa fa-lock" style="width: 14px; height: 14px"></i></span>
                                     <input id="password" type="password" class="form-control" name="password" placeholder="Contraseña" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon glyphicon glyphicon-log-in"></span>
+                                    <span class="input-group-addon"><i class="fa fa-repeat" style="width: 14px; height: 14px"></i></span>
                                     <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" placeholder="Repetir contraseña" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><strong>Rol</strong></span>
+                                    <span class="input-group-addon"><i class="fa fa-users" style="width: 14px; height: 14px"></i></span>
                                     <select id="role" name="role" class="form-control">
                                             @foreach($roles as $role)
                                                 <option id="{{$role->id}}">{{$role->name}}</option>
@@ -51,12 +52,12 @@
                                 </div>
                             </div>
                             <div class="box-footer">
-                                <button type="reset" class="btn btn-warning btn-flat pull-left">
-                                    <span class="glyphicon glyphicon-erase"></span>
+                                <button type="reset" class="btn btn-warning pull-left">
+                                    <span class="fa fa-eraser"></span>
                                     {{ __('Limpiar') }}
                                 </button>
-                                <button type="submit" class="btn btn-primary btn-flat pull-right">
-                                    <span class="glyphicon glyphicon-plus"></span>
+                                <button type="submit" class="btn btn-primary pull-right">
+                                    <span class="fa fa-plus"></span>
                                     {{ __('Crear') }}
                                 </button>
                             </div>
@@ -64,6 +65,7 @@
                     </form>
                 </div>
             </div>
+            <div class="col-md-4"></div>
         </div>
     </section>
 

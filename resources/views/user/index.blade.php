@@ -46,10 +46,10 @@
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->roles->name}}</td>
                                     <td>
-                                        <form action="/user/{{$user->id}}" method="post">
+                                        <form action="{{route('user.destroy', ['user' => $user->id])}}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <a href="/user/{{$user->id}}/edit" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-edit" style="margin-right: 2px"></span> Editar</a>
+                                            <a href="{{route('user.edit', ['user' => $user->id])}}" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-edit" style="margin-right: 2px"></span> Editar</a>
                                             <button type="submit" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove" style="margin-right: 2px"></span> Eliminar</button>
                                         </form>
                                     </td>

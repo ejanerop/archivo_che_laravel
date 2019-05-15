@@ -4,19 +4,19 @@
 
     <section class="content-header">
         <ul>
-        @foreach($errors->all() as $error)
-            <li class="text-red">
+            @foreach($errors->all() as $error)
+                <li class="text-red">
             <span class="text-red">
                 <strong class="text-red">{{ $error }}</strong>
             </span>
-            </li>
-        @endforeach
+                </li>
+            @endforeach
         </ul>
     </section>
 
     <section class="content">
         <div class="box box-primary">
-            <form method="POST" action="{{route('document.store')}}" enctype="multipart/form-data">
+            <form method="POST" action="{{route('document.index')}}" enctype="multipart/form-data">
                 @csrf
                 <input id="type" name="type" type="hidden" value="text">
                 <div class="box-header">
