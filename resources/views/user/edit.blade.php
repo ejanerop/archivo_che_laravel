@@ -62,12 +62,12 @@
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-lock" style="width: 14px; height: 14px"></i></span>
                                             <input id="password" type="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Nueva contraseña">
-                                            @if ($errors->has('password'))
-                                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                            @endif
                                         </div>
+                                        @if ($errors->has('password'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('password') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                     <div class="form-group">
                                         <div class="input-group">
@@ -78,11 +78,11 @@
                                 </div><!-- /.box-body -->
                             </div>
                             <div class="box-footer">
-                                <button type="button" class="btn btn-danger btn-flat pull-left">
+                                <a href="{{route('user.index')}}" class="btn btn-danger pull-left">
                                     <span class="fa fa-remove"></span>
                                     {{ __('Cancelar') }}
-                                </button>
-                                <button type="submit" class="btn btn-primary btn-flat pull-right">
+                                </a>
+                                <button type="submit" class="btn btn-primary pull-right">
                                     <span class="fa fa-save"></span>
                                     {{ __('Guardar') }}
                                 </button>

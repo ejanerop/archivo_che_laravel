@@ -27,11 +27,11 @@
                                 <textarea id="description" name="description" class="form-control" rows="4" style="resize: none" placeholder="Descripción del tema">{{$research_topic->description}}</textarea>
                             </div>
                             <div class="box-footer">
-                                <button type="button" class="btn btn-danger btn-flat pull-left">
+                                <a href="{{route('research_topic.index')}}" class="btn btn-danger pull-left">
                                     <span class="fa fa-remove"></span>
                                     {{ __('Cancelar') }}
-                                </button>
-                                <button type="submit" class="btn btn-primary btn-flat pull-right">
+                                </a>
+                                <button type="submit" class="btn btn-primary pull-right">
                                     <span class="fa fa-save"></span>
                                     {{ __('Guardar') }}
                                 </button>

@@ -33,10 +33,10 @@
                                 </select>
                             </div>
                             <div class="box-footer">
-                                <button type="button" class="btn btn-danger pull-left">
+                                <a href="{{route('document_type.index')}}" class="btn btn-danger pull-left">
                                     <span class="fa fa-remove"></span>
                                     {{ __('Cancelar') }}
-                                </button>
+                                </a>
                                 <button type="submit" class="btn btn-primary pull-right">
                                     <span class="fa fa-save"></span>
                                     {{ __('Guardar') }}

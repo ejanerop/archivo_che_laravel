@@ -30,10 +30,10 @@
                                 </select>
                             </div>
                             <div class="box-footer">
-                                <button type="reset" class="btn btn-warning pull-left">
-                                    <span class="glyphicon glyphicon-erase"></span>
-                                    {{ __('Limpiar') }}
-                                </button>
+                                <a href="{{route('document_type.index')}}" class="btn btn-danger pull-left">
+                                    <span class="fa fa-remove"></span>
+                                    {{ __('Cancelar') }}
+                                </a>
                                 <button type="submit" class="btn btn-primary pull-right">
                                     <span class="glyphicon glyphicon-plus"></span>
                                     {{ __('Crear') }}

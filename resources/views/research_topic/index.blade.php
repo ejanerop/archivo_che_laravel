@@ -27,7 +27,7 @@
                 @endif
                 <div class="box box-primary">
                     <div class="box-header">
-                        <a href="{{route('research_topic.create')}}" class="btn btn-flat btn-success pull-right"><span class="fa fa-plus"></span>Nuevo</a>
+                        <a href="{{route('research_topic.create')}}" class="btn btn-success pull-right"><span class="fa fa-plus"></span></a>
                     </div>
                     <div class="box-body">
                         <table id="table" class="table table-bordered">

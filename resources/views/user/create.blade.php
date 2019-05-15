@@ -52,10 +52,10 @@
                                 </div>
                             </div>
                             <div class="box-footer">
-                                <button type="reset" class="btn btn-warning pull-left">
-                                    <span class="fa fa-eraser"></span>
-                                    {{ __('Limpiar') }}
-                                </button>
+                                <a href="{{route('user.index')}}" class="btn btn-danger pull-left">
+                                    <span class="fa fa-remove"></span>
+                                    {{ __('Cancelar') }}
+                                </a>
                                 <button type="submit" class="btn btn-primary pull-right">
                                     <span class="fa fa-plus"></span>
                                     {{ __('Crear') }}

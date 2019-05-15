@@ -26,11 +26,11 @@
                                 <textarea id="description" name="description" class="form-control" rows="4" style="resize: none" placeholder="Descripción del tema"></textarea>
                             </div>
                             <div class="box-footer">
-                                <button type="reset" class="btn btn-warning btn-flat pull-left">
-                                    <span class="fa fa-eraser"></span>
-                                    {{ __('Limpiar') }}
-                                </button>
-                                <button type="submit" class="btn btn-primary btn-flat pull-right">
+                                <a href="{{route('research_topic.index')}}" class="btn btn-danger pull-left">
+                                    <span class="fa fa-remove"></span>
+                                    {{ __('Cancelar') }}
+                                </a>
+                                <button type="submit" class="btn btn-primary pull-right">
                                     <span class="fa fa-plus"></span>
                                     {{ __('Crear') }}
                                 </button>
