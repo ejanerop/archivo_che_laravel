@@ -14,14 +14,14 @@
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h4><span class="glyphicon glyphicon-ok"></span></h4>
+                        <h4><span class="fa fa-checked"></span></h4>
                         <strong>{{ session('success') }}</strong>
                     </div>
                 @endif
                 @if (session('error'))
                     <div class="alert alert-danger alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h4><span class="glyphicon glyphicon-ban-circle"></span></h4>
+                        <h4><span class="fa fa-ban"></span></h4>
                         <strong>{{ session('error') }}</strong>
                     </div>
                 @endif
@@ -49,8 +49,8 @@
                                         <form action="{{route('user.destroy', ['user' => $user->id])}}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <a href="{{route('user.edit', ['user' => $user->id])}}" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-edit" style="margin-right: 2px"></span> Editar</a>
-                                            <button type="submit" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove" style="margin-right: 2px"></span> Eliminar</button>
+                                            <a href="{{route('user.edit', ['user' => $user->id])}}" class="btn btn-xs btn-info"><span class="fa fa-edit" style="margin-right: 2px"></span> Editar</a>
+                                            <button type="submit" onclick="return confirm('Está seguro que desea eliminar el usuario {{$user->username}}?')" class="btn btn-xs btn-danger"><span class="fa fa-remove" style="margin-right: 2px"></span> Eliminar</button>
                                         </form>
                                     </td>
                                 </tr>

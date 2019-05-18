@@ -134,7 +134,10 @@ class DocumentController extends Controller
      */
     public function edit($id)
     {
-        return view('document.edit', ['document'=> Document::find($id) ]);
+        return view('document.edit', ['document'=> Document::with(['subtopics', 'resources', 'access_level','document_type'])->find($id),
+            'resource_types' => ResourceType::with('document_types')->get(),
+            'topics' => ResearchTopic::with('subtopics')->get(),
+            'access_levels' => AccessLevel::all()]);
     }
 
     /**

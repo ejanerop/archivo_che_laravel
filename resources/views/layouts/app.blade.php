@@ -15,7 +15,7 @@
             <ul class="nav navbar-nav pull-left">
                 <li>
                     <a href="#" data-toggle="offcanvas" role="button" onclick="toggleToggler()">
-                        <span id="toggle" class="glyphicon glyphicon-chevron-left" style="color: #ffffff"></span>
+                        <span id="toggle" class="fa fa-chevron-left" style="color: #ffffff"></span>
                     </a>
                 </li>
             </ul>
@@ -80,10 +80,10 @@
 
             <script id="toggler">
                 function toggleToggler() {
-                    if( $('span#toggle').hasClass('glyphicon-chevron-left')){
-                        $('span#toggle').removeClass('glyphicon-chevron-left').addClass('glyphicon-chevron-right');
+                    if( $('span#toggle').hasClass('fa-chevron-left')){
+                        $('span#toggle').removeClass('fa-chevron-left').addClass('fa-chevron-right');
                     }else {
-                        $('span#toggle').removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-left');
+                        $('span#toggle').removeClass('fa-chevron-right').addClass('fa-chevron-left');
                     }
                 }
             </script>
@@ -97,45 +97,45 @@
             <section class="sidebar">
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">
-                    <li id="start" class="li active"><a href="/home"><span>Inicio</span><span class="glyphicon glyphicon-home pull-right"></span></a></li>
+                    <li id="start" class="li active"><a href="{{route('home')}}"><span>Inicio</span><span class="fa fa-home pull-right"></span></a></li>
                     @if(\Illuminate\Support\Facades\Auth::user()->hasRole('admin'))
                     <li class="header">Administración</li>
                     <li id="user" class="li treeview">
-                        <a href="#"><span>Usuarios</span><span class="glyphicon glyphicon-user pull-right"></span></a>
+                        <a href="#"><span>Usuarios</span><span class="fa fa-users pull-right"></span></a>
                         <ul class="treeview-menu">
-                            <li id="userCreate"><a href="/user/create">Nuevo Usuario <span class="glyphicon glyphicon-plus pull-right"></span></a></li>
-                            <li id="userList"><a href="/user">Lista de usuarios <span class="glyphicon glyphicon-list pull-right"></span></a></li>
+                            <li id="userCreate"><a href="{{route('user.create')}}">Nuevo Usuario <span class="fa fa-plus pull-right"></span></a></li>
+                            <li id="userList"><a href="{{route('user.index')}}">Lista de usuarios <span class="fa fa-list-ul pull-right"></span></a></li>
                         </ul>
                     </li>
                     @endif
                     @if(\Illuminate\Support\Facades\Auth::user()->hasRole('manager'))
                     <li class="header">Gestión</li>
                     <li id="document" class="li treeview">
-                        <a href="#"><span>Documentos</span> <span class="glyphicon glyphicon-file pull-right"></span></a>
+                        <a href="#"><span>Documentos</span> <span class="fa fa-file-text pull-right"></span></a>
                         <ul class="treeview-menu">
-                            <li id="documentCreate"><a href="/document/create">Nuevo Documento <span class="glyphicon glyphicon-plus pull-right"></span></a></li>
-                            <li id="documentList"><a href="/document">Lista de documentos <span class="glyphicon glyphicon-list pull-right"></span></a></li>
+                            <li id="documentCreate"><a href="{{route('document.create')}}">Nuevo Documento <span class="fa fa-plus pull-right"></span></a></li>
+                            <li id="documentList"><a href="{{route('document.index')}}">Lista de documentos <span class="fa fa-list-ul pull-right"></span></a></li>
                         </ul>
                     </li>
                     <li id="topic" class="li treeview">
-                        <a href="#"><span>Temas de investigación</span> <span class="glyphicon glyphicon-book pull-right"></span></a>
+                        <a href="#"><span>Temas de investigación</span> <span class="fa fa-book pull-right"></span></a>
                         <ul class="treeview-menu">
-                            <li id="topicCreate"><a href="/research_topic/create">Nuevo tema <span class="glyphicon glyphicon-plus pull-right"></span></a></li>
-                            <li id="topicList"><a href="/research_topic">Lista de temas <span class="glyphicon glyphicon-list pull-right"></span></a></li>
+                            <li id="topicCreate"><a href="{{route('research_topic.create')}}">Nuevo tema <span class="fa fa-plus pull-right"></span></a></li>
+                            <li id="topicList"><a href="{{route('research_topic.index')}}">Lista de temas <span class="fa fa-list-ul pull-right"></span></a></li>
                         </ul>
                     </li>
                     <li id="subtopic" class="li treeview">
-                        <a href="#"><span>Subtemas de investigación</span> <span class="glyphicon glyphicon-bookmark pull-right"></span></a>
+                        <a href="#"><span>Subtemas de investigación</span> <span class="fa fa-bookmark pull-right"></span></a>
                         <ul class="treeview-menu">
-                            <li id="subtopicCreate"><a href="/subtopic/create">Nuevo Subtema <span class="glyphicon glyphicon-plus pull-right"></span></a></li>
-                            <li id="subtopicList"><a href="/subtopic">Lista de subtemas <span class="glyphicon glyphicon-list pull-right"></span></a></li>
+                            <li id="subtopicCreate"><a href="{{route('subtopic.create')}}">Nuevo Subtema <span class="fa fa-plus pull-right"></span></a></li>
+                            <li id="subtopicList"><a href="{{route('subtopic.index')}}">Lista de subtemas <span class="fa fa-list-ul pull-right"></span></a></li>
                         </ul>
                     </li>
                     <li id="document_type" class="li treeview">
-                        <a href="#"><span>Tipos de documentos</span> <span class="glyphicon glyphicon-list-alt pull-right"></span></a>
+                        <a href="#"><span>Tipos de documentos</span> <span class="fa fa-tags pull-right"></span></a>
                         <ul class="treeview-menu">
-                            <li id="typeCreate"><a href="/document_type/create">Nuevo tipo de documento<span class="glyphicon glyphicon-plus pull-right"></span></a></li>
-                            <li id="typeList"><a href="/document_type">Lista de tipos <span class="glyphicon glyphicon-list pull-right"></span></a></li>
+                            <li id="typeCreate"><a href="{{route('document_type.create')}}">Nuevo tipo de documento<span class="fa fa-plus pull-right"></span></a></li>
+                            <li id="typeList"><a href="{{route('document_type.index')}}">Lista de tipos <span class="fa fa-list-ul pull-right"></span></a></li>
                         </ul>
                     </li>
                     @endif

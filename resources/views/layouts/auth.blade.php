@@ -25,6 +25,7 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset('css/adminLTE/skins/_all-skins.min.css') }}">
     <link rel="stylesheet" href="{{ asset('iCheck/square/blue.css') }}">
+    <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}">
 
 
     <!-- Scripts -->
