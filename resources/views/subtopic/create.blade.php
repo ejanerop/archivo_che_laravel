@@ -3,9 +3,16 @@
 @section('content')
 
     <section class="content-header">
-        <div class="container">
-            <h2>Nuevo subtema de investigación</h2>
-        </div>
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </section>
 
 <section class="content">
@@ -13,17 +20,15 @@
         <div class="col-md-4"></div>
         <div class="col-md-4">
             <div class="box box-primary">
-                <div class="box-header"></div>
+                <div class="box-header">
+                    <h4>Nuevo subtema</h4>
+                </div>
                 <form id="topic" method="POST" action="{{route('subtopic.store')}}">
                     @csrf
                     <div class="box-body">
-                        <div class="form-group {{$errors->has('name')?'has-error':''}}">
+                        <div class="form-group">
                             <label for="name">Nombre</label>
                             <input type="text" id="name" name="name" class="form-control" placeholder="Temática" required>
-                            @if($errors->has('name'))
-                                <span class="text-red" role="alert">{{$errors->first('name')}}</span>
-                            @endif
-
                         </div>
                         <div class="form-group">
                                 <label for="description">Descripción</label>
@@ -44,9 +49,9 @@
                                 <span class="fa fa-remove"></span>
                                 {{ __('Cancelar') }}
                             </a>
-                            <button type="submit" class="btn btn-primary btn-flat pull-right">
-                                <span class="fa fa-plus"></span>
-                                {{ __('Crear') }}
+                            <button type="submit" class="btn btn-success pull-right">
+                                <span class="fa fa-save"></span>
+                                {{ __('Guardar') }}
                             </button>
                         </div>
                     </div>

@@ -12,11 +12,11 @@
         <div class="row">
             <div id="alert-div" class="col-md-12">
                 @if (session('success'))
-                <div class="alert alert-success alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <h4><span class="fa fa-ok"></span></h4>
-                    <strong>{{ session('success') }}</strong>
-                </div>
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4><span class="fa fa-checked"></span></h4>
+                        <strong>{{ session('success') }}</strong>
+                    </div>
                 @endif
                 @if (session('error'))
                     <div class="alert alert-danger alert-dismissable">
@@ -51,7 +51,7 @@
                             @csrf
                             @method('DELETE')
                             <a href="{{route('document_type.edit', ['document_type' =>  $type->id])}}" class="btn btn-xs btn-info"><span class="fa fa-edit" style="margin-right: 2px"></span> Editar</a>
-                            <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-remove" style="margin-right: 2px"></span> Eliminar</button>
+                            <button type="submit"  onclick="return confirm('Está seguro que desea eliminar el tipo de documento {{$type->document_type}}?')" class="btn btn-xs btn-danger"><span class="fa fa-remove" style="margin-right: 2px"></span> Eliminar</button>
                         </form>
                     </td>
                     </tr>

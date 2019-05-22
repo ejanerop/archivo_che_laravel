@@ -61,7 +61,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->username = $request->input('username');
         $user->email = $request->input('email');
-        if($request->has('password')){
+        if($request->input('password') != null){
             $user->password = Hash::make($request->input('password'));
         }
         $user->roles()->associate($role);

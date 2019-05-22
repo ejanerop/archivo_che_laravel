@@ -35,25 +35,25 @@
                                 <tr>
                                     <th>Tema de investigación</th>
                                     <th>Descripción</th>
-                                    <th>Cantidad de subtemas</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
+                            <tbody>
                             @foreach($research_topics as $topic)
                                 <tr>
                                     <td>{{$topic->research_topic}}</td>
                                     <td>{{$topic->description}}</td>
-                                    <td>{{$topic->subtopics_count}}</td>
                                     <td>
                                         <form action="{{route('research_topic.destroy', ['research_topic' => $topic->id])}}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <a href="{{route('research_topic.edit', ['research_topic' => $topic->id])}}" class="btn btn-xs btn-info"><span class="fa fa-edit" style="margin-right: 2px"></span> Editar</a>
-                                            <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-remove" style="margin-right: 2px"></span> Eliminar</button>
+                                            <button type="submit" class="btn btn-xs btn-danger"  onclick="return confirm('Está seguro que desea eliminar el tema {{$topic->research_topic}}?')"><span class="fa fa-remove" style="margin-right: 2px"></span> Eliminar</button>
                                         </form>
                                     </td>
                                 </tr>
                             @endforeach
+                            </tbody>
                         </table>
                     </div>
                 </div>

@@ -51,7 +51,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <a href="{{route('subtopic.edit', ['subtopic' => $topic->id])}}" class="btn btn-xs btn-info"><span class="fa fa-edit" style="margin-right: 2px"></span> Editar</a>
-                                            <button type="submit" onclick="return confirm('Está seguro que desea eliminar el subtema {{$subtopic->name}}?')" class="btn btn-xs btn-danger"><span class="fa fa-remove" style="margin-right: 2px"></span> Eliminar</button>
+                                            <button type="submit" onclick="return confirm('Está seguro que desea eliminar el subtema {{$topic->name}}?')" class="btn btn-xs btn-danger"><span class="fa fa-remove" style="margin-right: 2px"></span> Eliminar</button>
                                         </form>
                                     </td>
                                 </tr>

@@ -104,7 +104,7 @@ class SubtopicController extends Controller
         $subtopic->research_topic()->associate($research_topic);
         $subtopic->save();
 
-        return redirect()->route('subtopic.index');
+        return redirect()->route('subtopic.index')->with('success','El subtema fue editado correctamente.');;
     }
 
     /**

@@ -3,9 +3,16 @@
 @section('content')
 
     <section class="content-header">
-        <div class="container">
-            <h2>Nuevo tipo de documeto</h2>
-        </div>
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </section>
 
     <section class="content">
@@ -13,13 +20,15 @@
             <div class="col-md-4"></div>
             <div class="col-md-4">
                 <div class="box box-primary">
-                    <div class="box-header"></div>
+                    <div class="box-header">
+                        <h4>Nuevo tipo de documento</h4>
+                    </div>
                     <form id="doctype" method="POST" action="{{route('document_type.store')}}">
                         @csrf
                         <div class="box-body">
                             <div class="form-group {{$errors->has('document_type')?"has-error":""}}">
                                     <label for="document_type">Tipo de documento</label>
-                                    <input type="text" id="document_type" name="document_type" class="form-control" placeholder="Tipo de documento" style="display: inline-block" required>
+                                    <input type="text" id="document_type" name="document_type" class="form-control" placeholder="Tipo de documento" value="{{old('document_type')}}" style="display: inline-block" required>
                             </div>
                             <div class="form-group">
                                 <label for="resource_type">Tipo de recurso</label>
@@ -34,9 +43,9 @@
                                     <span class="fa fa-remove"></span>
                                     {{ __('Cancelar') }}
                                 </a>
-                                <button type="submit" class="btn btn-primary pull-right">
-                                    <span class="glyphicon glyphicon-plus"></span>
-                                    {{ __('Crear') }}
+                                <button type="submit" class="btn btn-success pull-right">
+                                    <span class="fa fa-save"></span>
+                                    {{ __('Guardar') }}
                                 </button>
                             </div>
                         </div>
@@ -59,7 +68,7 @@
                 }
             },
             messages: {
-                name: {
+                document_type: {
                     required: "Debe llenar este campo",
                     maxlength: "El tipo de documento no puede exceder los 191 caracteres"
                 }

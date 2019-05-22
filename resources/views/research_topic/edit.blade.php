@@ -3,9 +3,16 @@
 @section('content')
 
     <section class="content-header">
-        <div class="container">
-            <h2>Nuevo tema de investigación</h2>
-        </div>
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </section>
 
     <section class="content">
@@ -13,7 +20,9 @@
             <div class="col-md-4"></div>
             <div class="col-md-4">
                 <div class="box box-primary width-auto">
-                    <div class="box-header"></div>
+                    <div class="box-header">
+                        <h4>Editar tema de investigación</h4>
+                    </div>
                     <form method="POST" action="{{route('research_topic.update', ['research_topic' => $research_topic->id])}}">
                         @method('PUT')
                         @csrf

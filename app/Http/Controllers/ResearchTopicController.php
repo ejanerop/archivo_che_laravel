@@ -21,7 +21,7 @@ class ResearchTopicController extends Controller
      */
     public function index()
     {
-        return view('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()]);
+        return view('research_topic.index', ['research_topics'=> ResearchTopic::with('subtopics')->get()]);
     }
 
     /**

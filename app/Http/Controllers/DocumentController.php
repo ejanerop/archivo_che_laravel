@@ -86,6 +86,7 @@ class DocumentController extends Controller
         $resource->document()->associate($document);
         $resource->type = $request->input('type');
 
+
         $type = $request->input('type');
         if($type == 'text'){
             $text = new Text();
@@ -105,6 +106,7 @@ class DocumentController extends Controller
         }else{
             $path = $request->file('resource')->store('public');
             $resource->src = $path;
+            $resource->description = $request->input('resource_description');
         }
         $resource->save();
 

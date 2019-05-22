@@ -113,19 +113,29 @@
 
                                     <div class="tab-pane" id="tab_3">
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group {{$errors->has('resource')?'has-error':''}}">
-                                                    <label for="resource">Recurso</label>
-                                                    <input id="resource" name="resource" type="file" class="form-control" accept="image/*" disabled>
-                                                </div>
-                                            </div>
+                                            <div class="col-md-6"></div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <input id="hasFacsim" name="hasFacsim" type="checkbox" class="form-control">
-                                                    <label for="hasFacsim">Tiene facsimil</label>
+                                                    <label for="hasFacsim">Facsimil</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group {{$errors->has('resource')?'has-error':''}}">
+                                                    <label for="resource">Recurso principal</label>
+                                                    <input id="resource" name="resource" type="file" class="form-control" accept="image/*" disabled>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="image">Facsimil</label>
+                                                    <label for="resource_description">Descripción del recurso</label>
+                                                    <textarea id="resource_description" name="resource_description" class="form-control" style="resize: none" disabled></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+
+                                                <div class="form-group">
+                                                    <label for="image">Archivo(s)</label>
                                                     <input id="facsim" name="facsim[]" type="file" class="form-control" accept="image/*" multiple disabled>
                                                 </div>
                                             </div>
@@ -153,7 +163,15 @@
     <script src="{{asset('input-mask/jquery.inputmask.date.extensions.js')}}"></script>
     <script src="{{asset('input-mask/jquery.inputmask.extensions.js')}}"></script>
     <script>
-        $('.text_area').richText();
+        $('.text_area').richText({
+            urls: false,
+            table: false,
+            fontColor: false,
+            fontSize: false,
+            imageUpload: false,
+            fileUpload: false,
+            videoEmbed: false
+        });
         $('#subtopics').select2();
         $('li.li').removeClass('active');
         $('li#document').addClass('active');
@@ -166,8 +184,8 @@
         });
 
         function modifyResource() {
-            var textArea = $('.box-footer');
             var inputResources = $('input#resource');
+            var descResources = $('textarea#resource_description');
             var optSelected = $('.opt:selected');
             var hasFacsim = $('#hasFacsim');
             var facsim = $('input#facsim');
@@ -176,12 +194,14 @@
             if(optSelected.hasClass('Texto')){
                 tabText.removeClass('hidden');
                 inputResources.attr("disabled", true);
+                descResources.attr("disabled", true);
                 hasFacsim.iCheck('enable');
                 hasFacsim.iCheck('uncheck');
                 type.attr('value', 'text');
             }else{
                 tabText.addClass('hidden');
                 inputResources.attr("disabled", false);
+                descResources.attr("disabled", false);
                 hasFacsim.iCheck('disable');
                 facsim.attr('disabled', 'disabled');
                 if(optSelected.hasClass('Imagen')){

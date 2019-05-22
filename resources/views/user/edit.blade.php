@@ -4,7 +4,6 @@
 
     <section class="content-header">
         <div class="container">
-            <h2>Editar usuario usuario</h2>
         </div>
     </section>
 
@@ -13,7 +12,9 @@
             <div class="col-md-4"></div>
             <div class="col-md-4">
                 <div class="box box-primary">
-                    <div class="box-header"></div>
+                    <div class="box-header">
+                        <h4>Editar usuario</h4>
+                    </div>
                     <form role="form" method="POST" action="{{route('user.update', ['user' => $user->id])}}">
                         @method('PUT')
                         @csrf

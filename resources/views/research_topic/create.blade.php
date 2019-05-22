@@ -3,9 +3,16 @@
 @section('content')
 
     <section class="content-header">
-        <div class="container">
-            <h2>Nuevo tema de investigación</h2>
-        </div>
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </section>
 
     <section class="content">
@@ -13,7 +20,9 @@
             <div class="col-md-4"></div>
             <div class="col-md-4">
                 <div class="box box-primary">
-                    <div class="box-header"></div>
+                    <div class="box-header">
+                        <h4>Nuevo tema de investigación</h4>
+                    </div>
                     <form id="topic" method="POST" action="{{route('research_topic.store')}}">
                         @csrf
                         <div class="box-body">
@@ -26,13 +35,13 @@
                                 <textarea id="description" name="description" class="form-control" rows="4" style="resize: none" placeholder="Descripción del tema"></textarea>
                             </div>
                             <div class="box-footer">
-                                <a href="{{route('research_topic.index')}}" class="btn btn-danger pull-left">
+                                <a href="{{route('subtopic.index')}}" class="btn btn-danger pull-left">
                                     <span class="fa fa-remove"></span>
                                     {{ __('Cancelar') }}
                                 </a>
-                                <button type="submit" class="btn btn-primary pull-right">
-                                    <span class="fa fa-plus"></span>
-                                    {{ __('Crear') }}
+                                <button type="submit" class="btn btn-success pull-right">
+                                    <span class="fa fa-save"></span>
+                                    {{ __('Guardar') }}
                                 </button>
                             </div>
                         </div>
