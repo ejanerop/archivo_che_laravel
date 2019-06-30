@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Role;
+use App\Rules\CurrentPassword;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Hash;
@@ -86,12 +87,13 @@ class UserController extends Controller
     public function changePassword(Request $request, $id){
 
         $validator = Validator::make($request->all(),[
-            'old_password' => ['required','string','min:8'],
+            'old_password' => ['required','string','min:8', new CurrentPassword()],
             'password' => 'required|string|min:8|confirmed'
         ])->validate();
 
         $user = User::find($id);
         $user->password = Hash::make($request->input('password'));
+        $user->save();
 
         return view('user.profile', ['user' => User::with('roles')->find($id)]);
 

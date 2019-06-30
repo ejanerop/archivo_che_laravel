@@ -103,14 +103,13 @@
                                            </div>
                                        </div>
                                         <div class="row">
+                                            <!--  Recursos secundarios -->
                                         </div>
                                     </div>
-
                                     <div class="tab-pane" id="tab_2">
                                         <label for="text">Texto</label>
                                         <textarea id="text" name="text" class="text_area"></textarea>
                                     </div>
-
                                     <div class="tab-pane" id="tab_3">
                                         <div class="row">
                                             <div class="col-md-6"></div>
@@ -133,26 +132,23 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-
                                                 <div class="form-group">
                                                     <label for="image">Archivo(s)</label>
-                                                    <input id="facsim" name="facsim[]" type="file" class="form-control" accept="image/*" multiple disabled>
+                                                    <input id="facsim" name="facsim" type="file" class="form-control" accept="image/*" multiple disabled>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                </div>
+                <div class="row">
 
-                    </div>
-                    <div class="box-footer">
+                </div>
+                <div class="box-footer">
 
-                    </div>
                 </div>
             </form>
         </div>

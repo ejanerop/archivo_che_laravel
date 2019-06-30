@@ -54,6 +54,9 @@
                 </div>
             </div>
             <div class="box-footer">
+                @foreach($document->resources as $resource)
+                <img src="{{asset($resource->path)}}" alt="sd">
+                @endforeach
             </div>
         </div>
     </section>

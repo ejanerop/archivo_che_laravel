@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use phpDocumentor\Reflection\File;
 
 class DocumentController extends Controller
 {
@@ -60,7 +61,7 @@ class DocumentController extends Controller
             'name' => 'required',
             'subtopics' => 'required',
             'date' =>['required' , new DateString()],
-            'facsim' => 'required_with:hasFacsim|mimetypes:image/*',
+            'facsim' => 'required_with:hasFacsim',
             'resource' => 'required_unless:type,text|mimetypes:video/*,audio/*,image/*'
         ])->validate();
 
@@ -75,7 +76,7 @@ class DocumentController extends Controller
         $document->date = date('Y-m-d', strtotime($request->input('date')));
         $document->access_level()->associate($accessLevel);
         $document->document_type()->associate($documentType);
-                if($request->has('description')){
+        if($request->has('description')){
             $document->description = $request->input('description');
         }
         $document->save();
@@ -96,7 +97,7 @@ class DocumentController extends Controller
             $resource->text()->associate($text);
             $resource->save();
             if($request->hasFile('facsim')){
-                $pathFacsim = $request->file('facsim')->store('public');
+                $pathFacsim = Storage::disk('public')->putFile('facsim', $request->file('facsim'));
                 $facsim = new Resource();
                 $facsim->type = 'facsim';
                 $facsim->src = $pathFacsim;
@@ -104,14 +105,13 @@ class DocumentController extends Controller
                 $facsim->save();
             }
         }else{
-            $path = $request->file('resource')->store('public');
+            $path = Storage::disk('public')->putFile($type, $request->file('resource'));;
             $resource->src = $path;
             $resource->description = $request->input('resource_description');
+            $resource->save();
         }
-        $resource->save();
 
         return redirect()->route('document.index')->with('success','El documento fue creado correctamente.');
-
     }
 
     /**
@@ -136,10 +136,17 @@ class DocumentController extends Controller
      */
     public function edit($id)
     {
+        $document = Document::with('subtopics')->find($id);
+        $subtopics = [];
+        $i = 0;
+        foreach ($document->subtopics as $subtopic){
+            $subtopics[$i] = $subtopic->id;
+        }
         return view('document.edit', ['document'=> Document::with(['subtopics', 'resources', 'access_level','document_type'])->find($id),
             'resource_types' => ResourceType::with('document_types')->get(),
             'topics' => ResearchTopic::with('subtopics')->get(),
-            'access_levels' => AccessLevel::all()]);
+            'access_levels' => AccessLevel::all(),
+            'subtopics' => $subtopics]);
     }
 
     /**
@@ -151,19 +158,53 @@ class DocumentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //todo
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'subtopics' => 'required',
+            'date' =>['required' , new DateString()],
+            'facsim' => 'required_with:hasFacsim|mimetypes:image/*',
+            'resource' => 'required_unless:type,text|mimetypes:video/*,audio/*,image/*'
+        ])->validate();
+
+
+        $document = Document::find($id);
+        $accessLevel = AccessLevel::where('name', $request->input('access_level'))->first();
+        $documentType = DocumentType::where('document_type', $request->input('document_type'))->first();
+        $subtopics = $request->input('subtopics');
+
+        $document->name = $request->input('name');
+        $document->date = date('Y-m-d', strtotime($request->input('date')));
+        if($request->has('description')){
+            $document->description = $request->input('description');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        //TODO
-        echo 'TO-DO Borrar';
+        $document = Document::with('resources')->find($id);
+        $document->subtopics()->detach();
+        foreach($document->resources as $resource){
+            if($resource->type == 'text'){
+                $id = $resource->text->id;
+                $resource->text()->dissociate();
+                $text = Text::find($id);
+                $resource->delete();
+                $text->delete();
+            }else{
+                Storage::disk('public')->delete($resource->src);
+                $resource->delete();
+            }
+        }
+        $document->delete();
+        return redirect()->route('document.index')->with('success','El documento fue eliminado correctamente.');
+
     }
 
     public function test(Request $request)
