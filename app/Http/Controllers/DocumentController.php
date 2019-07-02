@@ -58,7 +58,7 @@ class DocumentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'name' => 'required',
+            'name' => 'required|unique:documents',
             'subtopics' => 'required',
             'date' =>['required' , new DateString()],
             'facsim' => 'required_with:hasFacsim',
@@ -123,8 +123,14 @@ class DocumentController extends Controller
     public function show($id)
     {
         $document = Document::find($id);
-        $document->load('subtopics', 'resources', 'access_level','document_type');
-        return view('document.show',['document' => $document]);
+        $mainResource = null;
+        foreach ($document->resources as $resource){
+            if($resource->type != 'facsim'){
+                $mainResource = $resource;
+            }
+        }
+        $document->load('subtopics', 'resources', 'access_level','document_type', 'document_type.resource_type');
+        return view('document.show',['document' => $document, 'mainResource' => $mainResource]);
 
     }
 
@@ -137,6 +143,13 @@ class DocumentController extends Controller
     public function edit($id)
     {
         $document = Document::with('subtopics')->find($id);
+        $text = null;
+        foreach ($document->resources as $res){
+            if($res->type == 'text'){
+                $text = $res->text;
+            }
+        }
+        $resource = Resource::with('text')->where('type','<>','facsim')->first();
         $subtopics = [];
         $i = 0;
         foreach ($document->subtopics as $subtopic){
@@ -146,7 +159,8 @@ class DocumentController extends Controller
             'resource_types' => ResourceType::with('document_types')->get(),
             'topics' => ResearchTopic::with('subtopics')->get(),
             'access_levels' => AccessLevel::all(),
-            'subtopics' => $subtopics]);
+            'subtopics' => $subtopics,
+            'text' => $text]);
     }
 
     /**
@@ -159,11 +173,11 @@ class DocumentController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(),[
-            'name' => 'required',
+            'name' => ['required',  Rule::unique('documents')->ignore($id)],
             'subtopics' => 'required',
             'date' =>['required' , new DateString()],
             'facsim' => 'required_with:hasFacsim|mimetypes:image/*',
-            'resource' => 'required_unless:type,text|mimetypes:video/*,audio/*,image/*'
+            'resource' => 'mimetypes:video/*,audio/*,image/*'
         ])->validate();
 
 
@@ -172,11 +186,76 @@ class DocumentController extends Controller
         $documentType = DocumentType::where('document_type', $request->input('document_type'))->first();
         $subtopics = $request->input('subtopics');
 
+
         $document->name = $request->input('name');
         $document->date = date('Y-m-d', strtotime($request->input('date')));
         if($request->has('description')){
             $document->description = $request->input('description');
+        }else{
+            $document->description = '';
         }
+
+        $document->subtopics()->detach();
+        foreach ($subtopics as $topic){
+            $subtopic = Subtopic::where('name', $topic)->first();
+            $document->subtopics()->attach($subtopic);
+        }
+
+        $document->access_level()->dissociate();
+        $document->access_level()->associate($accessLevel);
+
+        $document->document_type()->dissociate();
+        $document->document_type()->associate($documentType);
+
+        $resource = new Resource();
+
+        if($request->hasFile('resource')){
+            foreach($document->resources as $res){
+                if($res->type != 'facsim'){
+                    Storage::disk('public')->delete($res->src);
+                    $res->delete();
+                }
+            }
+            $type = $request->input('type');
+            $path = Storage::disk('public')->putFile($type, $request->file('resource'));;
+            $resource->src = $path;
+            $resource->description = $request->input('resource_description');
+            $resource->type = $request->input('type');
+            $resource->document()->associate($document);
+            $resource->save();
+        }
+
+        $type = $request->input('type');
+        if($type == 'text'){
+            foreach($document->resources as $res){
+                if($res->type == 'text'){
+                    $txt = $res->text;
+                    $res->delete();
+                    $txt->delete();
+                }
+            }
+            $text = new Text();
+            $text->text = $request->input('text');
+            $text->save();
+            $resource->type = 'text';
+
+            $resource->text()->associate($text);
+            $resource->document()->associate($document);
+            $resource->save();
+            if($request->hasFile('facsim')){
+                $pathFacsim = Storage::disk('public')->putFile('facsim', $request->file('facsim'));
+                $facsim = new Resource();
+                $facsim->type = 'facsim';
+                $facsim->src = $pathFacsim;
+                $facsim->document()->associate($document);
+                $facsim->save();
+            }
+        }
+
+        $document->save();
+
+        return redirect()->route('document.index')->with('success','El documento fue editado correctamente.');
+
     }
 
     /**

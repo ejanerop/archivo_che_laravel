@@ -51,7 +51,7 @@ return [
     "min"              => [
         "numeric" => "El tamaño de :attribute debe ser de al menos :min.",
         "file"    => "El tamaño de :attribute debe ser de al menos :min kilobytes.",
-        "string"  => ":attribute debe contener al menos :min caracteres.",
+        "string"  => "La :attribute debe contener al menos :min caracteres.",
         "array"   => ":attribute debe tener al menos :min elementos.",
     ],
     "not_in"           => ":attribute es inválido.",
@@ -110,7 +110,9 @@ return [
         'document_type' => 'tipo de documento',
         'name' => 'nombre',
         'subtopics' => 'subtemas',
-        'date' => 'fecha'
+        'date' => 'fecha',
+        'password' => 'contraseña',
+        'username' => 'nombre de usuario'
     ],
 
 ];

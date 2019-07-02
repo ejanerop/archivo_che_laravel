@@ -21,10 +21,10 @@
                 @csrf
                 <input id="type" name="type" type="hidden" value="text">
                 <div class="box-header">
-                    <button type="reset" class="btn btn-warning pull-left">
-                        <i class="fa fa-eraser"></i>
-                        {{ __('Limpiar') }}
-                    </button>
+                    <a href="{{route('document.index')}}" class="btn btn-danger pull-left">
+                        <span class="fa fa-remove"></span>
+                        {{ __('Cancelar') }}
+                    </a>
                     <button type="submit" class="btn btn-success pull-right">
                         <i class="fa fa-save"></i>
                         {{ __('Guardar') }}
@@ -64,11 +64,13 @@
                                                         <label for="document_type">Tipo de documento</label>
                                                         <select id="document_type"  name="document_type" class="form-control" onchange="modifyResource()">
                                                             @foreach($resource_types as $resType)
+                                                                @if($resType->resource_type == $document->document_type->resource_type->resource_type)
                                                                 <optgroup class="optgroup" label="{{$resType->resource_type}}">
                                                                     @foreach($resType->document_types as $docType)
                                                                         <option class="opt {{$resType->resource_type}}" id="{{$docType->id}}" {{$docType->id == $document->document_type->id ? 'selected' : ''}}>{{$docType->document_type}}</option>
                                                                     @endforeach
                                                                 </optgroup>
+                                                                @endif
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -109,7 +111,9 @@
                                     </div>
                                     <div class="tab-pane" id="tab_2">
                                         <label for="text">Texto</label>
-                                        <textarea id="text" name="text" class="text_area"></textarea>
+                                        <textarea id="text" name="text" class="text_area">
+                                            {{isset($text)?$text->text:''}}
+                                        </textarea>
                                     </div>
                                     <div class="tab-pane" id="tab_3">
                                         <div class="row">
@@ -126,6 +130,7 @@
                                                 <div class="form-group {{$errors->has('resource')?'has-error':''}}">
                                                     <label for="resource">Recurso principal</label>
                                                     <input id="resource" name="resource" type="file" class="form-control" accept="image/*" disabled>
+                                                    <p class="help-block">Si deja en blanco este campo, se mantendrá el recurso principal existente.</p>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="resource_description">Descripción del recurso</label>

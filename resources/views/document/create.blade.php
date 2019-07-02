@@ -20,10 +20,10 @@
                 @csrf
                 <input id="type" name="type" type="hidden" value="text">
                 <div class="box-header">
-                    <button type="reset" class="btn btn-warning pull-left">
-                        <i class="fa fa-eraser"></i>
-                        {{ __('Limpiar') }}
-                    </button>
+                    <a href="{{route('document.index')}}" class="btn btn-danger pull-left">
+                        <span class="fa fa-remove"></span>
+                        {{ __('Cancelar') }}
+                    </a>
                     <button type="submit" class="btn btn-success pull-right">
                         <i class="fa fa-save"></i>
                         {{ __('Guardar') }}
@@ -45,7 +45,7 @@
                                                <div class="col-md-12">
                                                    <div class="form-group {{$errors->has('name')?'has-error':''}}">
                                                        <label for="name">Nombre</label>
-                                                       <input id="name" name="name" type="text" class="form-control" placeholder="Título del documento">
+                                                       <input id="name" name="name" type="text" class="form-control" placeholder="Título del documento" required>
                                                    </div>
                                                    <div class="form-group {{$errors->has('description')?'has-error':''}}">
                                                        <label for="description">Descripción</label>

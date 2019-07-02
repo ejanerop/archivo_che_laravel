@@ -95,7 +95,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->input('password'));
         $user->save();
 
-        return view('user.profile', ['user' => User::with('roles')->find($id)]);
+        return redirect()->route('user.profile', ['user' => User::with('roles')->find($id)])->with('success','El usuario ha sido eliminado correctamente.');
 
     }
 }

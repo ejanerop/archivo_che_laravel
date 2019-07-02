@@ -54,7 +54,9 @@
                                 <span class="glyphicon glyphicon-floppy-save"></span>
                                 {{ __('Guardar') }}
                             </button>
-                            <h4><span class="pull-right glyphicon glyphicon-ok" style="color: #00a65a"></span></h4>
+                            @if (session('success'))
+                                <h4><span id="ok" class="pull-right glyphicon glyphicon-ok" style="color: #00a65a"></span></h4>
+                            @endif
                         </div>
                     </form>
                     </div>
@@ -63,4 +65,10 @@
         </div>
     </section>
 
+    <script>
+        $('span#ok').removeClass("hidden").delay(6000).queue(function(next){
+            $(this).removeClass("hidden");
+            next();
+        });
+    </script>
 @endsection

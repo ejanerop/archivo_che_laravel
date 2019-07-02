@@ -53,7 +53,7 @@
                                 <li class="user-body"></li>
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a class="btn btn-default btn-flat" href="/profile/{{Auth::user()->id}}">
+                                        <a class="btn btn-default btn-flat" href="{{route('user.profile',Auth::user()->id)}}">
                                             {{ __('Pefil') }}
                                         </a>
                                     </div>

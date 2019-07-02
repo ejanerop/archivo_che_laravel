@@ -54,12 +54,52 @@
                 </div>
             </div>
             <div class="box-footer">
-                @foreach($document->resources as $resource)
-                <img src="{{asset($resource->path)}}" alt="sd">
-                @endforeach
+                @if($document->document_type->resource_type->resource_type == 'Imagen')
+                    <img src="{{asset($mainResource->path)}}" alt="sd">
+                @elseif($document->document_type->resource_type->resource_type == 'Audio')
+                    <audio controls>
+                        <source src="{{asset($mainResource->path)}}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                @elseif($document->document_type->resource_type->resource_type == 'Video')
+                    <video width="320" height="240" controls>
+                        <source src="{{asset($mainResource->path)}}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                @else
+                    <label for="text" hidden>Texto</label>
+                    <textarea id="text" name="text" class="text_area">
+                        {{$mainResource->text->text}}
+                    </textarea>
+                @endif
             </div>
         </div>
     </section>
 
+    <script>
+        $('.text_area').richText({
+            urls: false,
+            table: false,
+            fontColor: false,
+            fontSize: false,
+            imageUpload: false,
+            fileUpload: false,
+            videoEmbed: false,
+            bold: false,
+            italic: false,
+            underline: false,
+            leftAlign: false,
+            centerAlign: false,
+            rightAlign: false,
+            justify: false,
+            ol: false,
+            ul: false,
+            heading: false,
+            fonts: false,
+            removeStyles: false,
+            code: false,
+        });
+        $('div.richText-editor').attr('contenteditable', 'false');
+    </script>
 
 @endsection
