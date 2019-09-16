@@ -62,7 +62,7 @@ class DocumentController extends Controller
             'subtopics' => 'required',
             'date' =>['required' , new DateString()],
             'facsim' => 'required_with:hasFacsim',
-            'resource' => 'required_unless:type,text|mimetypes:video/*,audio/*,image/*'
+            'resource' => 'mimetypes:video/*,audio/*,image/*' //TODO ke mimetype es pdf
         ])->validate();
 
 
@@ -86,16 +86,8 @@ class DocumentController extends Controller
         }
         $resource->document()->associate($document);
         $resource->type = $request->input('type');
-
-
         $type = $request->input('type');
         if($type == 'text'){
-            $text = new Text();
-            $text->text = $request->input('text');
-            $text->save();
-            $resource->type = 'text';
-            $resource->text()->associate($text);
-            $resource->save();
             if($request->hasFile('facsim')){
                 $pathFacsim = Storage::disk('public')->putFile('facsim', $request->file('facsim'));
                 $facsim = new Resource();
@@ -104,12 +96,12 @@ class DocumentController extends Controller
                 $facsim->document()->associate($document);
                 $facsim->save();
             }
-        }else{
-            $path = Storage::disk('public')->putFile($type, $request->file('resource'));;
-            $resource->src = $path;
-            $resource->description = $request->input('resource_description');
-            $resource->save();
         }
+        $path = Storage::disk('public')->putFile($type, $request->file('resource'));;
+        $resource->src = $path;
+        $resource->description = $request->input('resource_description');
+        $resource->save();
+
 
         return redirect()->route('document.index')->with('success','El documento fue creado correctamente.');
     }
