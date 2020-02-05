@@ -14,6 +14,9 @@ class User extends Authenticatable
         return $this->belongsTo('App\Role', 'role_id');
     }
 
+    public function requests(){
+        return $this->hasMany('App\Request');
+    }
 
     public function hasRole($role){
         if($this->roles()->where('slug',$role)->first()) {

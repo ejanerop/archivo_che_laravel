@@ -119,7 +119,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group {{$errors->has('resource')?'has-error':''}}">
                                                     <label for="resource">Recurso principal</label>
-                                                    <input id="resource" name="resource" type="file" class="form-control" accept="image/*">
+                                                    <input id="resource" name="resource" type="file" class="form-control" accept="application/pdf">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="resource_description">Descripción del recurso</label>
@@ -175,6 +175,7 @@
             if(optSelected.hasClass('Texto')){
                 hasFacsim.iCheck('enable');
                 hasFacsim.iCheck('uncheck');
+                inputResources.attr("accept", "application/pdf");
                 type.attr('value', 'text');
             }else{
                 inputResources.attr("disabled", false);
@@ -236,6 +237,8 @@
                     break;
             }
         }
+
+        modifyResource();
 
     </script>
 

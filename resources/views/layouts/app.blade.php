@@ -113,7 +113,7 @@
                     <li id="document" class="li treeview">
                         <a href="#"><span>Documentos</span> <span class="fa fa-file-text pull-right"></span></a>
                         <ul class="treeview-menu">
-                            <li id="documentCreate"><a href="{{route('document.create')}}">Nuevo Documento <span class="fa fa-plus pull-right"></span></a></li>
+                            <li id="documentCreate"><a href="{{route('document.create')}}">Nuevo Documento <span class="fa fa-plus pull-right"></span></a></li>     
                             <li id="documentList"><a href="{{route('document.index')}}">Lista de documentos <span class="fa fa-list-ul pull-right"></span></a></li>
                         </ul>
                     </li>
@@ -139,6 +139,15 @@
                         </ul>
                     </li>
                     @endif
+                    @if(\Illuminate\Support\Facades\Auth::user()->hasRole('director'))
+                    <li id="topic" class="li treeview">
+                        <a href="#"><span>Solicitudes</span> <span class="fa fa-book pull-right"></span></a>
+                        <ul class="treeview-menu">
+                            <li id="petitionList"><a href="{{route('petition.index')}}">Lista de solicitudes <span class="fa fa-list-ul pull-right"></span></a></li>
+                        </ul>
+                    </li>
+                    @endif
+
                 </ul><!-- /.sidebar-menu -->
 
             </section><!-- /.sidebar -->

@@ -62,7 +62,7 @@ class DocumentController extends Controller
             'subtopics' => 'required',
             'date' =>['required' , new DateString()],
             'facsim' => 'required_with:hasFacsim',
-            'resource' => 'mimetypes:video/*,audio/*,image/*' //TODO ke mimetype es pdf
+            'resource' => 'mimetypes:video/*,audio/*,image/*,application/pdf' 
         ])->validate();
 
 

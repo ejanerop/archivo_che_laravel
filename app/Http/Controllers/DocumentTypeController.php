@@ -7,6 +7,7 @@ use App\ResourceType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Util\Logger;
 
 class DocumentTypeController extends Controller
 {
@@ -54,6 +55,9 @@ class DocumentTypeController extends Controller
         $document_type->document_type = $request->input('document_type');
         $document_type->resource_type()->associate($resource_type);
         $document_type->save();
+
+        Logger::log('create', $request->ip(), 'document_type', $document_type->id);
+        
         return redirect()->route('document_type.index')->with('success', 'Tipo de documento creado correctamente.');
     }
 
@@ -98,6 +102,7 @@ class DocumentTypeController extends Controller
         $documentType->document_type = $request->input('document_type');
         $documentType->resource_type()->associate($resource_type);
         $documentType->save();
+        Logger::log('edit', $request->ip(), 'document_type', $document_type->id);
         return redirect()->route('document_type.index', ['document_types' => DocumentType::all()])->with('success', 'Tipo de documento editado correctamente.');
 
     }
@@ -115,6 +120,7 @@ class DocumentTypeController extends Controller
             return redirect()->route('document_type.index', ['document_types' => DocumentType::all()])->with('error', 'No se puede eliminar. Existen documentos de este tipo.');
         }else{
             $documentType->delete();
+            Logger::log('delete', $request->ip(), 'document_type', $document_type->id);
             return redirect()->route('document_type.index', ['document_types' => DocumentType::all()])->with('success', 'Eliminado correctamente');
 
         }

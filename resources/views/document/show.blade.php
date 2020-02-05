@@ -76,38 +76,14 @@
                     </video>
                 @else
                     <label for="text" hidden>Texto</label>
-                    <textarea id="text" name="text" class="text_area">
-                        {{$mainResource->text->text}}
-                    </textarea>
+                    <embed src="{{asset($mainResource->path)}}" width="500" height="375" type="application/pdf">
                 @endif
             </div>
         </div>
     </section>
 
     <script>
-        $('.text_area').richText({
-            urls: false,
-            table: false,
-            fontColor: false,
-            fontSize: false,
-            imageUpload: false,
-            fileUpload: false,
-            videoEmbed: false,
-            bold: false,
-            italic: false,
-            underline: false,
-            leftAlign: false,
-            centerAlign: false,
-            rightAlign: false,
-            justify: false,
-            ol: false,
-            ul: false,
-            heading: false,
-            fonts: false,
-            removeStyles: false,
-            code: false,
-        });
-        $('div.richText-editor').attr('contenteditable', 'false');
+        
     </script>
 
 @endsection

@@ -18,5 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AccessLevelTableSeeder::class);
         $this->call(ResearchTopicTableSeeder::class);
         $this->call(SubtopicTableSeeder::class);
+        $this->call(LogTypeTableSeeder::class);
+        $this->call(PetitionStateTableSeeder::class);
     }
 }

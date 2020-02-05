@@ -24,4 +24,8 @@ class Document extends Model
     public function access_level(){
         return $this->belongsTo('App\AccessLevel', 'access_level_id');
     }
+
+    public function requests(){
+        return $this->hasMany('App\Request');
+    }
 }

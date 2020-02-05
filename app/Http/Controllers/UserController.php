@@ -6,6 +6,7 @@ use App\Role;
 use App\Rules\CurrentPassword;
 use Illuminate\Http\Request;
 use App\User;
+use App\Util\Logger;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -40,6 +41,8 @@ class UserController extends Controller
         $user->roles()->associate($role);
         $user->save();
 
+        Logger::log('create', $request->ip(), 'user', $user->id);
+
         return redirect()->route('user.index');
     }
 
@@ -68,6 +71,8 @@ class UserController extends Controller
         $user->roles()->associate($role);
         $user->save();
 
+        Logger::log('edit', $request->ip(), 'user', $user->id);
+
         return redirect()->route('user.index')->with('success','El usuario fue modificado correctamente.');
     }
 
@@ -76,6 +81,8 @@ class UserController extends Controller
         $user = User::find($id);
 
         $user->delete();
+
+        Logger::log('delete', $request->ip(), 'user', $user->id);
 
         return redirect()->route('user.index')->with('success','El usuario ha sido eliminado correctamente.');
     }
@@ -95,7 +102,9 @@ class UserController extends Controller
         $user->password = Hash::make($request->input('password'));
         $user->save();
 
-        return redirect()->route('user.profile', ['user' => User::with('roles')->find($id)])->with('success','El usuario ha sido eliminado correctamente.');
+        Logger::log('password_change', $request->ip(), 'user', $user->id);
+
+        return redirect()->route('user.profile', ['user' => User::with('roles')->find($id)])->with('success','La cotraseña se ha cambiado correctamente.');
 
     }
 }
