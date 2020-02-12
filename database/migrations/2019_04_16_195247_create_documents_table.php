@@ -17,6 +17,7 @@ class CreateDocumentsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description')->nullable($value = true);
+            $table->string('author');
             $table->date('date');
             $table->unsignedBigInteger('document_type_id');
             $table->unsignedBigInteger('access_level_id');

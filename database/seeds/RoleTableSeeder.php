@@ -41,5 +41,15 @@ class RoleTableSeeder extends Seeder
         $role->name = 'Cordinador Académico';
         $role->slug = 'coord.acad';
         $role->save();
+
+        $role = new Role();
+        $role->name = 'Investigador interno';
+        $role->slug = 'inv.int';
+        $role->save();
+
+        $role = new Role();
+        $role->name = 'Investigador externo';
+        $role->slug = 'coord.ext';
+        $role->save();
     }
 }

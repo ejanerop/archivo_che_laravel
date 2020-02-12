@@ -38,9 +38,12 @@
                             </div>
 
                         @else
+                         
+
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->username }}  <span class="caret"></span>
                             </a>
+
 
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li class="user-header">
@@ -70,6 +73,9 @@
                                 </li>
                             </ul>
                         @endguest
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                         </li>
                     </ul>
                 </div>

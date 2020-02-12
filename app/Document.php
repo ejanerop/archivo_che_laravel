@@ -28,4 +28,39 @@ class Document extends Model
     public function requests(){
         return $this->hasMany('App\Request');
     }
+
+    public function scopeFilterName($query, $name)
+    {
+        return $query->where('name', 'like', '%'. $name .'%');
+    }
+
+    public function scopeFilterDateStart($query, $date)
+    {
+        //TODO
+        return $query->where('name', '>', 100);
+    }
+
+    public function scopeFilterDateEnd($query, $date)
+    {
+        //TODO
+        return $query->where('name', '>', 100);
+    }
+
+    public function scopeFilterTopic($query, $topic)
+    {
+        //TODO
+        return $query->where('name', '>', 100);
+    }
+
+    public function scopeFilterSubtopic($query, $topic)
+    {
+        //TODO
+        return $query->where('name', '>', 100);
+    }
+
+    public function scopeFilterType($query, $type)
+    {
+        //TODO
+        return $query->where('name', '>', 100);
+    }
 }

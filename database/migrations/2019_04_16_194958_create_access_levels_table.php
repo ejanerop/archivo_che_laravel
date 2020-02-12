@@ -16,6 +16,7 @@ class CreateAccessLevelsTable extends Migration
         Schema::create('access_levels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->tinyInteger('level');
             $table->string('description')->nullable($value = true);
             $table->timestamps();
         });

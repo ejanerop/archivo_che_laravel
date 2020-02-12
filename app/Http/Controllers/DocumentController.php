@@ -9,13 +9,16 @@ use App\ResearchTopic;
 use App\Resource;
 use App\ResourceType;
 use App\Rules\DateString;
+use App\Rules\DateNow;
 use App\Subtopic;
 use App\Text;
+use App\Stage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use phpDocumentor\Reflection\File;
+use App\Util\Logger;
 
 class DocumentController extends Controller
 {
@@ -32,7 +35,10 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        return view('document.index', ['documents' => Document::with(['subtopics', 'resources', 'access_level','document_type'])->get()]);
+        return view('document.index', ['documents' => Document::with(['subtopics', 'resources', 'access_level','document_type'])->get(),
+                                       'resource_types' => ResourceType::with('document_types')->get(),
+                                       'topics' => ResearchTopic::with('subtopics')->get(),
+                                       'stages' => Stage::all()]);
     }
 
     /**
@@ -60,7 +66,8 @@ class DocumentController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => 'required|unique:documents',
             'subtopics' => 'required',
-            'date' =>['required' , new DateString()],
+            'author' => 'required',
+            'date' =>['required' , new DateString(), new DateNow()],
             'facsim' => 'required_with:hasFacsim',
             'resource' => 'mimetypes:video/*,audio/*,image/*,application/pdf' 
         ])->validate();
@@ -73,6 +80,7 @@ class DocumentController extends Controller
 
         $document = new Document();
         $document->name = $request->input('name');
+        $document->author = $request->input('author');
         $document->date = date('Y-m-d', strtotime($request->input('date')));
         $document->access_level()->associate($accessLevel);
         $document->document_type()->associate($documentType);
@@ -167,7 +175,7 @@ class DocumentController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => ['required',  Rule::unique('documents')->ignore($id)],
             'subtopics' => 'required',
-            'date' =>['required' , new DateString()],
+            'date' =>['required' , new DateString(), new DateNow()],
             'facsim' => 'required_with:hasFacsim|mimetypes:image/*',
             'resource' => 'mimetypes:video/*,audio/*,image/*'
         ])->validate();

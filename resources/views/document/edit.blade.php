@@ -76,9 +76,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="date">Etapa</label>
-                                                        <input type="text" id="date" class="form-control" readonly>
+                                                    <div class="form-group {{$errors->has('author')?'has-error':''}}">
+                                                        <label for="date">Autor</label>
+                                                        <input type="text" id="author" name="author" class="form-control" placeholder="Autor del documento" value="{{$document->author}}">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="access_level">Nivel de acceso</label>

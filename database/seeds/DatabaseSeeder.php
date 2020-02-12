@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SubtopicTableSeeder::class);
         $this->call(LogTypeTableSeeder::class);
         $this->call(PetitionStateTableSeeder::class);
+        $this->call(StageTableSeeder::class);
     }
 }
