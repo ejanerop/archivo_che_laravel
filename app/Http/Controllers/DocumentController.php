@@ -69,7 +69,7 @@ class DocumentController extends Controller
             'author' => 'required',
             'date' =>['required' , new DateString(), new DateNow()],
             'facsim' => 'required_with:hasFacsim',
-            'resource' => 'mimetypes:video/*,audio/*,image/*,application/pdf' 
+            'resource' => 'mimetypes:video/*,audio/*,image/*,application/pdf'
         ])->validate();
 
 
@@ -78,10 +78,20 @@ class DocumentController extends Controller
         $subtopics = $request->input('subtopics');
         $resource = new Resource();
 
+
         $document = new Document();
         $document->name = $request->input('name');
         $document->author = $request->input('author');
-        $document->date = date('Y-m-d', strtotime($request->input('date')));
+
+        $date = date('Y-m-d', strtotime($request->input('date')));
+        $document->date = $date;
+        $stages = Stage::all();
+        foreach ($stages as $stage) {
+            if (($date >= $stage->date_start) && ($date <= $stage->date_end)) {
+                $document->stage()->associate($stage);
+            }
+        }
+
         $document->access_level()->associate($accessLevel);
         $document->document_type()->associate($documentType);
         if($request->has('description')){

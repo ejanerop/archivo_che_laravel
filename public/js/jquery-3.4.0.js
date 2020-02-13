@@ -9440,7 +9440,7 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\archivo_che\resources\js\jquery-3.4.0.js */"./resources/js/jquery-3.4.0.js");
+module.exports = __webpack_require__(/*! c:\xampp\htdocs\archivo_che\resources\js\jquery-3.4.0.js */"./resources/js/jquery-3.4.0.js");
 
 
 /***/ })

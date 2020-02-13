@@ -14,4 +14,9 @@ class Subtopic extends Model
     public function documents(){
         return $this->belongsToMany('App\Document', 'document_subtopic');
     }
+
+    public function scopeFilterName($query, $name)
+    {
+        return $query->where('name', $name);
+    }
 }

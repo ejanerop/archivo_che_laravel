@@ -25,13 +25,24 @@ class Document extends Model
         return $this->belongsTo('App\AccessLevel', 'access_level_id');
     }
 
-    public function requests(){
-        return $this->hasMany('App\Request');
+    public function petitions(){
+        return $this->hasMany('App\Petition');
+    }
+
+    public function stage(){
+        return $this->belongsTo('App\Stage', 'stage_id');
     }
 
     public function scopeFilterName($query, $name)
     {
         return $query->where('name', 'like', '%'. $name .'%');
+    }
+
+    public function scopeFilterStages($query, $stages)
+    {
+        return $query->whereHas('stage', function ($q) use ($stages) {
+                $q->whereIn('name', $stages);
+            });
     }
 
     public function scopeFilterDateStart($query, $date)
@@ -46,21 +57,19 @@ class Document extends Model
         return $query->where('name', '>', 100);
     }
 
-    public function scopeFilterTopic($query, $topic)
+    public function scopeFilterSubtopics($query, $topics)
     {
-        //TODO
-        return $query->where('name', '>', 100);
+        $query = $query->whereHas('subtopics', function ($q) use ($topics) {
+                $q->whereIn('name', $topics);
+            });
+        return $query;
     }
 
-    public function scopeFilterSubtopic($query, $topic)
+    public function scopeFilterTypes($query, $types)
     {
-        //TODO
-        return $query->where('name', '>', 100);
-    }
-
-    public function scopeFilterType($query, $type)
-    {
-        //TODO
-        return $query->where('name', '>', 100);
+        $query = $query->whereHas('document_type', function ($q) use ($types) {
+            $q->whereIn('document_type', $types);
+        });
+    return $query;
     }
 }

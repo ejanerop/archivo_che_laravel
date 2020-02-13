@@ -254,14 +254,14 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="name">Nombre del documento</label>
-                          <input id="name" name="name" type="text" class="form-control" placeholder="Título completo o parcial del documento">
+                          <label for="nameFilter">Nombre del documento</label>
+                          <input id="nameFilter" name="nameFilter" type="text" class="form-control" placeholder="Título completo o parcial del documento">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="document_types">Tipos de documento</label>
-                          <select id="document_types" name="document_types[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona los tipos de documento" style="width: 100%">
+                          <label for="document_typesFilter">Tipos de documento</label>
+                          <select id="document_typesFilter" name="document_typesFilter[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona los tipos de documento" style="width: 100%">
                             @foreach($resource_types as $resType)
                             <optgroup class="optgroup" label="{{$resType->resource_type}}">
                               @foreach($resType->document_types as $docType)
@@ -274,10 +274,24 @@
                       </div>
                     </div>
                     <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="radio" name="filterTime" id="filterByStage">
+                                <label for="filterByStage">Filtrar por etapa cronológica</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="radio" name="filterTime" id="filterByDate">
+                                <label for="filterByDate">Filtrar por fechas</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="stages">Etapas</label>
-                          <select id="stages" name="stages[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona las etapas" style="width: 100%">
+                          <label for="stagesFilter">Etapas</label>
+                          <select id="stagesFilter" name="stagesFilter[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona las etapas" style="width: 100%" disabled>
                             @foreach($stages as $stage)
                               <option class="opt {{$resType->resource_type}}" id="{{$docType->id}}">{{$stage->name}}</option>
                             @endforeach
@@ -285,17 +299,19 @@
                         </div>
                       </div>
                       <div class="col-md-3">
-                        
+                        <label for="dateStartFilter">Fecha de inicio</label>
+                        <input type="text" id="dateStartFilter" name="dateStartFilter" class="form-control" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask disabled>
                       </div>
                       <div class="col-md-3">
-                        
+                        <label for="dateEndFilter">Fecha de fin</label>
+                        <input type="text" id="dateEndFilter" name="dateEndFilter" class="form-control" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask disabled>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="subtopics">Subtemas de investigación</label>
-                          <select id="subtopics" name="subtopics[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona los temas de investigación" style="width: 100%">
+                          <label for="subtopicsFilter">Subtemas de investigación</label>
+                          <select id="subtopicsFilter" name="subtopicsFilter[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona los temas de investigación" style="width: 100%">
                             @foreach($topics as $topic)
                               <optgroup label="{{$topic->research_topic}}">
                                 @foreach($topic->subtopics as $subtopic)
@@ -307,13 +323,13 @@
                         </div>
                       </div>
                       <div class="col-md-3">
-                        
+
                       </div>
                       <div class="col-md-3">
-                        
+
                       </div>
                     </div>
-                  </div>                
+                  </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -336,6 +352,21 @@
         $('li#document').addClass('active');
         $('li#documentList').addClass('active');
         $('.filterSelect').select2();
+        $("[data-mask]").inputmask();
+        $('#filterByStage').on('ifToggled',function () {
+            var stages = $('select#stagesFilter');
+            var dateEnd = $('input#dateEndFilter');
+            var dateStart = $('input#dateStartFilter');
+            stages.attr("disabled", !this.checked);
+            dateEnd.attr("disabled", this.checked);
+            dateStart.attr("disabled", this.checked);
+            if (this.checked) {
+                stages.removeAttr("value");
+            }else{
+                dateEnd.attr("value", "");
+                dateStart.attr("value", "");
+            }
+        });
     </script>
 
 @endsection
