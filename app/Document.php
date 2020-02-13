@@ -47,14 +47,12 @@ class Document extends Model
 
     public function scopeFilterDateStart($query, $date)
     {
-        //TODO
-        return $query->where('name', '>', 100);
+        return $query->where('date', '>=', $date);
     }
 
     public function scopeFilterDateEnd($query, $date)
     {
-        //TODO
-        return $query->where('name', '>', 100);
+        return $query->where('date', '>=', $date);
     }
 
     public function scopeFilterSubtopics($query, $topics)
