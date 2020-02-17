@@ -2,8 +2,8 @@
 
 @section('content')
 
-<!-- Control Sidebar -->
-      <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
           <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
@@ -169,7 +169,8 @@
       <div class="control-sidebar-bg"></div>
 
 
-    <section class="content-header">
+
+      <section class="content-header">
         <div class="container">
             <h3>Documentos</h3>
         </div>
@@ -196,10 +197,16 @@
                     <div class="box-header">
                         <a href="{{route('document.create')}}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Nuevo</a>
 
-                        <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#exampleModalCenter">
-                            <i class="fa fa-filter"></i>
-                             Filtrar
-                        </button>
+                        @if($filtered)
+                            <a href="{{route('document.index')}}" class="btn btn-danger">
+                                <i class="fa fa-close"></i>
+                                 Quitar filtro</a>
+                        @else
+                            <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#exampleModalCenter">
+                                <i class="fa fa-filter"></i>
+                                 Filtrar
+                            </button>
+                        @endif
                     </div>
                     <div class="box-body">
                         <table id="table" class="table table-bordered">
@@ -233,6 +240,9 @@
                                 </tr>
                             @endforeach
                         </table>
+                        <div class="pull-right">
+                            {{$documents->render()}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -249,7 +259,7 @@
                 <h4 class="modal-title">Filtrar</h4>
               </div>
               <div class="modal-body">
-                <form>
+                <form action="{{route('document.filter')}}" method="GET">
                   <div class="container-fluid">
                     <div class="row">
                       <div class="col-md-6">
@@ -333,7 +343,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Filtrar</button>
+                <button type="submit" class="btn btn-primary">Filtrar</button>
                 </form>
               </div>
             </div>
@@ -347,7 +357,9 @@
     <script src="{{asset('input-mask/jquery.inputmask.date.extensions.js')}}"></script>
     <script src="{{asset('input-mask/jquery.inputmask.extensions.js')}}"></script>
     <script>
-        $('#table').DataTable();
+        $('#table').DataTable( {
+            "paging": false
+        });
         $('li.li').removeClass('active');
         $('li#document').addClass('active');
         $('li#documentList').addClass('active');
@@ -361,6 +373,20 @@
             dateEnd.attr("disabled", this.checked);
             dateStart.attr("disabled", this.checked);
             if (this.checked) {
+                stages.removeAttr("value");
+            }else{
+                dateEnd.attr("value", "");
+                dateStart.attr("value", "");
+            }
+        });
+        $('#filterByDate').on('ifToggled',function () {
+            var stages = $('select#stagesFilter');
+            var dateEnd = $('input#dateEndFilter');
+            var dateStart = $('input#dateStartFilter');
+            stages.attr("disabled", this.checked);
+            dateEnd.attr("disabled", !this.checked);
+            dateStart.attr("disabled", !this.checked);
+            if (!this.checked) {
                 stages.removeAttr("value");
             }else{
                 dateEnd.attr("value", "");

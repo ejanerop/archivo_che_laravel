@@ -29,6 +29,7 @@ Route::resource('research_topic', 'ResearchTopicController');
 Route::resource('user', 'UserController')->middleware('user.has.role:admin');
 
 Route::resource('document', 'DocumentController');
+Route::get('/document_filter', 'DocumentController@filter')->name('document.filter');
 
 Route::resource('document_type', 'DocumentTypeController');
 

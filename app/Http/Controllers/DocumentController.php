@@ -35,11 +35,61 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        return view('document.index', ['documents' => Document::with(['subtopics', 'resources', 'access_level','document_type'])->get(),
+
+        $documents = Document::with(['subtopics', 'resources', 'access_level','document_type'])->paginate(50);
+        return view('document.index', ['documents' => $documents,
                                        'resource_types' => ResourceType::with('document_types')->get(),
                                        'topics' => ResearchTopic::with('subtopics')->get(),
-                                       'stages' => Stage::all()]);
+                                       'stages' => Stage::all(),
+                                       'filtered' => false]);
     }
+
+    public function filter(Request $request)
+    {
+
+        $documents = Document::with(['subtopics', 'resources', 'access_level','document_type']);
+
+        //TODO add si no hay filtro, redirect index
+        $filtered = false;
+
+        if ($request->has('nameFilter')) {
+            $name = $request->input('nameFilter');
+            if (trim($name) != '') {
+                $documents->filterName($name);
+                $filtered = true;
+            }
+        }
+        if ($request->has('document_typesFilter')) {
+            $document_types = $request->input('document_typesFilter');
+            $documents->filterTypes($document_types);
+            $filtered = true;
+        }
+        if ($request->has('stagesFilter')) {
+            $stages = $request->input('stagesFilter');
+            $documents->filterStages($stages);
+            $filtered = true;
+        }
+        if ($request->has('subtopicsFilter')) {
+            $subtopic = $request->input('subtopicsFilter');
+            $documents->filterSubtopics($subtopic);
+            $filtered = true;
+        }
+        if ($request->has('dateStartFilter')) {
+            if ($request->has('dateEndFilter')) {
+                $documents->filterSubtopics($subtopic);
+            $filtered = true;
+            }
+        }
+
+
+        return view('document.index', ['documents' => $documents->paginate(50),
+                                       'resource_types' => ResourceType::with('document_types')->get(),
+                                       'topics' => ResearchTopic::with('subtopics')->get(),
+                                       'stages' => Stage::all(),
+                                       'filtered' => $filtered]);
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
