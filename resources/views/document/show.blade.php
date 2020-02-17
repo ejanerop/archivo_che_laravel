@@ -76,14 +76,14 @@
                     </video>
                 @else
                     <label for="text" hidden>Texto</label>
-                    <embed src="{{asset($mainResource->path)}}" width="500" height="375" type="application/pdf">
+                    <embed src="{{asset($mainResource->path)}}" width="100%" height="700" type="application/pdf">
                 @endif
             </div>
         </div>
     </section>
 
     <script>
-        
+
     </script>
 
 @endsection

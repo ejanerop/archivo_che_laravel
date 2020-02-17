@@ -76,17 +76,22 @@ class DocumentController extends Controller
         }
         if ($request->has('dateStartFilter')) {
             if ($request->has('dateEndFilter')) {
-                $documents->filterSubtopics($subtopic);
-            $filtered = true;
+                $documents->filterDateStart(date('Y-m-d', strtotime($request->input('dateStartFilter'))));
+                $documents->filterDateEnd(date('Y-m-d', strtotime($request->input('dateEndFilter'))));
+                $filtered = true;
             }
         }
 
+        if ($filtered) {
+            return view('document.index', ['documents' => $documents->paginate(50),
+                                           'resource_types' => ResourceType::with('document_types')->get(),
+                                           'topics' => ResearchTopic::with('subtopics')->get(),
+                                           'stages' => Stage::all(),
+                                           'filtered' => $filtered]);
+        }else{
+            return redirect()->route('document.index');
+        }
 
-        return view('document.index', ['documents' => $documents->paginate(50),
-                                       'resource_types' => ResourceType::with('document_types')->get(),
-                                       'topics' => ResearchTopic::with('subtopics')->get(),
-                                       'stages' => Stage::all(),
-                                       'filtered' => $filtered]);
     }
 
 

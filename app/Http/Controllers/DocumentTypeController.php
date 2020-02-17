@@ -102,7 +102,7 @@ class DocumentTypeController extends Controller
         $documentType->document_type = $request->input('document_type');
         $documentType->resource_type()->associate($resource_type);
         $documentType->save();
-        Logger::log('edit', $request->ip(), 'document_type', $documentType->id);
+        Logger::log('update', $request->ip(), 'document_type', $documentType->id);
         return redirect()->route('document_type.index', ['document_types' => DocumentType::all()])->with('success', 'Tipo de documento editado correctamente.');
 
     }

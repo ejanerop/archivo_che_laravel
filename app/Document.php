@@ -33,6 +33,72 @@ class Document extends Model
         return $this->belongsTo('App\Stage', 'stage_id');
     }
 
+    public function getDateFormatedAttribute(){
+        $date = $this->date;
+
+        $year = substr($date, 0, 4);
+        $month = substr($date, 5, 2);
+        $monthText = '';
+        $day = substr($date, 8, 2);
+
+        switch ($month) {
+            case '01':
+                $monthText = 'enero';
+                break;
+
+            case '02':
+                $monthText = 'febrero';
+                break;
+
+            case '03':
+                $monthText = 'marzo';
+                break;
+
+            case '04':
+                $monthText = 'abril';
+                break;
+
+            case '05':
+                $monthText = 'mayo';
+                break;
+
+            case '06':
+                $monthText = 'junio';
+                break;
+
+            case '07':
+                $monthText = 'julio';
+                break;
+
+            case '08':
+                $monthText = 'agosto';
+                break;
+
+            case '09':
+                $monthText = 'septiembre';
+                break;
+
+            case '10':
+                $monthText = 'octubre';
+                break;
+
+            case '11':
+                $monthText = 'noviembre';
+                break;
+
+            case '12':
+                $monthText = 'diciembre';
+                break;
+
+            default:
+                $monthText = 'enero';
+                break;
+        }
+
+
+        return $day . ' de ' . $monthText . ' de ' . $year;
+    }
+
     public function scopeFilterName($query, $name)
     {
         return $query->where('name', 'like', '%'. $name .'%');
@@ -52,7 +118,7 @@ class Document extends Model
 
     public function scopeFilterDateEnd($query, $date)
     {
-        return $query->where('date', '>=', $date);
+        return $query->where('date', '<=', $date);
     }
 
     public function scopeFilterSubtopics($query, $topics)

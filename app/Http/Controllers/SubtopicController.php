@@ -107,7 +107,7 @@ class SubtopicController extends Controller
         $subtopic->research_topic()->associate($research_topic);
         $subtopic->save();
 
-        Logger::log('edit', $request->ip(), 'subtopic', $subtopic->id);
+        Logger::log('update', $request->ip(), 'subtopic', $subtopic->id);
 
         return redirect()->route('subtopic.index')->with('success','El subtema fue editado correctamente.');;
     }
@@ -119,7 +119,7 @@ class SubtopicController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
 
         $subtopic = Subtopic::with('documents')->find($id);

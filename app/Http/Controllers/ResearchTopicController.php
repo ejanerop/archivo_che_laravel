@@ -10,7 +10,7 @@ use App\Util\Logger;
 
 class ResearchTopicController extends Controller
 {
-    
+
     public function __construct() {
         $this->middleware('user.has.role:manager');
     }
@@ -47,12 +47,12 @@ class ResearchTopicController extends Controller
             'research_topic' => 'required|unique:research_topic',
             'description' => 'nullable|max:255'
         ]);
-        $research_topic = new ResearchTopic();
-        $research_topic->research_topic = $request->input('research_topic');
-        $research_topic->description = $request->input('description');
-        $research_topic->save();
+        $researchTopic = new ResearchTopic();
+        $researchTopic->research_topic = $request->input('research_topic');
+        $researchTopic->description = $request->input('description');
+        $researchTopic->save();
 
-        Logger::log('create', $request->ip(), 'research_topic', $research_topic->id);
+        Logger::log('create', $request->ip(), 'research_topic', $researchTopic->id);
 
         return redirect()->route('research_topic.index')->with('success', 'Tema de investigación creado correctamente.');
     }
@@ -97,7 +97,7 @@ class ResearchTopicController extends Controller
         $researchTopic->description = $request->input('description');
         $researchTopic->save();
 
-        Logger::log('edit', $request->ip(), 'research_topic', $research_topic->id);
+        Logger::log('update', $request->ip(), 'research_topic', $researchTopic->id);
 
         return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()]);
     }
@@ -109,14 +109,14 @@ class ResearchTopicController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(ResearchTopic $researchTopic)
+    public function destroy(Request $request, ResearchTopic $researchTopic)
     {
 
         if($researchTopic->subtopics()->count() != 0){
             return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()])->with('error', 'No se puede eliminar, existen subtemas pertenecientes a este tema.');
         }else{
             $researchTopic->delete();
-            Logger::log('delete', $request->ip(), 'research_topic', $research_topic->id);
+            Logger::log('delete', $request->ip(), 'research_topic', $researchTopic->id);
             return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()])->with('success', 'Eliminado correctamente');
 
         }

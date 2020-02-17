@@ -225,7 +225,7 @@
                                     <td>{{$document->name}}</td>
                                     <td>{{$document->description}}</td>
                                     <td>{{$document->document_type->document_type}}</td>
-                                    <td>{{$document->date}}</td>
+                                    <td>{{$document->date_formated}}</td>
                                     <td>{{$document->access_level->name}}</td>
                                     <td>
                                         <form action="{{route('document.destroy', ['document' => $document->id])}}" method="post">
