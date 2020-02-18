@@ -35,20 +35,22 @@
                         <table id="table" class="table table-bordered">
                 <thead>
                     <tr>
+                        <th>Fecha y hora</th>
                         <th>Usuario</th>
-                        <th>Dirección IP</th>
                         <th>Acción</th>
-                        <th>Tabla</th>                        
+                        <th>Tabla</th>
                         <th>Objeto</th>
+                        <th>Dirección IP</th>
                     </tr>
                  </thead>
             @foreach($logs as $log)
                 <tr>
+                    <td>{{$log->created_at}}</td>
                     <td>{{$log->user}}</td>
-                    <td>{{$log->ip_address}}</td>
-                    <td>{{$log->action}}</td>
+                    <td>{{$log->log_type->type}}</td>
                     <td>{{$log->table}}</td>
                     <td>{{$log->object}}</td>
+                    <td>{{$log->ip_address}}</td>
                 </tr>
             @endforeach
         </table>

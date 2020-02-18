@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePetitionsTable extends Migration
+class CreatePetitionTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreatePetitionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('petitions', function (Blueprint $table) {
+        Schema::create('petition_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('petition_state_id');
-            $table->foreign('petition_state_id')->references('id')->on('petition_states');
+            $table->string('slug');
+            $table->string('type');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreatePetitionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('petition');
+        Schema::dropIfExists('petition_types');
     }
 }
