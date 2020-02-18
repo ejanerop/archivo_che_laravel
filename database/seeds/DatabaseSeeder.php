@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LogTypeTableSeeder::class);
         $this->call(PetitionStateTableSeeder::class);
         $this->call(StageTableSeeder::class);
+        $this->call(PetitionTypeTableSeeder::class);
     }
 }
