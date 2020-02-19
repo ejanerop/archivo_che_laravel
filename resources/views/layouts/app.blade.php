@@ -38,7 +38,7 @@
                             </div>
 
                         @else
-                         
+
 
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->username }}  <span class="caret"></span>
@@ -119,7 +119,7 @@
                     <li id="document" class="li treeview">
                         <a href="#"><span>Documentos</span> <span class="fa fa-file-text pull-right"></span></a>
                         <ul class="treeview-menu">
-                            <li id="documentCreate"><a href="{{route('document.create')}}">Nuevo Documento <span class="fa fa-plus pull-right"></span></a></li>     
+                            <li id="documentCreate"><a href="{{route('document.create')}}">Nuevo Documento <span class="fa fa-plus pull-right"></span></a></li>
                             <li id="documentList"><a href="{{route('document.index')}}">Lista de documentos <span class="fa fa-list-ul pull-right"></span></a></li>
                         </ul>
                     </li>
@@ -142,6 +142,12 @@
                         <ul class="treeview-menu">
                             <li id="typeCreate"><a href="{{route('document_type.create')}}">Nuevo tipo de documento<span class="fa fa-plus pull-right"></span></a></li>
                             <li id="typeList"><a href="{{route('document_type.index')}}">Lista de tipos <span class="fa fa-list-ul pull-right"></span></a></li>
+                        </ul>
+                    </li>
+                    <li id="log" class="li treeview">
+                        <a href="#"><span>Actividad de usuarios</span> <span class="fa fa-exchange pull-right"></span></a>
+                        <ul class="treeview-menu">
+                            <li id="typeList"><a href="{{route('log.index')}}">Lista de acciones<span class="fa fa-list-ul pull-right"></span></a></li>
                         </ul>
                     </li>
                     @endif

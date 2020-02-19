@@ -13,7 +13,7 @@ class Logger
 		$log->user = \Illuminate\Support\Facades\Auth::user()->username;
 		$log->ip_address = $ip;
 		$log->log_type()->associate($logType);
-		$log->table = $table;
+		$log->object_table = $table;
 		$log->object = $object;
 		$log->save();
 	}

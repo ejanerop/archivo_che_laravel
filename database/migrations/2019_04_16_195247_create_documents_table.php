@@ -21,7 +21,7 @@ class CreateDocumentsTable extends Migration
             $table->date('date');
             $table->unsignedBigInteger('document_type_id');
             $table->unsignedBigInteger('access_level_id');
-            $table->foreign('document_type_id')->references('id')->on('document_type');
+            $table->foreign('document_type_id')->references('id')->on('document_types');
             $table->foreign('access_level_id')->references('id')->on('access_levels');
             $table->timestamps();
 

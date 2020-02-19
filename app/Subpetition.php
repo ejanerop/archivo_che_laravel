@@ -11,6 +11,6 @@ class Subpetition extends Model
     }
 
     public function petition(){
-		return $this->belongsTo('App\Petition', 'petition_id');
+        return $this->belongsTo('App\Petition', 'petition_id');
     }
 }

@@ -48,8 +48,8 @@
                     <td>{{$log->created_at}}</td>
                     <td>{{$log->user}}</td>
                     <td>{{$log->log_type->type}}</td>
-                    <td>{{$log->table}}</td>
-                    <td>{{$log->object}}</td>
+                    <td>{{$log->object_table}}</td>
+                    <td>{{$log->object_name}}</td>
                     <td>{{$log->ip_address}}</td>
                 </tr>
             @endforeach

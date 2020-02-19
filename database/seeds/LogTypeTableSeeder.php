@@ -61,5 +61,10 @@ class LogTypeTableSeeder extends Seeder
         $logType->slug = 'logout';
 		$logType->type = 'Cierre de sesión';
         $logType->save();
+
+        $logType = new LogType();
+        $logType->slug = 'password_reset';
+		$logType->type = 'Cambio de contraseña';
+        $logType->save();
     }
 }

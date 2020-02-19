@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDocumentType extends Migration
+class CreateResearchTopicsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateDocumentType extends Migration
      */
     public function up()
     {
-        Schema::create('document_type', function (Blueprint $table) {
+        Schema::create('research_topics', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('document_type');
-            $table->unsignedBigInteger('resource_type_id');
-            $table->foreign('resource_type_id')->references('id')->on('resource_type');
+            $table->string('research_topic');
+            $table->string('description')->nullable($value = true);
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateDocumentType extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('document_type');
+        Schema::dropIfExists('research_topics');
     }
 }

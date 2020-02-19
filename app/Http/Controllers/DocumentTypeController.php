@@ -48,7 +48,7 @@ class DocumentTypeController extends Controller
         $resource_type = ResourceType::where('resource_type', $request->input('resource_type'))->first();
 
         $validate = $request->validate([
-            'document_type' => 'required|unique:document_type'
+            'document_type' => 'required|unique:document_types'
         ]);
 
         $document_type = new DocumentType();
@@ -56,7 +56,7 @@ class DocumentTypeController extends Controller
         $document_type->resource_type()->associate($resource_type);
         $document_type->save();
 
-        Logger::log('create', $request->ip(), 'document_type', $document_type->id);
+        Logger::log('create', $request->ip(), 'document_types', $document_type->id);
 
         return redirect()->route('document_type.index')->with('success', 'Tipo de documento creado correctamente.');
     }
@@ -94,7 +94,7 @@ class DocumentTypeController extends Controller
     {
 
         $validate = Validator::make($request->all(),[
-            'document_type' => ['required', Rule::unique('document_type')->ignore($documentType->id)]
+            'document_type' => ['required', Rule::unique('document_types')->ignore($documentType->id)]
         ])->validate();
 
         $resource_type = ResourceType::where('resource_type', $request->input('resource_type'))->first();
@@ -102,7 +102,7 @@ class DocumentTypeController extends Controller
         $documentType->document_type = $request->input('document_type');
         $documentType->resource_type()->associate($resource_type);
         $documentType->save();
-        Logger::log('update', $request->ip(), 'document_type', $documentType->id);
+        Logger::log('update', $request->ip(), 'document_types', $documentType->id);
         return redirect()->route('document_type.index', ['document_types' => DocumentType::all()])->with('success', 'Tipo de documento editado correctamente.');
 
     }
@@ -120,7 +120,7 @@ class DocumentTypeController extends Controller
             return redirect()->route('document_type.index', ['document_types' => DocumentType::all()])->with('error', 'No se puede eliminar. Existen documentos de este tipo.');
         }else{
             $documentType->delete();
-            Logger::log('delete', $request->ip(), 'document_type', $documentType->id);
+            Logger::log('delete', $request->ip(), 'document_types', $documentType->id);
             return redirect()->route('document_type.index', ['document_types' => DocumentType::all()])->with('success', 'Eliminado correctamente');
 
         }

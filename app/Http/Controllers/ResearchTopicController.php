@@ -52,7 +52,7 @@ class ResearchTopicController extends Controller
         $researchTopic->description = $request->input('description');
         $researchTopic->save();
 
-        Logger::log('create', $request->ip(), 'research_topic', $researchTopic->id);
+        Logger::log('create', $request->ip(), 'research_topics', $researchTopic->id);
 
         return redirect()->route('research_topic.index')->with('success', 'Tema de investigación creado correctamente.');
     }
@@ -76,7 +76,7 @@ class ResearchTopicController extends Controller
      */
     public function edit(ResearchTopic $researchTopic)
     {
-        return view('research_topic.edit', ['research_topic' => $researchTopic]);
+        return view('research_topic.edit', ['research_topics' => $researchTopic]);
     }
 
     /**
@@ -97,7 +97,7 @@ class ResearchTopicController extends Controller
         $researchTopic->description = $request->input('description');
         $researchTopic->save();
 
-        Logger::log('update', $request->ip(), 'research_topic', $researchTopic->id);
+        Logger::log('update', $request->ip(), 'research_topics', $researchTopic->id);
 
         return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()]);
     }
@@ -116,7 +116,7 @@ class ResearchTopicController extends Controller
             return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()])->with('error', 'No se puede eliminar, existen subtemas pertenecientes a este tema.');
         }else{
             $researchTopic->delete();
-            Logger::log('delete', $request->ip(), 'research_topic', $researchTopic->id);
+            Logger::log('delete', $request->ip(), 'research_topics', $researchTopic->id);
             return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()])->with('success', 'Eliminado correctamente');
 
         }

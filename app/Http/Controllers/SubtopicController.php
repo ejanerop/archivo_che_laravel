@@ -57,7 +57,7 @@ class SubtopicController extends Controller
         $subtopic->research_topic()->associate($research_topic);
         $subtopic->save();
 
-        Logger::log('create', $request->ip(), 'subtopic', $subtopic->id);
+        Logger::log('create', $request->ip(), 'subtopics', $subtopic->id);
 
         return redirect()->route('subtopic.index')->with('success','El subtema fue creado correctamente.');
     }
@@ -107,7 +107,7 @@ class SubtopicController extends Controller
         $subtopic->research_topic()->associate($research_topic);
         $subtopic->save();
 
-        Logger::log('update', $request->ip(), 'subtopic', $subtopic->id);
+        Logger::log('update', $request->ip(), 'subtopics', $subtopic->id);
 
         return redirect()->route('subtopic.index')->with('success','El subtema fue editado correctamente.');;
     }
@@ -127,7 +127,7 @@ class SubtopicController extends Controller
             return redirect()->route('subtopic.index', ['subtopics' => Subtopic::with('research_topic')->get()])->with('error', 'No se puede eliminar, existen documentos pertenecientes a este tema.');
         }else{
             $subtopic->delete();
-            Logger::log('delete', $request->ip(), 'subtopic', $subtopic->id);
+            Logger::log('delete', $request->ip(), 'subtopics', $subtopic->id);
             return redirect()->route('subtopic.index', ['subtopics' => Subtopic::with('research_topic')->get()])->with('success', 'Eliminado correctamente');
 
         }
