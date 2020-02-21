@@ -47,6 +47,7 @@
                                         <form action="{{route('research_topic.destroy', ['research_topic' => $topic->id])}}" method="post">
                                             @csrf
                                             @method('DELETE')
+                                            <a href="{{route('research_topic.show', ['research_topic' => $topic->id])}}" class="btn btn-xs btn-success"><span class="fa fa-eye" style="margin-right: 2px"></span> Mostrar</a>
                                             <a href="{{route('research_topic.edit', ['research_topic' => $topic->id])}}" class="btn btn-xs btn-info"><span class="fa fa-edit" style="margin-right: 2px"></span> Editar</a>
                                             <button type="submit" class="btn btn-xs btn-danger"  onclick="return confirm('Está seguro que desea eliminar el tema {{$topic->research_topic}}?')"><span class="fa fa-remove" style="margin-right: 2px"></span> Eliminar</button>
                                         </form>

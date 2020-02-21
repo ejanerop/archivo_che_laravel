@@ -18,6 +18,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Request');
     }
 
+    public function getLevelAttribute(){
+        return $this->roles->access_level->level;
+    }
+
     public function hasRole($role){
         if($this->roles()->where('slug',$role)->first()) {
             return true;

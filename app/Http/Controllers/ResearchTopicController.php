@@ -65,7 +65,9 @@ class ResearchTopicController extends Controller
      */
     public function show(ResearchTopic $researchTopic)
     {
-        //todo
+        $subtopics = $researchTopic->subtopics;
+        return view('research_topic.show', ['researchTopic' => $researchTopic,
+                                            'subtopics' => $subtopics]);
     }
 
     /**

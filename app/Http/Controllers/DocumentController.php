@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use phpDocumentor\Reflection\File;
 use App\Util\Logger;
+use \Illuminate\Support\Facades\Auth;
 
 class DocumentController extends Controller
 {
@@ -36,7 +37,7 @@ class DocumentController extends Controller
     public function index()
     {
 
-        $documents = Document::with(['subtopics', 'resources', 'access_level','document_type'])->paginate(50);
+        $documents = Document::with(['subtopics', 'resources', 'access_level','document_type'])->filterAccessLevel(Auth::user()->level)->paginate(50);
         return view('document.index', ['documents' => $documents,
                                        'resource_types' => ResourceType::with('document_types')->get(),
                                        'topics' => ResearchTopic::with('subtopics')->get(),

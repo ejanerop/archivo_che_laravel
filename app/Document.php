@@ -136,4 +136,12 @@ class Document extends Model
         });
     return $query;
     }
+
+    public function scopeFilterAccessLevel($query, $accessLevel)
+    {
+        $query = $query->whereHas('access_level', function ($q) use ($accessLevel) {
+            $q->where('level', '>=',  $accessLevel);
+        });
+    return $query;
+    }
 }
