@@ -13,4 +13,14 @@ class Subpetition extends Model
     public function petition(){
         return $this->belongsTo('App\Petition', 'petition_id');
     }
+
+    public function isType($type){
+        if($this->petition_type->slug == $type){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
 }

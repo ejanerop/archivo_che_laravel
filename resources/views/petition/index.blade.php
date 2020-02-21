@@ -36,17 +36,22 @@
                 <thead>
                     <tr>
                         <th>Usuario</th>
-                        <th>Documento</th>
-                        <th>Estado</th>  
-                        <th>Acción</th> 
+                        <th>Estado</th>
+                        <th>Acción</th>
                     </tr>
                  </thead>
             @foreach($petitions as $petition)
                 <tr>
                     <td>{{$petition->user->username}}</td>
-                    <td>{{$petition->document->name}}</td>
-                    <td>{{$petition->petition_state->state}}</td>
+                    @if($petition->petition_state->slug == 'approved')
+                    <td><span class="label label-success">{{$petition->petition_state->state}}</span></td>
+                    @elseif($petition->petition_state->slug == 'denied')
+                    <td><span class="label label-danger">{{$petition->petition_state->state}}</span></td>
+                    @else
+                    <td><span class="label label-primary">{{$petition->petition_state->state}}</span></td>
+                    @endif
                     <td>
+                        <a href="{{route('petition.show' , ['petition' => $petition])}}" class="btn btn-xs btn-info"><span class="fa fa-eye" style="margin-right: 2px"></span> Mostrar</a>
                         <a href="{{route('petition.accept' , ['petition' => $petition])}}" class="btn btn-xs btn-success"><span class="fa fa-check" style="margin-right: 2px"></span> Aprobar</a>
                         <a href="{{route('petition.deny' , ['petition' => $petition])}}" class="btn btn-xs btn-danger"><span class="fa fa-close" style="margin-right: 2px"></span> Denegar</a>
                     </td>

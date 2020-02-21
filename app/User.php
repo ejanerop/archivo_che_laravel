@@ -14,12 +14,16 @@ class User extends Authenticatable
         return $this->belongsTo('App\Role', 'role_id');
     }
 
-    public function requests(){
-        return $this->hasMany('App\Request');
+    public function petitions(){
+        return $this->hasMany('App\Petition');
     }
 
     public function getLevelAttribute(){
         return $this->roles->access_level->level;
+    }
+
+    public function getPetitionCountAttribute(){
+        return User::withCount('petitions')->where('id', $this->id)->first()->petitions_count;
     }
 
     public function hasRole($role){

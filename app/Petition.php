@@ -15,6 +15,6 @@ class Petition extends Model
     }
 
     public function subpetitions(){
-		return $this->hasMany('App\PetitionType', 'petition_id');
+		return $this->hasMany('App\Subpetition', 'petition_id');
     }
 }

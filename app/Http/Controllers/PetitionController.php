@@ -2,9 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\DocumentType;
 use App\Petition;
 use App\PetitionState;
+use App\PetitionType;
+use App\ResourceType;
+use App\ResearchTopic;
+use App\Stage;
+use App\Rules\DateNow;
+use App\Rules\DateString;
+use App\Subpetition;
+use App\Subtopic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PetitionController extends Controller
 {
@@ -15,7 +26,7 @@ class PetitionController extends Controller
      */
     public function index()
     {
-        return view('petition.index',['petitions'=> Petition::with(['document', 'petition_state', 'user'])->get()]);
+        return view('petition.index',['petitions'=> Petition::with(['petition_state', 'user'])->get()]);
     }
 
 
@@ -51,29 +62,117 @@ class PetitionController extends Controller
         $petition->petition_state()->dissociate();
         $petition->petition_state()->associate($petitionState);
         $petition->save();
-        
+
         return redirect()->route('petition.index')->with('success','La solicitud fue denegada correctamente.');
+    }
+
+ /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('petition.create', [
+            'resourceTypes' => ResourceType::with('document_types')->get(),
+            'topics' => ResearchTopic::with('subtopics')->get(),
+            'stages' => Stage::all()
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'subtopics' => 'required_without_all:documentTypes,stages,dateStart,dateEnd',
+            'documentTypes' => 'required_without_all:subtopics,stages,dateStart,dateEnd',
+            'stages' => 'required_without_all:documentTypes,subtopics,dateStart,dateEnd',
+            'dateStart' => [new DateString(), new DateNow(), 'required_with:dateEnd', 'required_without_all:documentTypes,stages,subtopics'],
+            'dateEnd' => [new DateString(), new DateNow(), 'required_with:dateStart', 'required_without_all:documentTypes,stages,subtopics']
+        ])->validate();
+
+
+        $user = Auth::user();
+
+        if($user->petition_count > 5){
+            return redirect()->route('home');
+        }else{
+            $petition = new Petition();
+            $petition->user()->associate($user);
+            $petition->petition_state()->associate(PetitionState::where('slug', 'made')->first());
+            $petition->save();
+
+            if ($request->has('subtopics')){
+                foreach ($request->input('subtopics') as $subtopic) {
+                    $topic = Subtopic::where('name', $subtopic)->first();
+                    $subpetition = new Subpetition();
+                    $subpetition->petition_type()->associate(PetitionType::where('slug', 'subtopic')->first());
+                    $subpetition->petition()->associate($petition);
+                    $subpetition->object_id = $topic->id;
+                    $subpetition->save();
+                }
+            }
+
+            if ($request->has('documentTypes')){
+                foreach ($request->input('documentTypes') as $documentType) {
+                    $documentType = DocumentType::where('document_type', $documentType)->first();
+                    $subpetition = new Subpetition();
+                    $subpetition->petition_type()->associate(PetitionType::where('slug', 'document_type')->first());
+                    $subpetition->petition()->associate($petition);
+                    $subpetition->object_id = $documentType->id;
+                    $subpetition->save();
+                }
+            }
+
+            if ($request->has('stages')){
+                foreach ($request->input('stages') as $stage) {
+                    $stage = Stage::where('name', $stage)->first();
+                    $subpetition = new Subpetition();
+                    $subpetition->petition_type()->associate(PetitionType::where('slug', 'stage')->first());
+                    $subpetition->petition()->associate($petition);
+                    $subpetition->object_id = $stage->id;
+                    $subpetition->save();
+                }
+            }elseif($request->has('dateStart')){
+                //
+            }
+
+            return redirect()->route('home');
+        }
+
     }
 
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show(Request $request, Petition $petition)
     {
-        //
+        $petition->load('subpetitions', 'user', 'petition_state');
+        $subpetitions = $petition->subpetitions;
+        $stages = Stage::all();
+        $documentTypes = DocumentType::all();
+        $subtopics = Subtopic::all();
+        return view('petition.show', ['petition' => $petition,
+                                      'subpetitions' => $subpetitions,
+                                      'stages' => $stages,
+                                      'documentTypes' => $documentTypes,
+                                      'subtopics' => $subtopics]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, Petition $petition)
     {
         //
     }
