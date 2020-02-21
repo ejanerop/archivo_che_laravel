@@ -176,6 +176,7 @@ class DocumentController extends Controller
         $resource->description = $request->input('resource_description');
         $resource->save();
 
+        Logger::log('create', $request->ip(), 'documents', $document->id, $document->name);
 
         return redirect()->route('document.index')->with('success','El documento fue creado correctamente.');
     }
@@ -209,13 +210,7 @@ class DocumentController extends Controller
     public function edit($id)
     {
         $document = Document::with('subtopics')->find($id);
-        $text = null;
-        foreach ($document->resources as $res){
-            if($res->type == 'text'){
-                $text = $res->text;
-            }
-        }
-        $resource = Resource::with('text')->where('type','<>','facsim')->first();
+        $resource = Resource::where('type','<>','facsim')->first();
         $subtopics = [];
         $i = 0;
         foreach ($document->subtopics as $subtopic){
@@ -225,8 +220,7 @@ class DocumentController extends Controller
             'resource_types' => ResourceType::with('document_types')->get(),
             'topics' => ResearchTopic::with('subtopics')->get(),
             'access_levels' => AccessLevel::all(),
-            'subtopics' => $subtopics,
-            'text' => $text]);
+            'subtopics' => $subtopics]);
     }
 
     /**
@@ -243,7 +237,7 @@ class DocumentController extends Controller
             'subtopics' => 'required',
             'date' =>['required' , new DateString(), new DateNow()],
             'facsim' => 'required_with:hasFacsim|mimetypes:image/*',
-            'resource' => 'mimetypes:video/*,audio/*,image/*'
+            'resource' => 'mimetypes:video/*,audio/*,image/*,application/pdf'
         ])->validate();
 
 
@@ -292,33 +286,19 @@ class DocumentController extends Controller
         }
 
         $type = $request->input('type');
-        if($type == 'text'){
-            foreach($document->resources as $res){
-                if($res->type == 'text'){
-                    $txt = $res->text;
-                    $res->delete();
-                    $txt->delete();
-                }
-            }
-            $text = new Text();
-            $text->text = $request->input('text');
-            $text->save();
-            $resource->type = 'text';
 
-            $resource->text()->associate($text);
-            $resource->document()->associate($document);
-            $resource->save();
-            if($request->hasFile('facsim')){
-                $pathFacsim = Storage::disk('public')->putFile('facsim', $request->file('facsim'));
-                $facsim = new Resource();
-                $facsim->type = 'facsim';
-                $facsim->src = $pathFacsim;
-                $facsim->document()->associate($document);
-                $facsim->save();
-            }
+        if($request->hasFile('facsim')){
+            $pathFacsim = Storage::disk('public')->putFile('facsim', $request->file('facsim'));
+            $facsim = new Resource();
+            $facsim->type = 'facsim';
+            $facsim->src = $pathFacsim;
+            $facsim->document()->associate($document);
+            $facsim->save();
         }
 
         $document->save();
+
+        Logger::log('update', $request->ip(), 'documents', $document->id, $document->name);
 
         return redirect()->route('document.index')->with('success','El documento fue editado correctamente.');
 
@@ -331,23 +311,18 @@ class DocumentController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $document = Document::with('resources')->find($id);
         $document->subtopics()->detach();
         foreach($document->resources as $resource){
-            if($resource->type == 'text'){
-                $id = $resource->text->id;
-                $resource->text()->dissociate();
-                $text = Text::find($id);
-                $resource->delete();
-                $text->delete();
-            }else{
-                Storage::disk('public')->delete($resource->src);
-                $resource->delete();
-            }
+            Storage::disk('public')->delete($resource->src);
+            $resource->delete();
         }
         $document->delete();
+
+        Logger::log('update', $request->ip(), 'documents', $document->id, $document->name);
+
         return redirect()->route('document.index')->with('success','El documento fue eliminado correctamente.');
 
     }

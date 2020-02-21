@@ -36,7 +36,6 @@
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
                                     <li id="li1" class="active"><a href="#tab_1" onclick="toggleTab(1)" data-toggle="tab" aria-expanded="false">General</a></li>
-                                    <li id="li2"><a href="#tab_2" onclick="toggleTab(2)" data-toggle="tab" aria-expanded="false">Texto</a></li>
                                     <li id="li3"><a href="#tab_3" onclick="toggleTab(3)" data-toggle="tab" aria-expanded="true">Recursos</a></li>
                                 </ul>
                                 <div class="tab-content">
@@ -109,12 +108,7 @@
                                             <!--  Recursos secundarios -->
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="tab_2">
-                                        <label for="text">Texto</label>
-                                        <textarea id="text" name="text" class="text_area">
-                                            {{isset($text)?$text->text:''}}
-                                        </textarea>
-                                    </div>
+
                                     <div class="tab-pane" id="tab_3">
                                         <div class="row">
                                             <div class="col-md-6"></div>
@@ -129,7 +123,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group {{$errors->has('resource')?'has-error':''}}">
                                                     <label for="resource">Recurso principal</label>
-                                                    <input id="resource" name="resource" type="file" class="form-control" accept="image/*" disabled>
+                                                    <input id="resource" name="resource" type="file" class="form-control" accept="image/*">
                                                     <p class="help-block">Si deja en blanco este campo, se mantendrá el recurso principal existente.</p>
                                                 </div>
                                                 <div class="form-group">
@@ -165,15 +159,6 @@
     <script src="{{asset('input-mask/jquery.inputmask.date.extensions.js')}}"></script>
     <script src="{{asset('input-mask/jquery.inputmask.extensions.js')}}"></script>
     <script>
-        $('.text_area').richText({
-            urls: false,
-            table: false,
-            fontColor: false,
-            fontSize: false,
-            imageUpload: false,
-            fileUpload: false,
-            videoEmbed: false
-        });
         $('#subtopics').select2();
         $('li.li').removeClass('active');
         $('li#document').addClass('active');
@@ -192,16 +177,12 @@
             var hasFacsim = $('#hasFacsim');
             var facsim = $('input#facsim');
             var type = $('input#type');
-            var tabText = $('li#li2');
             if(optSelected.hasClass('Texto')){
-                tabText.removeClass('hidden');
-                inputResources.attr("disabled", true);
-                descResources.attr("disabled", true);
                 hasFacsim.iCheck('enable');
                 hasFacsim.iCheck('uncheck');
+                inputResources.attr("accept", "application/pdf");
                 type.attr('value', 'text');
             }else{
-                tabText.addClass('hidden');
                 inputResources.attr("disabled", false);
                 descResources.attr("disabled", false);
                 hasFacsim.iCheck('disable');

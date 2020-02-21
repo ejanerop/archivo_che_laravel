@@ -140,7 +140,7 @@ class Document extends Model
     public function scopeFilterAccessLevel($query, $accessLevel)
     {
         $query = $query->whereHas('access_level', function ($q) use ($accessLevel) {
-            $q->where('level', '>=',  $accessLevel);
+            $q->where('level', '<=',  $accessLevel);
         });
     return $query;
     }

@@ -41,7 +41,7 @@ class UserController extends Controller
         $user->roles()->associate($role);
         $user->save();
 
-        Logger::log('create', $request->ip(), 'users', $user->id);
+        Logger::log('create', $request->ip(), 'users', $user->id, $user->username);
 
         return redirect()->route('user.index');
     }
@@ -71,18 +71,18 @@ class UserController extends Controller
         $user->roles()->associate($role);
         $user->save();
 
-        Logger::log('edit', $request->ip(), 'users', $user->id);
+        Logger::log('edit', $request->ip(), 'users', $user->id, $user->username);
 
         return redirect()->route('user.index')->with('success','El usuario fue modificado correctamente.');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $user = User::find($id);
-
+        $name = $user->username;
         $user->delete();
 
-        Logger::log('delete', $request->ip(), 'users', $user->id);
+        Logger::log('delete', $request->ip(), 'users', $user->id, $name);
 
         return redirect()->route('user.index')->with('success','El usuario ha sido eliminado correctamente.');
     }
@@ -102,7 +102,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->input('password'));
         $user->save();
 
-        Logger::log('password_change', $request->ip(), 'users', $user->id);
+        Logger::log('password_change', $request->ip(), 'users', $user->id, $user->username);
 
         return redirect()->route('user.profile', ['user' => User::with('roles')->find($id)])->with('success','La cotraseña se ha cambiado correctamente.');
 
