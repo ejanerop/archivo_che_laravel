@@ -17,10 +17,14 @@
     <section class="content">
         <div class="box box-primary">
             <div class="box-header">
+                <a href="" class="btn btn-danger pull-left">
+                    <span class="fa fa-remove"></span>
+                    {{ __('Atras') }}
+                </a>
             </div>
             <div class="box-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="user">Usuario</label>
                         <input type="text" id="user" name="user" class="form-control" value="{{$petition->user->username}}" readonly>
@@ -35,13 +39,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="tableSubtopics">Subtemas</label>
-                        <table id="tableSubtopics" class="table table-bordered">
+                        <label for="tableSubtopics">Subtemas   <a href="">(Editar)</a></label>
+                        <table id="tableSubtopics" class="table table-bordered table-hover">
                             <tbody>
-                                @foreach ($subtopics as $subtopic)
-                                    @if ($subtopic->isInPetition($petition))
+                                @foreach ($subpetitions as $subpetition)
+                                    @if ($subpetition->object_type == 'subtopic')
                                     <tr>
-                                        <td>{{$subtopic->name}}</td>
+                                        <td>{{$subpetition->object->name}}</td>
                                     </tr>
                                     @endif
                                 @endforeach
@@ -49,13 +53,13 @@
                         </table>
                     </div>
                     <div class="col-md-4">
-                        <label for="tableStages">Etapas</label>
-                        <table id="tableStages" class="table table-bordered">
+                        <label for="tableStages">Etapas   <a href="">(Editar)</a></label>
+                        <table id="tableStages" class="table table-bordered table-hover">
                             <tbody>
-                                @foreach ($stages as $stage)
-                                    @if ($stage->isInPetition($petition))
+                                @foreach ($subpetitions as $subpetition)
+                                    @if ($subpetition->object_type == 'stage')
                                     <tr>
-                                        <td>{{$stage->name}}</td>
+                                        <td>{{$subpetition->object->name}}</td>
                                     </tr>
                                     @endif
                                 @endforeach
@@ -63,18 +67,36 @@
                         </table>
                     </div>
                     <div class="col-md-4">
-                        <label for="tableDocumentTypes">Tipos de documentos</label>
-                        <table id="tableDocumentTypes" class="table table-bordered">
+                        <label for="tableDocumentTypes">Tipos de documentos   <a href="">(Editar)</a></label>
+                        <table id="tableDocumentTypes" class="table table-bordered table-hover">
                             <tbody>
-                                @foreach ($documentTypes as $documentType)
-                                    @if ($documentType->isInPetition($petition))
+                                @foreach ($subpetitions as $subpetition)
+                                    @if ($subpetition->object_type == 'document_type')
                                     <tr>
-                                        <td>{{$documentType->document_type}}</td>
+                                        <td>{{$subpetition->object->document_type}}</td>
                                     </tr>
                                     @endif
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="btn'group"></div>
+                            <a href="{{route('petition.deny' , ['petition' => $petition])}}" class="btn btn-danger">
+                                <span class="fa fa-times-circle-o"></span>
+                                {{ __('Denegar') }}
+                            </a>
+                            <a href="{{route('petition.accept' , ['petition' => $petition])}}" class="btn btn-success">
+                                <span class="fa fa-check-circle-o"></span>
+                                {{ __('Aprobar') }}
+                            </a>
+                        </div>
+                        <div class="col-md-2">
+
+                        </div>
                     </div>
                 </div>
             </div>

@@ -3,9 +3,7 @@
 @section('content')
 
     <section class="content-header">
-        <div class="container">
-            <h3>Tipos de documento</h3>
-        </div>
+        <div class="container"><h3>Tipos de documento</h3></div>
     </section>
 
     <section class="content">

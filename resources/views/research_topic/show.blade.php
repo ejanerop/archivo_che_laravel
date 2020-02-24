@@ -31,9 +31,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="description">Descripción</label>
-                                <textarea id="description" name="description" class="form-control" rows="4" style="resize: none" placeholder="Descripción del tema">
-                                    {{$researchTopic->description}}
-                                </textarea>
+                                <textarea id="description" name="description" class="form-control" rows="4" style="resize: none" placeholder="Descripción del tema" readonly>{{$researchTopic->description}}</textarea>
                             </div>
                             <table class="table table-bordered">
                                 <thead>

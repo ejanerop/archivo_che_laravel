@@ -109,10 +109,11 @@ return [
         'research_topic' => 'tema de investigación',
         'document_type' => 'tipo de documento',
         'name' => 'nombre',
-        'subtopics' => 'subtemas',
+        'subtopics' => 'subtemas de investigación',
         'date' => 'fecha',
         'password' => 'contraseña',
-        'username' => 'nombre de usuario'
+        'username' => 'nombre de usuario',
+        'resource' => 'recurso principal'
     ],
 
 ];

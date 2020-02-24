@@ -36,15 +36,12 @@
                                     <textarea id="description" name="description" class="form-control" rows="3" placeholder="Descripción del tema" style="resize: none; display: inline-block">{{$subtopic->description}}</textarea>
                             </div>
                             <div class="form-group">
-                                <div class="input-group">
-                                    <label for="research_topic">Tema de investigación relacionado</label>
-                                    <select id="research_topic" name="research_topic" class="form-control">
-                                        @foreach($research_topics as $topic)
-                                            <option id="{{$topic->id}}">{{$topic->research_topic}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
+                                <label for="research_topic">Tema de investigación relacionado</label>
+                                <select id="research_topic" name="research_topic" class="form-control">
+                                    @foreach($research_topics as $topic)
+                                        <option id="{{$topic->id}}">{{$topic->research_topic}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="box-footer">
                                 <a href="{{route('subtopic.index')}}" class="btn btn-danger pull-left">

@@ -78,7 +78,7 @@ class ResearchTopicController extends Controller
      */
     public function edit(ResearchTopic $researchTopic)
     {
-        return view('research_topic.edit', ['research_topics' => $researchTopic]);
+        return view('research_topic.edit', ['researchTopic' => $researchTopic]);
     }
 
     /**
@@ -91,7 +91,7 @@ class ResearchTopicController extends Controller
     public function update(Request $request, ResearchTopic $researchTopic)
     {
         $validate = Validator::make($request->all(),[
-            'research_topic' => ['required', Rule::unique('research_topic')->ignore($researchTopic->id)],
+            'research_topic' => ['required', Rule::unique('research_topics')->ignore($researchTopic->id)],
             'description' => ['nullable', 'max:255']
         ])->validate();
 

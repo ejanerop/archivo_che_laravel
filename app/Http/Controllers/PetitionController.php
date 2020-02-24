@@ -111,8 +111,8 @@ class PetitionController extends Controller
                 foreach ($request->input('subtopics') as $subtopic) {
                     $topic = Subtopic::where('name', $subtopic)->first();
                     $subpetition = new Subpetition();
-                    $subpetition->petition_type()->associate(PetitionType::where('slug', 'subtopic')->first());
                     $subpetition->petition()->associate($petition);
+                    $subpetition->object_type ='subtopic';
                     $subpetition->object_id = $topic->id;
                     $subpetition->save();
                 }
@@ -122,8 +122,8 @@ class PetitionController extends Controller
                 foreach ($request->input('documentTypes') as $documentType) {
                     $documentType = DocumentType::where('document_type', $documentType)->first();
                     $subpetition = new Subpetition();
-                    $subpetition->petition_type()->associate(PetitionType::where('slug', 'document_type')->first());
                     $subpetition->petition()->associate($petition);
+                    $subpetition->object_type = 'document_type';
                     $subpetition->object_id = $documentType->id;
                     $subpetition->save();
                 }
@@ -133,8 +133,8 @@ class PetitionController extends Controller
                 foreach ($request->input('stages') as $stage) {
                     $stage = Stage::where('name', $stage)->first();
                     $subpetition = new Subpetition();
-                    $subpetition->petition_type()->associate(PetitionType::where('slug', 'stage')->first());
                     $subpetition->petition()->associate($petition);
+                    $subpetition->object_type = 'stage';
                     $subpetition->object_id = $stage->id;
                     $subpetition->save();
                 }

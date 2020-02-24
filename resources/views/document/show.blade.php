@@ -63,7 +63,7 @@
             </div>
             <div class="box-footer">
                 @if($document->document_type->resource_type->resource_type == 'Imagen')
-                    <img src="{{asset($mainResource->path)}}" alt="sd">
+                    <img src="{{asset($mainResource->path)}}" alt="sd" width="100%">
                 @elseif($document->document_type->resource_type->resource_type == 'Audio')
                     <audio controls>
                         <source src="{{asset($mainResource->path)}}" type="audio/mpeg">

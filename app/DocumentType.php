@@ -15,16 +15,8 @@ class DocumentType extends Model
         return $this->belongsTo('App\ResourceType', 'resource_type_id');
     }
 
-    public function isInPetition(Petition $petition){
-        $result = false;
-        $subpetitions = $petition->subpetitions;
-        foreach ($subpetitions as $subpetition) {
-            if ($subpetition->isType('document_type')) {
-                if ($subpetition->object_id == $this->id) {
-                    $result = true;
-                }
-            }
-        }
-        return $result;
+    public function subpetitions()
+    {
+        return $this->morphMany('App\Subpetition', 'object');
     }
 }

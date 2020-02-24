@@ -125,7 +125,7 @@ class DocumentController extends Controller
             'author' => 'required',
             'date' =>['required' , new DateString(), new DateNow()],
             'facsim' => 'required_with:hasFacsim',
-            'resource' => 'mimetypes:video/*,audio/*,image/*,application/pdf'
+            'resource' => 'required|mimetypes:video/*,audio/*,image/*,application/pdf'
         ])->validate();
 
 

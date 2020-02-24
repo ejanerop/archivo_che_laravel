@@ -44,11 +44,11 @@
                                                <div class="col-md-12">
                                                    <div class="form-group {{$errors->has('name')?'has-error':''}}">
                                                        <label for="name">Nombre</label>
-                                                       <input id="name" name="name" type="text" class="form-control" placeholder="Título del documento" required>
+                                                   <input id="name" name="name" type="text" class="form-control" placeholder="Título del documento" value="{{old('name')}}" required>
                                                    </div>
                                                    <div class="form-group {{$errors->has('description')?'has-error':''}}">
                                                        <label for="description">Descripción</label>
-                                                       <textarea id="description" name="description" rows="5" class="form-control" style="resize:none" placeholder="Descripción"></textarea>
+                                                       <textarea id="description" name="description" rows="5" class="form-control" style="resize:none" placeholder="Descripción">{{old('description')}}</textarea>
                                                    </div>
                                                </div>
                                            </div>
@@ -56,7 +56,7 @@
                                                <div class="col-md-6">
                                                    <div class="form-group {{$errors->has('date')?'has-error':''}}">
                                                        <label for="date">Fecha</label>
-                                                       <input type="text" id="date" name="date" class="form-control" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask>
+                                                       <input type="text" id="date" name="date" class="form-control" data-inputmask="'alias': 'dd-mm-yyyy'" value="{{old('date')}}" data-mask>
                                                    </div>
                                                    <div class="form-group">
                                                        <label for="document_type">Tipo de documento</label>
@@ -74,7 +74,7 @@
                                                <div class="col-md-6">
                                                    <div class="form-group">
                                                        <label for="date">Autor</label>
-                                                       <input type="text" id="author" name="author" class="form-control" placeholder="Autor del documento" required>
+                                                       <input type="text" id="author" name="author" class="form-control" placeholder="Autor del documento" value="{{old('author')}}" required>
                                                    </div>
                                                    <div class="form-group">
                                                        <label for="access_level">Nivel de acceso</label>
@@ -210,9 +210,32 @@
                 },
                 date: {
                     required: true
+                },
+                author: {
+                    required: true
+                },
+                subtopics: {
+                    required: true
                 }
             },
-            messages: {}
+            messages: {
+                name: {
+                    required: "Debe llenar este campo",
+                    maxlength: "El nombre del documento no puede exceder los 191 caracteres"
+                },
+                date: {
+                    required: "Debe llenar este campo"
+                },
+                author: {
+                    required: "Debe llenar este campo"
+                },
+                description: {
+                    maxlength: "La descripción no puede ser mayor de 255 caracteres"
+                },
+                subtopics: {
+                    required: "Debe seleccionar al menos un subtema"
+                }
+            }
         });
 
         function toggleTab(tab) {

@@ -17,9 +17,8 @@ class CreateSubpetitionsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('petition_id');
             $table->foreign('petition_id')->references('id')->on('petitions');
-            $table->unsignedBigInteger('petition_type_id');
-            $table->foreign('petition_type_id')->references('id')->on('petition_types');
             $table->integer('object_id');
+            $table->string('object_type');
             $table->timestamps();
         });
     }
