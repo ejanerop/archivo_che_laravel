@@ -17,8 +17,8 @@
     <section class="content">
         <div class="box box-primary">
             <div class="box-header">
-                <a href="" class="btn btn-danger pull-left">
-                    <span class="fa fa-remove"></span>
+                <a href="" class="btn btn-primary pull-left">
+                    <span class="fa fa-reply"></span>
                     {{ __('Atras') }}
                 </a>
             </div>

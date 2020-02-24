@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="{{ asset('select2/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/adminLTE/AdminLTE.min.css') }}">
     <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('ionicons/css/ionicons.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('richtext/richtext.min.css') }}">
 
