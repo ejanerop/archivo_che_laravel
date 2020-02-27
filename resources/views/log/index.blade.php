@@ -48,9 +48,9 @@
                     <td>{{$log->created_at}}</td>
                     <td>{{$log->user}}</td>
                     <td>{{$log->log_type->type}}</td>
-                    <td>{{$log->object_table}}</td>
+                    <td>{{$log->table_name}}</td>
                     <td>{{$log->object_name}}</td>
-                    <td>{{$log->ip_address}}</td>
+                    <td>{{$log->ip_add}}</td>
                 </tr>
             @endforeach
         </table>
@@ -64,8 +64,8 @@
         $(function () {
             $('#table').DataTable();
             $('li.li').removeClass('active');
-            $('li#document_type').addClass('active');
-            $('li#typeList').addClass('active');
+            $('li#log').addClass('active');
+            $('li#logList').addClass('active');
         });
     </script>
 

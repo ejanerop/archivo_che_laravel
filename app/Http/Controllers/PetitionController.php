@@ -13,6 +13,7 @@ use App\Rules\DateNow;
 use App\Rules\DateString;
 use App\Subpetition;
 use App\Subtopic;
+use App\Util\Logger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -43,6 +44,7 @@ class PetitionController extends Controller
         $petition->petition_state()->dissociate();
         $petition->petition_state()->associate($petitionState);
         $petition->save();
+        Logger::log('permit', '', '', '', '');
 
         return redirect()->route('petition.index')->with('success','La solicitud fue aceptada correctamente.');
     }
@@ -62,6 +64,7 @@ class PetitionController extends Controller
         $petition->petition_state()->dissociate();
         $petition->petition_state()->associate($petitionState);
         $petition->save();
+        Logger::log('deny', '', '', '');
 
         return redirect()->route('petition.index')->with('success','La solicitud fue denegada correctamente.');
     }
@@ -106,6 +109,7 @@ class PetitionController extends Controller
             $petition->user()->associate($user);
             $petition->petition_state()->associate(PetitionState::where('slug', 'made')->first());
             $petition->save();
+            Logger::log('request', '', '', '');
 
             if ($request->has('subtopics')){
                 foreach ($request->input('subtopics') as $subtopic) {
@@ -157,14 +161,28 @@ class PetitionController extends Controller
     {
         $petition->load('subpetitions', 'user', 'petition_state');
         $subpetitions = $petition->subpetitions;
-        $stages = Stage::all();
-        $documentTypes = DocumentType::all();
-        $subtopics = Subtopic::all();
+        $stagesSelected = [];
+        $documentTypesSelected = [];
+        $subtopicsSelected = [];
+
+        foreach ($subpetitions as $subpetition) {
+            if ($subpetition->object_type == 'stage') {
+                array_push($stagesSelected, $subpetition->object->id);
+            } elseif ($subpetition->object_type == 'document_type') {
+                array_push($documentTypesSelected, $subpetition->object->id);
+            } else {
+                array_push($subtopicsSelected, $subpetition->object->id);
+            }
+        }
+
         return view('petition.show', ['petition' => $petition,
                                       'subpetitions' => $subpetitions,
-                                      'stages' => $stages,
-                                      'documentTypes' => $documentTypes,
-                                      'subtopics' => $subtopics]);
+                                      'stages' => Stage::all(),
+                                      'resourceTypes' => ResourceType::with('document_types')->get(),
+                                      'topics' => ResearchTopic::with('subtopics')->get(),
+                                      'stagesSelected' => $stagesSelected,
+                                      'documentTypesSelected' => $documentTypesSelected,
+                                      'subtopicsSelected' => $subtopicsSelected]);
     }
 
     /**

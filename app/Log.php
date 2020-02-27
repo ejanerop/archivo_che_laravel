@@ -30,56 +30,35 @@ class Log extends Model
         //TODO
     }
 
-    /*public function getObjectNameAttribute(){
-
-        $objectName = 'probando';
-        $id = intval($this->object);
+    public function getTableNameAttribute(){
+        $tableName = '';
 
         switch ($this->object_table) {
-
             case 'documents':
-                try {
-                    $objectName = Document::findOrFail($id)->name;
-                } catch (ModelNotFoundException $th) {
-                    $objectName = 'No encontrado';
-                }
-                break;
-
-            case 'document_types':
-                try {
-                    $objectName = DocumentType::findOrFail($id)->document_type;
-                } catch (ModelNotFoundException $th) {
-                    $objectName = 'No encontrado';
-                }
+                $tableName ='Documentos';
                 break;
 
             case 'research_topics':
-                try {
-                    $objectName = ResearchTopic::findOrFail($id)->research_topic;
-                } catch (ModelNotFoundException $th) {
-                    $objectName = 'No encontrado';
-                }
+                $tableName ='Temas de investigación';
                 break;
 
             case 'subtopics':
-                try {
-                    $objectName = Subtopic::findOrFail($id)->name;
-                } catch (ModelNotFoundException $th) {
-                    $objectName = 'No encontrado';
-                }
+                $tableName ='Subtemas de investigación';
                 break;
 
-            case 'users':
-                try {
-                    $objectName = User::findOrFail($id)->username;
-                } catch (ModelNotFoundException $th) {
-                    $objectName = 'No encontrado';
-                }
+            case 'document_types':
+                $tableName ='Tipos de documentos';
                 break;
 
             default:
+                $tableName ='';
                 break;
         }
-        return $objectName;
-    }*/
+        return $tableName;
+    }
+
+    public function getIpAddAttribute(){
+        return $this->ip_address == '::1' ? '127.0.0.1': $this->ip_address;
+    }
+
 }

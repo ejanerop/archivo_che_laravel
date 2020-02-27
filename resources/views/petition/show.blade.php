@@ -17,7 +17,7 @@
     <section class="content">
         <div class="box box-primary">
             <div class="box-header">
-                <a href="" class="btn btn-primary pull-left">
+                <a href="{{route('petition.index')}}" class="btn btn-primary pull-left">
                     <span class="fa fa-reply"></span>
                     {{ __('Atras') }}
                 </a>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="tableSubtopics">Subtemas   <a href="">(Editar)</a></label>
+                        <label for="tableSubtopics">Subtemas</label>
                         <table id="tableSubtopics" class="table table-bordered table-hover">
                             <tbody>
                                 @foreach ($subpetitions as $subpetition)
@@ -53,7 +53,7 @@
                         </table>
                     </div>
                     <div class="col-md-4">
-                        <label for="tableStages">Etapas   <a href="">(Editar)</a></label>
+                        <label for="tableStages">Etapas</label>
                         <table id="tableStages" class="table table-bordered table-hover">
                             <tbody>
                                 @foreach ($subpetitions as $subpetition)
@@ -67,7 +67,7 @@
                         </table>
                     </div>
                     <div class="col-md-4">
-                        <label for="tableDocumentTypes">Tipos de documentos   <a href="">(Editar)</a></label>
+                        <label for="tableDocumentTypes">Tipos de documentos</label>
                         <table id="tableDocumentTypes" class="table table-bordered table-hover">
                             <tbody>
                                 @foreach ($subpetitions as $subpetition)
@@ -86,11 +86,15 @@
                         <div class="col-md-10">
                             <div class="btn'group"></div>
                             <a href="{{route('petition.deny' , ['petition' => $petition])}}" class="btn btn-danger">
-                                <span class="fa fa-times-circle-o"></span>
+                                <span class="fa fa-times"></span>
                                 {{ __('Denegar') }}
                             </a>
+                            <a href="" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">
+                                <span class="fa fa-edit"></span>
+                                {{ __('Editar y Aprobar') }}
+                            </a>
                             <a href="{{route('petition.accept' , ['petition' => $petition])}}" class="btn btn-success">
-                                <span class="fa fa-check-circle-o"></span>
+                                <span class="fa fa-check"></span>
                                 {{ __('Aprobar') }}
                             </a>
                         </div>
@@ -101,6 +105,78 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade in" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                  <h4 class="modal-title">Editar petición</h4>
+                </div>
+                <div class="modal-body">
+                  <form action="" method="POST">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="document_types">Tipos de documento</label>
+                                <select id="document_types" name="document_types[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona los tipos de documento" style="width: 100%">
+                                  @foreach($resourceTypes as $resType)
+                                  <optgroup class="optgroup" label="{{$resType->resource_type}}">
+                                    @foreach($resType->document_types as $docType)
+                                    <option class="opt" id="{{$docType->id}}" {{in_array($docType->id, $documentTypesSelected) ? 'selected' : ''}}>{{$docType->document_type}}</option>
+                                    @endforeach
+                                  </optgroup>
+                                  @endforeach
+                                </select>
+                              </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="stages">Etapas</label>
+                            <select id="stages" name="stages[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona las etapas" style="width: 100%">
+                              @foreach($stages as $stage)
+                                <option class="opt" id="{{$stage->id}}" {{in_array($stage->id, $stagesSelected) ? 'selected' : ''}}>{{$stage->name}}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="subtopics">Subtemas de investigación</label>
+                            <select id="subtopics" name="subtopics[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona los temas de investigación" style="width: 100%">
+                              @foreach($topics as $topic)
+                                <optgroup label="{{$topic->research_topic}}">
+                                  @foreach($topic->subtopics as $subtopic)
+                                  <option id="{{$subtopic->id}}" {{in_array($subtopic->id, $subtopicsSelected) ? 'selected' : ''}}>{{$subtopic->name}}</option>
+                                  @endforeach
+                                </optgroup>
+                              @endforeach
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary pull-left" data-dismiss="modal"><span class="fa fa-reply"></span> Atrás</button>
+                  <button type="submit" class="btn btn-success"><span class="fa fa-check"></span> Editar y aprobar</button>
+                  </form>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+          </div>
     </section>
+
+    <script src="{{asset('select2/select2.full.min.js')}}"></script>
+    <script>
+        $('.filterSelect').select2();
+    </script>
 
 @endsection

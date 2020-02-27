@@ -144,20 +144,22 @@
                             <li id="typeList"><a href="{{route('document_type.index')}}">Lista de tipos <span class="fa fa-list-ul pull-right"></span></a></li>
                         </ul>
                     </li>
+                    <li class="header">Actividad de usuarios</li>
                     <li id="log" class="li treeview">
-                        <a href="#"><span>Actividad de usuarios</span> <span class="fa fa-exchange pull-right"></span></a>
+                        <a href="#"><span>Registro de actividad</span> <span class="fa fa-exchange pull-right"></span></a>
                         <ul class="treeview-menu">
-                            <li id="typeList"><a href="{{route('log.index')}}">Lista de acciones<span class="fa fa-list-ul pull-right"></span></a></li>
+                            <li id="logList"><a href="{{route('log.index')}}">Lista de acciones<span class="fa fa-list-ul pull-right"></span></a></li>
                         </ul>
                     </li>
-                    @endif
-                    @if(\Illuminate\Support\Facades\Auth::user()->hasRole('director'))
-                    <li id="topic" class="li treeview">
+                    <li id="petition" class="li treeview">
                         <a href="#"><span>Solicitudes</span> <span class="fa fa-book pull-right"></span></a>
                         <ul class="treeview-menu">
                             <li id="petitionList"><a href="{{route('petition.index')}}">Lista de solicitudes <span class="fa fa-list-ul pull-right"></span></a></li>
                         </ul>
                     </li>
+                    @endif
+                    @if(\Illuminate\Support\Facades\Auth::user()->hasRole('director'))
+
                     @endif
 
                 </ul><!-- /.sidebar-menu -->

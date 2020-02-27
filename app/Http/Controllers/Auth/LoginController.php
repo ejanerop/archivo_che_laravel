@@ -41,6 +41,16 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, $user)
     {
-        Logger::log('login', $request->ip(), '', '', '');
+        Logger::log('login', '', '', '');
+    }
+    public function logout(Request $request)
+    {
+        Logger::log('logout', '', '', '');
+
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return $this->loggedOut($request) ?: redirect('/');
     }
 }

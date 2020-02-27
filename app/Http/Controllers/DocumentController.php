@@ -176,7 +176,7 @@ class DocumentController extends Controller
         $resource->description = $request->input('resource_description');
         $resource->save();
 
-        Logger::log('create', $request->ip(), 'documents', $document->id, $document->name);
+        Logger::log('create', 'documents', $document->id, $document->name);
 
         return redirect()->route('document.index')->with('success','El documento fue creado correctamente.');
     }
@@ -298,7 +298,7 @@ class DocumentController extends Controller
 
         $document->save();
 
-        Logger::log('update', $request->ip(), 'documents', $document->id, $document->name);
+        Logger::log('update', 'documents', $document->id, $document->name);
 
         return redirect()->route('document.index')->with('success','El documento fue editado correctamente.');
 
@@ -321,7 +321,7 @@ class DocumentController extends Controller
         }
         $document->delete();
 
-        Logger::log('update', $request->ip(), 'documents', $document->id, $document->name);
+        Logger::log('update', 'documents', $document->id, $document->name);
 
         return redirect()->route('document.index')->with('success','El documento fue eliminado correctamente.');
 

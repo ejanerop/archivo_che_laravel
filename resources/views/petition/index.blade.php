@@ -52,8 +52,6 @@
                     @endif
                     <td>
                         <a href="{{route('petition.show' , ['petition' => $petition])}}" class="btn btn-xs btn-info"><span class="fa fa-eye" style="margin-right: 2px"></span> Mostrar</a>
-                        <a href="{{route('petition.accept' , ['petition' => $petition])}}" class="btn btn-xs btn-success"><span class="fa fa-check" style="margin-right: 2px"></span> Aprobar</a>
-                        <a href="{{route('petition.deny' , ['petition' => $petition])}}" class="btn btn-xs btn-danger"><span class="fa fa-close" style="margin-right: 2px"></span> Denegar</a>
                     </td>
 
                 </tr>
@@ -69,8 +67,8 @@
         $(function () {
             $('#table').DataTable();
             $('li.li').removeClass('active');
-            $('li#document_type').addClass('active');
-            $('li#typeList').addClass('active');
+            $('li#petition').addClass('active');
+            $('li#petitionList').addClass('active');
         });
     </script>
 

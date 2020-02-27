@@ -7,11 +7,11 @@ use App\LogType;
 
 class Logger
 {
-	public static function log($action, $ip, $table, $object, $objectName) {
+	public static function log($action, $table, $object, $objectName) {
         $log = new Log();
         $logType = LogType::where('slug', $action)->first();
 		$log->user = \Illuminate\Support\Facades\Auth::user()->username;
-		$log->ip_address = $ip;
+		$log->ip_address = $_SERVER['REMOTE_ADDR'];
 		$log->log_type()->associate($logType);
 		$log->object_table = $table;
         $log->object = $object;

@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@if (\Illuminate\Support\Facades\Auth::user()->hasRole('manager'))
+    @include('home.manager')
+@elseif (\Illuminate\Support\Facades\Auth::user()->hasRole('director'))
+    @include('home.investigator')
+@else
+    @include('home.investigator')
+@endif
+
 @section('content')
 
     <section class="content-header">
@@ -7,19 +15,6 @@
     </section>
 
     <section class="content">
-        <div class="row justify-content-center">
-            <div class="col-lg-3 col-xs-6">
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>1003</h3>
-                        <p>Cantidad de documentos</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-android-document"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-        </div>
+        @yield('home')
     </section>
 @endsection

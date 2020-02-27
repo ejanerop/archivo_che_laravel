@@ -59,7 +59,7 @@ class RoleTableSeeder extends Seeder
 
         $role = new Role();
         $role->name = 'Investigador externo';
-        $role->slug = 'coord.ext';
+        $role->slug = 'inv.ext';
         $role->access_level()->associate($accessLevel);
         $role->save();
     }

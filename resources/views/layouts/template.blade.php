@@ -34,6 +34,14 @@
     <style>
         .glyphicon{top: 0}
         .box-footer {padding: 10px 0}
+        @font-face {
+            font-family: "Source-Sans-Pro";
+            src: url("{{ asset('font/SourceSansPro-Regular.ttf') }}");
+        }
+
+        * {
+            font-family: "Source-Sans-Pro";
+        }
     </style>
 
 
