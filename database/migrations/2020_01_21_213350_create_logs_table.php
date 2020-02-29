@@ -19,8 +19,8 @@ class CreateLogsTable extends Migration
             $table->ipAddress('ip_address');
             $table->unsignedBigInteger('log_type_id');
             $table->foreign('log_type_id')->references('id')->on('log_types');
-            $table->string('object_table')->nullable($value = true);
-            $table->string('object')->nullable($value = true);
+            $table->string('object_type')->nullable($value = true);
+            $table->integer('object_id')->nullable($value = true);
             $table->string('object_name')->nullable($value = true);
             $table->timestamps();
         });

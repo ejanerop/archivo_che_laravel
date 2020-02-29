@@ -19,4 +19,14 @@ class DocumentType extends Model
     {
         return $this->morphMany('App\Subpetition', 'object');
     }
+
+    public function logs(){
+        return $this->morphMany('App\Log', 'object');
+    }
+
+    public function getRelatedDocumentsAttribute()
+    {
+        return Document::where('document_type_id', $this->id)->get();
+
+    }
 }

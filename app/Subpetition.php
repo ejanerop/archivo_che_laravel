@@ -15,5 +15,9 @@ class Subpetition extends Model
         return $this->morphTo();
     }
 
+    public function getRelatedDocumentsAttribute(){
+        return $this->object->documents;
+    }
+
 
 }

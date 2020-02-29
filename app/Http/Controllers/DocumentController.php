@@ -25,7 +25,7 @@ class DocumentController extends Controller
 {
 
     public function __construct() {
-        $this->middleware('user.has.role:manager');
+        $this->middleware('user.has.role:manager')->except(['index','show']);
     }
 
 
@@ -37,8 +37,13 @@ class DocumentController extends Controller
     public function index()
     {
 
-        $documents = Document::with(['subtopics', 'resources', 'access_level','document_type'])->filterAccessLevel(Auth::user()->level)->paginate(50);
-        return view('document.index', ['documents' => $documents,
+        $documents = Document::with(['subtopics', 'resources', 'access_level','document_type'])->filterAccessLevel(Auth::user()->level)->get();
+        $documentsAllowed = Auth::user()->approved_documents;
+
+        $documents = $documents->merge($documentsAllowed);
+
+
+        return view('document.index', ['documents' => $documents->paginate(100),
                                        'resource_types' => ResourceType::with('document_types')->get(),
                                        'topics' => ResearchTopic::with('subtopics')->get(),
                                        'stages' => Stage::all(),
@@ -50,7 +55,6 @@ class DocumentController extends Controller
 
         $documents = Document::with(['subtopics', 'resources', 'access_level','document_type']);
 
-        //TODO add si no hay filtro, redirect index
         $filtered = false;
 
         if ($request->has('nameFilter')) {
@@ -176,7 +180,7 @@ class DocumentController extends Controller
         $resource->description = $request->input('resource_description');
         $resource->save();
 
-        Logger::log('create', 'documents', $document->id, $document->name);
+        Logger::log('create', 'document', $document->id, $document->name);
 
         return redirect()->route('document.index')->with('success','El documento fue creado correctamente.');
     }
@@ -197,6 +201,9 @@ class DocumentController extends Controller
             }
         }
         $document->load('subtopics', 'resources', 'access_level','document_type', 'document_type.resource_type');
+
+        Logger::log('read', 'document', $document->id, $document->name);
+
         return view('document.show',['document' => $document, 'mainResource' => $mainResource]);
 
     }
@@ -298,7 +305,7 @@ class DocumentController extends Controller
 
         $document->save();
 
-        Logger::log('update', 'documents', $document->id, $document->name);
+        Logger::log('update', 'document', $document->id, $document->name);
 
         return redirect()->route('document.index')->with('success','El documento fue editado correctamente.');
 
@@ -321,7 +328,7 @@ class DocumentController extends Controller
         }
         $document->delete();
 
-        Logger::log('update', 'documents', $document->id, $document->name);
+        Logger::log('update', 'document', $document->id, $document->name);
 
         return redirect()->route('document.index')->with('success','El documento fue eliminado correctamente.');
 

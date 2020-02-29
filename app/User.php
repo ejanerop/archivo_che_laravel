@@ -18,12 +18,49 @@ class User extends Authenticatable
         return $this->hasMany('App\Petition');
     }
 
+    public function logs(){
+        return $this->morphMany('App\Log', 'object');
+    }
+
     public function getLevelAttribute(){
         return $this->roles->access_level->level;
     }
 
     public function getPetitionCountAttribute(){
         return User::withCount('petitions')->where('id', $this->id)->first()->petitions_count;
+    }
+
+    public function getApprovedDocumentsAttribute(){
+        $petitions = $this->approved_petitions;
+        $documents = collect();
+        foreach ($petitions as $petition) {
+            if ($documents->isEmpty()) {
+                $documents = $petition->related_documents;
+            }else {
+                $documents = $documents->merge($petition->related_documents);
+            }
+        }
+
+        return $documents;
+
+    }
+
+    public function getApprovedPetitionsAttribute(){
+        $petitions = User::find($this->id)->petitions()->where('petition_state_id', 1)->get();
+
+        return $petitions;
+
+    }
+
+    public function getApprovedSubpetitionsAttribute(){
+        $petitions = User::find($this->id)->approved_petitions;
+        $subpetitions = collect();
+        foreach ($petitions as $petition) {
+            $subpetitions = $subpetitions->concat($petition->subpetitions);
+        }
+
+        return $subpetitions;
+
     }
 
     public function hasRole($role){

@@ -56,7 +56,7 @@ class DocumentTypeController extends Controller
         $documentType->resource_type()->associate($resource_type);
         $documentType->save();
 
-        Logger::log('create', 'document_types', $documentType->id, $documentType->document_type);
+        Logger::log('create', 'document_type', $documentType->id, $documentType->document_type);
 
         return redirect()->route('document_type.index')->with('success', 'Tipo de documento creado correctamente.');
     }
@@ -103,7 +103,7 @@ class DocumentTypeController extends Controller
         $documentType->resource_type()->associate($resource_type);
         $documentType->save();
 
-        Logger::log('update', 'document_types', $documentType->id, $documentType->document_type);
+        Logger::log('update', 'document_type', $documentType->id, $documentType->document_type);
 
         return redirect()->route('document_type.index', ['document_types' => DocumentType::all()])->with('success', 'Tipo de documento editado correctamente.');
 
@@ -124,7 +124,7 @@ class DocumentTypeController extends Controller
             $name = $documentType->document_type;
             $documentType->delete();
 
-            Logger::log('delete', 'document_types', $documentType->id, $name);
+            Logger::log('delete', 'document_type', $documentType->id, $name);
 
             return redirect()->route('document_type.index', ['document_types' => DocumentType::all()])->with('success', 'Eliminado correctamente');
 

@@ -44,7 +44,7 @@ class PetitionController extends Controller
         $petition->petition_state()->dissociate();
         $petition->petition_state()->associate($petitionState);
         $petition->save();
-        Logger::log('permit', '', '', '', '');
+        Logger::log('permit', '', null, '');
 
         return redirect()->route('petition.index')->with('success','La solicitud fue aceptada correctamente.');
     }
@@ -64,7 +64,7 @@ class PetitionController extends Controller
         $petition->petition_state()->dissociate();
         $petition->petition_state()->associate($petitionState);
         $petition->save();
-        Logger::log('deny', '', '', '');
+        Logger::log('deny', '', null, '');
 
         return redirect()->route('petition.index')->with('success','La solicitud fue denegada correctamente.');
     }
@@ -109,7 +109,7 @@ class PetitionController extends Controller
             $petition->user()->associate($user);
             $petition->petition_state()->associate(PetitionState::where('slug', 'made')->first());
             $petition->save();
-            Logger::log('request', '', '', '');
+            Logger::log('request', '', null, '');
 
             if ($request->has('subtopics')){
                 foreach ($request->input('subtopics') as $subtopic) {

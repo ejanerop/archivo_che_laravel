@@ -41,7 +41,7 @@ class UserController extends Controller
         $user->roles()->associate($role);
         $user->save();
 
-        Logger::log('create', 'users', $user->id, $user->username);
+        Logger::log('create', 'user', $user->id, $user->username);
 
         return redirect()->route('user.index');
     }
@@ -71,7 +71,7 @@ class UserController extends Controller
         $user->roles()->associate($role);
         $user->save();
 
-        Logger::log('update', 'users', $user->id, $user->username);
+        Logger::log('update', 'user', $user->id, $user->username);
 
         return redirect()->route('user.index')->with('success','El usuario fue modificado correctamente.');
     }
@@ -82,7 +82,7 @@ class UserController extends Controller
         $name = $user->username;
         $user->delete();
 
-        Logger::log('delete', 'users', $user->id, $name);
+        Logger::log('delete', 'user', $user->id, $name);
 
         return redirect()->route('user.index')->with('success','El usuario ha sido eliminado correctamente.');
     }

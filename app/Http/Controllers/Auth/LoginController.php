@@ -41,11 +41,11 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, $user)
     {
-        Logger::log('login', '', '', '');
+        Logger::log('login', '', null, '');
     }
     public function logout(Request $request)
     {
-        Logger::log('logout', '', '', '');
+        Logger::log('logout', '', null, '');
 
         $this->guard()->logout();
 

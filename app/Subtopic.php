@@ -20,8 +20,20 @@ class Subtopic extends Model
         return $this->morphMany('App\Subpetition', 'object');
     }
 
+    public function logs(){
+        return $this->morphMany('App\Log', 'object');
+    }
+
     public function scopeFilterName($query, $name)
     {
         return $query->where('name', $name);
+    }
+
+    public function getVisitsAttribute(){
+        $sum = 0;
+        foreach ($this->documents as $document) {
+            $sum += $document->visits;
+        }
+        return $sum;
     }
 }

@@ -17,4 +17,52 @@ class Petition extends Model
     public function subpetitions(){
 		return $this->hasMany('App\Subpetition', 'petition_id');
     }
+
+    public function getRelatedDocumentsAttribute(){
+        $documents = collect();
+        $docsByDocType = collect();
+        $docsByStage = collect();
+        $docsBySubtopic = collect();
+        foreach ($this->subpetitions as $subpetition) {
+            if ($subpetition->object_type == 'document_type') {
+                if($docsByDocType->isEmpty()){
+                    $docsByDocType = $subpetition->related_documents;
+                }else {
+                    $docsByDocType = $docsByDocType->merge($subpetition->related_documents);
+                }
+            }elseif ($subpetition->object_type == 'stage') {
+                if($docsByStage->isEmpty()){
+                    $docsByStage = $subpetition->related_documents;
+                }else {
+                    $docsByStage = $docsByStage->merge($subpetition->related_documents);
+                }
+            }elseif ($subpetition->object_type == 'subtopic') {
+                if($docsBySubtopic->isEmpty()){
+                    $docsBySubtopic = $subpetition->related_documents;
+                }else {
+                    $docsBySubtopic = $docsBySubtopic->merge($subpetition->related_documents);
+                }
+            }
+        }
+        if (!($docsByDocType->isEmpty())) {
+            $documents = $docsByDocType;
+            if ((!($docsByStage->isEmpty()))) {
+                $documents = $documents->intersect($docsByStage);
+            }
+            if ((!($docsBySubtopic->isEmpty()))) {
+                $documents = $documents->intersect($docsBySubtopic);
+            }
+        }elseif ((!($docsByStage->isEmpty()))) {
+            $documents = $docsByStage;
+            if ((!($docsBySubtopic->isEmpty()))) {
+                $documents = $documents->intersect($docsBySubtopic);
+            }
+        }else {
+            $documents = $docsBySubtopic;
+        }
+
+        return $documents;
+    }
+
+
 }

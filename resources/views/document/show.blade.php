@@ -28,7 +28,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="date">Fecha</label>
-                            <input type="text" id="date" name="date" class="form-control" value="{{date('d-M-Y',strtotime($document->date))}}" readonly>
+                            <input type="text" id="date" name="date" class="form-control" value="{{$document->date_formated}}" readonly>
                         </div>
                     </div>
                     <div class="col-md-3">

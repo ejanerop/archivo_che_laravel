@@ -31,29 +31,29 @@
                     </div>
                     <div class="box-body">
                         <table id="table" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Tipo de documento</th>
-                        <th>Tipo de recurso</th>
-                        <th>Cantidad de documentos</th>
-                        <th>Acciones</th>
-                    </tr>
-                 </thead>
-            @foreach($document_types as $type)
-                <tr>
-                    <td>{{$type->document_type}}</td>
-                    <td>{{$type->resource_type->resource_type}}</td>
-                    <td>{{$type->documents_count}}</td>
-                    <td>
-                        <form action="{{route('document_type.destroy', ['document_type' =>  $type->id])}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <a href="{{route('document_type.edit', ['document_type' =>  $type->id])}}" class="btn btn-xs btn-info"><span class="fa fa-edit" style="margin-right: 2px"></span> Editar</a>
-                            <button type="submit"  onclick="return confirm('Está seguro que desea eliminar el tipo de documento {{$type->document_type}}?')" class="btn btn-xs btn-danger"><span class="fa fa-remove" style="margin-right: 2px"></span> Eliminar</button>
-                        </form>
-                    </td>
-                    </tr>
-            @endforeach
+                            <thead>
+                                <tr>
+                                    <th>Tipo de documento</th>
+                                    <th>Tipo de recurso</th>
+                                    <th>Cantidad de documentos</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            @foreach($document_types as $type)
+                                <tr>
+                                    <td>{{$type->document_type}}</td>
+                                    <td>{{$type->resource_type->resource_type}}</td>
+                                    <td>{{$type->documents_count}}</td>
+                                    <td>
+                                        <form action="{{route('document_type.destroy', ['document_type' =>  $type->id])}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <a href="{{route('document_type.edit', ['document_type' =>  $type->id])}}" class="btn btn-xs btn-info"><span class="fa fa-edit" style="margin-right: 2px"></span> Editar</a>
+                                            <button type="submit"  onclick="return confirm('Está seguro que desea eliminar el tipo de documento {{$type->document_type}}?')" class="btn btn-xs btn-danger"><span class="fa fa-remove" style="margin-right: 2px"></span> Eliminar</button>
+                                        </form>
+                                    </td>
+                                    </tr>
+                            @endforeach
         </table>
                     </div>
                 </div>

@@ -33,6 +33,10 @@ class Document extends Model
         return $this->belongsTo('App\Stage', 'stage_id');
     }
 
+    public function logs(){
+        return $this->morphMany('App\Log', 'object');
+    }
+
     public function getDateFormatedAttribute(){
         $date = $this->date;
 
@@ -99,6 +103,10 @@ class Document extends Model
         return $day . ' de ' . $monthText . ' de ' . $year;
     }
 
+    public function getVisitsAttribute(){
+        return $this->logs()->where('log_type_id', '2')->count();
+    }
+
     public function scopeFilterName($query, $name)
     {
         return $query->where('name', 'like', '%'. $name .'%');
@@ -144,4 +152,6 @@ class Document extends Model
         });
     return $query;
     }
+
+
 }

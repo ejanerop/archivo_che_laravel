@@ -57,7 +57,7 @@ class SubtopicController extends Controller
         $subtopic->research_topic()->associate($research_topic);
         $subtopic->save();
 
-        Logger::log('create', 'subtopics', $subtopic->id, $subtopic->name);
+        Logger::log('create', 'subtopic', $subtopic->id, $subtopic->name);
 
         return redirect()->route('subtopic.index')->with('success','El subtema fue creado correctamente.');
     }
@@ -107,7 +107,7 @@ class SubtopicController extends Controller
         $subtopic->research_topic()->associate($research_topic);
         $subtopic->save();
 
-        Logger::log('update', 'subtopics', $subtopic->id, $subtopic->name);
+        Logger::log('update', 'subtopic', $subtopic->id, $subtopic->name);
 
         return redirect()->route('subtopic.index')->with('success','El subtema fue editado correctamente.');;
     }
@@ -129,7 +129,7 @@ class SubtopicController extends Controller
             $name = $subtopic->name;
             $subtopic->delete();
 
-            Logger::log('delete', 'subtopics', $subtopic->id, $name);
+            Logger::log('delete', 'subtopic', $subtopic->id, $name);
 
             return redirect()->route('subtopic.index', ['subtopics' => Subtopic::with('research_topic')->get()])->with('success', 'Eliminado correctamente');
 

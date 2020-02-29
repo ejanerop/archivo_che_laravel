@@ -10,4 +10,9 @@ class Stage extends Model
     {
         return $this->morphMany('App\Subpetition', 'object');
     }
+
+    public function documents()
+    {
+        return $this->hasMany('App\Document');
+    }
 }

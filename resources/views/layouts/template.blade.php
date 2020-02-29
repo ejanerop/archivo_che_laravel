@@ -42,6 +42,10 @@
         * {
             font-family: "Source-Sans-Pro";
         }
+
+        .select2-container .select2-selection.select2-selection--multiple .select2-search.select2-search--inline .select2-search__field:not([placeholder='']) {
+            width: 100% !important; margin-right: 100000px;
+        }
     </style>
 
 

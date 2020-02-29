@@ -38,6 +38,9 @@ Route::resource('subtopic', 'SubtopicController');
 Route::resource('log', 'LogController')->only([
     'index', 'show'
 ]);
+Route::get('/log_stats', 'LogController@stats')-> name('log.stats');
+
+
 
 Route::resource('petition', 'PetitionController')->only(['index', 'create', 'store', 'show']);
 Route::get('/petition/accept/{id}', 'PetitionController@acceptPetition')->name('petition.accept');

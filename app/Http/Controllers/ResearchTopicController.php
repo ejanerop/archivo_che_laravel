@@ -52,7 +52,7 @@ class ResearchTopicController extends Controller
         $researchTopic->description = $request->input('description');
         $researchTopic->save();
 
-        Logger::log('create', 'research_topics', $researchTopic->id, $researchTopic->research_topic);
+        Logger::log('create', 'research_topic', $researchTopic->id, $researchTopic->research_topic);
 
         return redirect()->route('research_topic.index')->with('success', 'Tema de investigación creado correctamente.');
     }
@@ -99,7 +99,7 @@ class ResearchTopicController extends Controller
         $researchTopic->description = $request->input('description');
         $researchTopic->save();
 
-        Logger::log('update', 'research_topics', $researchTopic->id, $researchTopic->research_topic);
+        Logger::log('update', 'research_topic', $researchTopic->id, $researchTopic->research_topic);
 
         return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()]);
     }
@@ -119,7 +119,7 @@ class ResearchTopicController extends Controller
         }else{
             $name = $researchTopic->research_topic;
             $researchTopic->delete();
-            Logger::log('delete', 'research_topics', $researchTopic->id, $name);
+            Logger::log('delete', 'research_topic', $researchTopic->id, $name);
             return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()])->with('success', 'Eliminado correctamente');
 
         }

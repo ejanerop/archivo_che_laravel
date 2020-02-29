@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Document;
 use App\Log;
+use App\Subtopic;
 use Illuminate\Http\Request;
 
 class LogController extends Controller
@@ -49,37 +51,17 @@ class LogController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Log  $log
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Log $log)
+    public function stats()
     {
-        //
+        $top5Docs = Document::withCount(['logs as visits' => function ($query) {
+            $query->where('log_type_id', '2');
+        }])->orderBy('visits', 'DESC')->limit(5)->get();
+
+        $top5Subtopics = Subtopic::all();
+        $top5Subtopics = $top5Subtopics->sortByDesc('visits')->take(5);
+
+        return view('log.stats', ['top5Docs' => $top5Docs,
+                                  'top5Subtopics' => $top5Subtopics]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Log  $log
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Log $log)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Log  $log
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Log $log)
-    {
-        //
-    }
 }

@@ -11,6 +11,10 @@ class Log extends Model
         return $this->belongsTo('App\LogType', 'log_type_id');
     }
 
+    public function object(){
+        return $this->morphTo();
+    }
+
     public function scopeFilterUser($query, $user){
         return $query->where('user', 'like', '%'. $user .'%');
     }
@@ -23,31 +27,35 @@ class Log extends Model
     }
 
     public function scopeFilterDate($query, $date){
-        //TODO
+        return $query->whereDate('created_at',  $date);
     }
 
     public function scopeFilterIpAddress($query, $ip){
-        //TODO
+        return $query->where('ip_address', $ip);
     }
 
     public function getTableNameAttribute(){
         $tableName = '';
 
-        switch ($this->object_table) {
-            case 'documents':
+        switch ($this->object_type) {
+            case 'document':
                 $tableName ='Documentos';
                 break;
 
-            case 'research_topics':
+            case 'research_topic':
                 $tableName ='Temas de investigación';
                 break;
 
-            case 'subtopics':
+            case 'subtopic':
                 $tableName ='Subtemas de investigación';
                 break;
 
-            case 'document_types':
+            case 'document_type':
                 $tableName ='Tipos de documentos';
+                break;
+
+            case 'user':
+                $tableName ='Usuarios';
                 break;
 
             default:

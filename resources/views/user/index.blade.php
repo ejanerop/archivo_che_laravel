@@ -4,7 +4,7 @@
 
     <section class="content-header">
         <div class="container">
-            <h3>Usuarios</h3>
+            <h3>Usuarios </h3>
         </div>
     </section>
 
