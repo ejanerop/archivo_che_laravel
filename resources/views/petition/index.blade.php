@@ -51,8 +51,13 @@
                     <td><span class="label label-primary">{{$petition->petition_state->state}}</span></td>
                     @endif
                     <td>
-                        <a href="{{route('petition.show' , ['petition' => $petition])}}" class="btn btn-xs btn-info"><span class="fa fa-eye" style="margin-right: 2px"></span> Mostrar</a>
-                    </td>
+                        <form action="{{route('petition.destroy', ['petition' => $petition])}}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <a href="{{route('petition.show' , ['petition' => $petition])}}" class="btn btn-xs btn-info"><span class="fa fa-eye" style="margin-right: 2px"></span> Mostrar</a>
+                            <button type="submit" onclick="return confirm('Está seguro que desea eliminar la petición?')" class="btn btn-xs btn-danger"><span class="fa fa-remove" style="margin-right: 2px"></span> Eliminar</button>
+                        </form>
+                        </td>
 
                 </tr>
             @endforeach

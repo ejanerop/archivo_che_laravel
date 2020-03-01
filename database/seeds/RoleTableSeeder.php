@@ -13,7 +13,7 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
-        $accessLevel = AccessLevel::where('level', 4)->first();
+        $accessLevel = AccessLevel::where('level', 1)->first();
 
         $role = new Role();
         $role->name = 'Invitado';
@@ -26,6 +26,8 @@ class RoleTableSeeder extends Seeder
         $role->slug = 'admin';
         $role->access_level()->associate($accessLevel);
         $role->save();
+
+        $accessLevel = AccessLevel::where('level', 4)->first();
 
         $role = new Role();
         $role->name = 'Director';
@@ -51,11 +53,15 @@ class RoleTableSeeder extends Seeder
         $role->access_level()->associate($accessLevel);
         $role->save();
 
+        $accessLevel = AccessLevel::where('level', 3)->first();
+
         $role = new Role();
         $role->name = 'Investigador interno';
         $role->slug = 'inv.int';
         $role->access_level()->associate($accessLevel);
         $role->save();
+
+        $accessLevel = AccessLevel::where('level', 2)->first();
 
         $role = new Role();
         $role->name = 'Investigador externo';

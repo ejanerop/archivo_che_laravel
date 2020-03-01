@@ -26,6 +26,7 @@ class DocumentController extends Controller
 
     public function __construct() {
         $this->middleware('user.has.role:manager')->except(['index','show']);
+        $this->middleware('user.has.access')->only('show');
     }
 
 
@@ -53,7 +54,10 @@ class DocumentController extends Controller
     public function filter(Request $request)
     {
 
-        $documents = Document::with(['subtopics', 'resources', 'access_level','document_type']);
+        $documents = Document::with(['subtopics', 'resources', 'access_level','document_type'])->filterAccessLevel(Auth::user()->level);
+        $documentsAllowed = Auth::user()->approved_documents;
+
+
 
         $filtered = false;
 
@@ -61,22 +65,38 @@ class DocumentController extends Controller
             $name = $request->input('nameFilter');
             if (trim($name) != '') {
                 $documents->filterName($name);
+                $documentsAllowed = $documentsAllowed->where('name', 'like', '%'. $name .'%');
                 $filtered = true;
             }
         }
         if ($request->has('document_typesFilter')) {
             $document_types = $request->input('document_typesFilter');
             $documents->filterTypes($document_types);
+            $documentsAllowed = $documentsAllowed->filter(function($item) use($document_types){
+                return  in_array($item->document_type->document_type, $document_types);
+            });
             $filtered = true;
         }
         if ($request->has('stagesFilter')) {
             $stages = $request->input('stagesFilter');
             $documents->filterStages($stages);
+            $documentsAllowed = $documentsAllowed->filter(function($item) use($stages){
+                return  in_array($item->stage->name, $stages);
+            });
             $filtered = true;
         }
         if ($request->has('subtopicsFilter')) {
-            $subtopic = $request->input('subtopicsFilter');
-            $documents->filterSubtopics($subtopic);
+            $subtopics = $request->input('subtopicsFilter');
+            $documents->filterSubtopics($subtopics);
+            $documentsAllowed = $documentsAllowed->filter(function($item) use($subtopics){
+                $return = false;
+                foreach ($item->subtopics as $topic) {
+                    if (in_array($topic->name, $subtopics)) {
+                        $return = true;
+                    }
+                }
+                return $return;
+            });
             $filtered = true;
         }
         if ($request->has('dateStartFilter')) {
@@ -86,9 +106,10 @@ class DocumentController extends Controller
                 $filtered = true;
             }
         }
+        $result = $documents->get()->merge($documentsAllowed);
 
         if ($filtered) {
-            return view('document.index', ['documents' => $documents->paginate(50),
+            return view('document.index', ['documents' => $result->paginate(50),
                                            'resource_types' => ResourceType::with('document_types')->get(),
                                            'topics' => ResearchTopic::with('subtopics')->get(),
                                            'stages' => Stage::all(),
@@ -191,7 +212,7 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $document = Document::find($id);
         $mainResource = null;

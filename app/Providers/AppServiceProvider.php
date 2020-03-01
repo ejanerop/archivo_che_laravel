@@ -45,6 +45,6 @@ class AppServiceProvider extends ServiceProvider
                     $this->forPage($page, $perPage), $this->count(), $perPage, $page, $options))
                     ->withPath('');
             });
-    }
+        }
     }
 }

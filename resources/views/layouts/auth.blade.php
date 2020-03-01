@@ -27,6 +27,23 @@
     <link rel="stylesheet" href="{{ asset('iCheck/square/blue.css') }}">
     <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}">
 
+    <style>
+        .glyphicon{top: 0}
+        .box-footer {padding: 10px 0}
+        @font-face {
+            font-family: "Source-Sans-Pro";
+            src: url("{{ asset('font/SourceSansPro-Regular.ttf') }}");
+        }
+
+        * {
+            font-family: "Source-Sans-Pro";
+        }
+
+        .select2-container .select2-selection.select2-selection--multiple .select2-search.select2-search--inline .select2-search__field:not([placeholder='']) {
+            width: 100% !important; margin-right: 100000px;
+        }
+    </style>
+
 
     <!-- Scripts -->
     <script>

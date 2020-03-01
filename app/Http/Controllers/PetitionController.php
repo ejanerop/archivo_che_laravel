@@ -192,6 +192,12 @@ class PetitionController extends Controller
      */
     public function destroy(Request $request, Petition $petition)
     {
-        //
+        $subpetitions = $petition->subpetitions;
+        foreach ($subpetitions as $subpetition) {
+            $subpetition->delete();
+        }
+        $petition->delete();
+
+        return redirect()->route('petition.index')->with('success','La petición fue eliminado correctamente.');
     }
 }

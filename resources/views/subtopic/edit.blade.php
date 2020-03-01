@@ -39,7 +39,7 @@
                                 <label for="research_topic">Tema de investigación relacionado</label>
                                 <select id="research_topic" name="research_topic" class="form-control">
                                     @foreach($research_topics as $topic)
-                                        <option id="{{$topic->id}}">{{$topic->research_topic}}</option>
+                                        <option id="{{$topic->id}}" {{$subtopic->research_topic->id == $topic->id ? 'selected' : '' }}>{{$topic->research_topic}}</option>
                                     @endforeach
                                 </select>
                             </div>

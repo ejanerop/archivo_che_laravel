@@ -39,10 +39,11 @@ Route::resource('log', 'LogController')->only([
     'index', 'show'
 ]);
 Route::get('/log_stats', 'LogController@stats')-> name('log.stats');
+Route::get('/log_filter', 'LogController@filter')-> name('log.filter');
 
 
 
-Route::resource('petition', 'PetitionController')->only(['index', 'create', 'store', 'show']);
+Route::resource('petition', 'PetitionController')->only(['index', 'create', 'store', 'show', 'destroy']);
 Route::get('/petition/accept/{id}', 'PetitionController@acceptPetition')->name('petition.accept');
 Route::get('/petition/deny/{id}', 'PetitionController@denyPetition')->name('petition.deny');
 

@@ -92,7 +92,7 @@
                                                            @foreach($topics as $topic)
                                                                <optgroup label="{{$topic->research_topic}}">
                                                                    @foreach($topic->subtopics as $subtopic)
-                                                                       <option id="{{$subtopic->id}}">{{$subtopic->name}}</option>
+                                                                       <option id="{{$subtopic->id}}" {{ (collect(old('subtopics'))->contains($subtopic->name)) ? 'selected':''}}>{{$subtopic->name}}</option>
                                                                    @endforeach
                                                                </optgroup>
                                                            @endforeach

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -61,6 +62,24 @@ class User extends Authenticatable
 
         return $subpetitions;
 
+    }
+
+    public function isDocumentPermitted($id){
+        $permitted = false;
+
+        $documents = Document::filterAccessLevel(Auth::user()->level)->get();
+        $documentsApproved = $this->approved_documents;
+        foreach ($documents as $document) {
+            if ($document->id == $id) {
+                $permitted = true;
+            }
+        }
+        foreach ($documentsApproved as $document) {
+            if ($document->id == $id) {
+                $permitted = true;
+            }
+        }
+        return $permitted;
     }
 
     public function hasRole($role){

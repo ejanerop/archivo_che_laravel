@@ -21,12 +21,12 @@ class Log extends Model
 
     public function scopeFilterLogTypes($query, $logTypes)
     {
-        return $query->whereHas('log_types', function ($q) use ($logTypes) {
-                $q->whereIn('slug', $logTypes);
+        return $query->whereHas('log_type', function ($q) use ($logTypes) {
+                $q->whereIn('type', $logTypes);
             });
     }
 
-    public function scopeFilterDate($query, $date){
+    public function scopeFilterDay($query, $date){
         return $query->whereDate('created_at',  $date);
     }
 

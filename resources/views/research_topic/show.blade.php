@@ -33,19 +33,22 @@
                                 <label for="description">Descripción</label>
                                 <textarea id="description" name="description" class="form-control" rows="4" style="resize: none" placeholder="Descripción del tema" readonly>{{$researchTopic->description}}</textarea>
                             </div>
-                            <table class="table table-bordered">
-                                <thead>
-                                </thead>
-                                <tbody>
-                                    @foreach($subtopics as $subtopic)
-                                    <tr>
-                                        <td>{{$subtopic->name}}</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                            <div class="form-group">
+                                <label for="subtopics">Subtemas relacionados</label>
+                                <table id="subtopics" class="table table-bordered table-condensed">
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($subtopics as $subtopic)
+                                        <tr>
+                                            <td>{{$subtopic->name}}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                             <div class="box-footer">
-                                <a href="{{route('subtopic.index')}}" class="btn btn-danger pull-left">
+                                <a href="{{route('research_topic.index')}}" class="btn btn-danger pull-left">
                                     <span class="fa fa-remove"></span>
                                     {{ __('Atrás') }}
                                 </a>

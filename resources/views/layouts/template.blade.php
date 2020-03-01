@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="{{ asset('ionicons/css/ionicons.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('richtext/richtext.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('chart-js/Chart.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/micss.css') }}">
 
