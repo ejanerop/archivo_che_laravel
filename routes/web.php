@@ -51,6 +51,6 @@ Route::resource('petition', 'PetitionController')->only(['index', 'create', 'sto
 Route::get('/petition/accept/{id}', 'PetitionController@acceptPetition')->name('petition.accept');
 Route::get('/petition/deny/{id}', 'PetitionController@denyPetition')->name('petition.deny');
 
-Route::get('/profile/{id}', 'UserController@profile')->name('user.profile');
+Route::get('/profile/{id}', 'UserController@profile')->middleware('user.profile')->name('user.profile');
 
-Route::post('/pass_change/{id}', 'UserController@changePassword')->name('pass.change');
+Route::post('/pass_change/{id}', 'UserController@changePassword')->middleware('user.profile')->name('pass.change');

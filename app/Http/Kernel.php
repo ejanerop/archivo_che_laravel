@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\UserHasAccess;
 use App\Http\Middleware\UserHasRole;
+use App\Http\Middleware\VerifyUserProfile;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -63,7 +64,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'user.has.role' => UserHasRole::class,
-        'user.has.access' => UserHasAccess::class
+        'user.has.access' => UserHasAccess::class,
+        'user.profile' => VerifyUserProfile::class
     ];
 
     /**

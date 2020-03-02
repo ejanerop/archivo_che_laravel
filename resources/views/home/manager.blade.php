@@ -3,7 +3,7 @@
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-aqua">
                 <div class="inner">
-                    <h3>1003</h3>
+                    <h3>{{\Stats::documentsCount()}}</h3>
                     <p>Cantidad de documentos</p>
                 </div>
                 <div class="icon">
@@ -16,7 +16,7 @@
             <!-- small box -->
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>20</h3>
+                    <h3>{{\Stats::usersCount()}}</h3>
                     <p>Cantidad de usuarios</p>
                 </div>
                 <div class="icon">
