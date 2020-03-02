@@ -270,17 +270,9 @@
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="document_typesFilter">Tipos de documento</label>
-                          <select id="document_typesFilter" name="document_typesFilter[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona los tipos de documento" style="width: 100%">
-                            @foreach($resource_types as $resType)
-                            <optgroup class="optgroup" label="{{$resType->resource_type}}">
-                              @foreach($resType->document_types as $docType)
-                              <option class="opt {{$resType->resource_type}}" id="{{$docType->id}}">{{$docType->document_type}}</option>
-                              @endforeach
-                            </optgroup>
-                            @endforeach
-                          </select>
-                        </div>
+                            <label for="authorFilter">Autor del documento</label>
+                            <input id="authorFilter" name="authorFilter" type="text" class="form-control" placeholder="Nombre del autor">
+                          </div>
                       </div>
                     </div>
                     <div class="row">
@@ -303,41 +295,49 @@
                           <label for="stagesFilter">Etapas</label>
                           <select id="stagesFilter" name="stagesFilter[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona las etapas" style="width: 100%" disabled>
                             @foreach($stages as $stage)
-                              <option class="opt {{$resType->resource_type}}" id="{{$docType->id}}">{{$stage->name}}</option>
+                              <option class="opt" id="{{$stage->id}}">{{$stage->name}}</option>
                             @endforeach
                           </select>
                         </div>
                       </div>
                       <div class="col-md-3">
                         <label for="dateStartFilter">Fecha de inicio</label>
-                        <input type="text" id="dateStartFilter" name="dateStartFilter" class="form-control" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask disabled>
+                        <input type="text" id="dateStartFilter" name="dateStartFilter" class="form-control" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask disabled nullable>
                       </div>
                       <div class="col-md-3">
                         <label for="dateEndFilter">Fecha de fin</label>
-                        <input type="text" id="dateEndFilter" name="dateEndFilter" class="form-control" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask disabled>
+                        <input type="text" id="dateEndFilter" name="dateEndFilter" class="form-control" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask disabled nullable>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="subtopicsFilter">Subtemas de investigación</label>
-                          <select id="subtopicsFilter" name="subtopicsFilter[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona los temas de investigación" style="width: 100%">
-                            @foreach($topics as $topic)
-                              <optgroup label="{{$topic->research_topic}}">
-                                @foreach($topic->subtopics as $subtopic)
-                                <option id="{{$subtopic->id}}">{{$subtopic->name}}</option>
-                                @endforeach
-                              </optgroup>
-                            @endforeach
-                          </select>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="subtopicsFilter">Subtemas de investigación</label>
+                                <select id="subtopicsFilter" name="subtopicsFilter[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona los temas de investigación" style="width: 100%">
+                                    @foreach($topics as $topic)
+                                    <optgroup label="{{$topic->research_topic}}">
+                                        @foreach($topic->subtopics as $subtopic)
+                                        <option id="{{$subtopic->id}}">{{$subtopic->name}}</option>
+                                        @endforeach
+                                    </optgroup>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                      </div>
-                      <div class="col-md-3">
-
-                      </div>
-                      <div class="col-md-3">
-
-                      </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="document_typesFilter">Tipos de documento</label>
+                                <select id="document_typesFilter" name="document_typesFilter[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona los tipos de documento" style="width: 100%">
+                                  @foreach($resource_types as $resType)
+                                  <optgroup class="optgroup" label="{{$resType->resource_type}}">
+                                    @foreach($resType->document_types as $docType)
+                                    <option class="opt {{$resType->resource_type}}" id="{{$docType->id}}">{{$docType->document_type}}</option>
+                                    @endforeach
+                                  </optgroup>
+                                  @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                   </div>
               </div>

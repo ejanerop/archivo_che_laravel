@@ -14,6 +14,10 @@ use Illuminate\Validation\Rule;
 class UserController extends Controller
 {
 
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         return view('user.index', ['users'=> User::with('roles')->get()]);

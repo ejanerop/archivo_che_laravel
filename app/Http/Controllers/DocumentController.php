@@ -25,6 +25,7 @@ class DocumentController extends Controller
 {
 
     public function __construct() {
+        $this->middleware('auth');
         $this->middleware('user.has.role:manager')->except(['index','show']);
         $this->middleware('user.has.access')->only('show');
     }
@@ -54,6 +55,11 @@ class DocumentController extends Controller
     public function filter(Request $request)
     {
 
+        $validator = Validator::make($request->all(),[
+            'dateStartFilter' =>['nullable', new DateString(), new DateNow()],
+            'dateEndFilter' =>['nullable', new DateString(), new DateNow()]
+        ])->validate();
+
         $documents = Document::with(['subtopics', 'resources', 'access_level','document_type'])->filterAccessLevel(Auth::user()->level);
         $documentsAllowed = Auth::user()->approved_documents;
 
@@ -69,19 +75,19 @@ class DocumentController extends Controller
                 $filtered = true;
             }
         }
+        if ($request->has('authorFilter')) {
+            $author = $request->input('authorFilter');
+            if (trim($author) != '') {
+                $documents->filterAuthor($author);
+                $documentsAllowed = $documentsAllowed->where('author', 'like', '%'. $name .'%');
+                $filtered = true;
+            }
+        }
         if ($request->has('document_typesFilter')) {
             $document_types = $request->input('document_typesFilter');
             $documents->filterTypes($document_types);
             $documentsAllowed = $documentsAllowed->filter(function($item) use($document_types){
                 return  in_array($item->document_type->document_type, $document_types);
-            });
-            $filtered = true;
-        }
-        if ($request->has('stagesFilter')) {
-            $stages = $request->input('stagesFilter');
-            $documents->filterStages($stages);
-            $documentsAllowed = $documentsAllowed->filter(function($item) use($stages){
-                return  in_array($item->stage->name, $stages);
             });
             $filtered = true;
         }
@@ -99,13 +105,32 @@ class DocumentController extends Controller
             });
             $filtered = true;
         }
-        if ($request->has('dateStartFilter')) {
+        if ($request->has('stagesFilter')) {
+            $stages = $request->input('stagesFilter');
+            $documents->filterStages($stages);
+            $documentsAllowed = $documentsAllowed->filter(function($item) use($stages){
+                return  in_array($item->stage->name, $stages);
+            });
+            $filtered = true;
+        }else{
+            if ($request->has('dateStartFilter')) {
+                if (trim($request->input('dateStartFilter')) != '') {
+                    $date = strtotime($request->input('dateStartFilter'));
+                    $documents->filterDateStart(date('Y-m-d', $date));
+                    $documentsAllowed = $documentsAllowed->where('date', '>=', date('Y-m-d', $date));
+                    $filtered = true;
+                }
+            }
             if ($request->has('dateEndFilter')) {
-                $documents->filterDateStart(date('Y-m-d', strtotime($request->input('dateStartFilter'))));
-                $documents->filterDateEnd(date('Y-m-d', strtotime($request->input('dateEndFilter'))));
-                $filtered = true;
+                if (trim($request->input('dateEndFilter')) != '') {
+                    $date = strtotime($request->input('dateEndFilter'));
+                    $documents->filterDateEnd(date('Y-m-d', $date));
+                    $documentsAllowed = $documentsAllowed->where('date', '<=', date('Y-m-d', $date));
+                    $filtered = true;
+                }
             }
         }
+
         $result = $documents->get()->merge($documentsAllowed);
 
         if ($filtered) {

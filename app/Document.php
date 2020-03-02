@@ -112,6 +112,11 @@ class Document extends Model
         return $query->where('name', 'like', '%'. $name .'%');
     }
 
+    public function scopeFilterAuthor($query, $author)
+    {
+        return $query->where('author', 'like', '%'. $author .'%');
+    }
+
     public function scopeFilterStages($query, $stages)
     {
         return $query->whereHas('stage', function ($q) use ($stages) {
