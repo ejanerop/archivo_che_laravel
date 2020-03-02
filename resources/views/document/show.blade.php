@@ -63,15 +63,15 @@
             </div>
             <div class="box-footer">
                 @if($document->document_type->resource_type->resource_type == 'Imagen')
-                    <img src="{{asset($mainResource->path)}}" alt="sd" width="100%">
+                    <img src="{{route('file', ['folder' => $mainResource->type, 'file' => $mainResource->path])}}" alt="sd" width="100%">
                 @elseif($document->document_type->resource_type->resource_type == 'Audio')
                     <audio controls>
-                        <source src="{{asset($mainResource->path)}}" type="audio/mpeg">
+                        <source src="{{route('file', ['folder' => $mainResource->type, 'file' => $mainResource->path])}}" type="audio/mpeg">
                         Your browser does not support the audio element.
                     </audio>
                 @elseif($document->document_type->resource_type->resource_type == 'Video')
                     <video width="320" height="240" controls>
-                        <source src="{{asset($mainResource->path)}}" type="video/mp4">
+                        <source src="{{route('file', ['folder' => $mainResource->type, 'file' => $mainResource->path])}}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 @else

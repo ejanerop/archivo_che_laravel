@@ -213,7 +213,8 @@ class DocumentController extends Controller
         $type = $request->input('type');
         if($type == 'text'){
             if($request->hasFile('facsim')){
-                $pathFacsim = Storage::disk('public')->putFile('facsim', $request->file('facsim'));
+                $pathFacsim = Storage::disk('media')->putFile('facsim', $request->file('facsim'));
+                str_replace('/', '\\', $pathFacsim);
                 $facsim = new Resource();
                 $facsim->type = 'facsim';
                 $facsim->src = $pathFacsim;
@@ -221,7 +222,8 @@ class DocumentController extends Controller
                 $facsim->save();
             }
         }
-        $path = Storage::disk('public')->putFile($type, $request->file('resource'));;
+        $path = Storage::disk('media')->putFile($type, $request->file('resource'));
+        $path = str_replace('/', '\\', $path);
         $resource->src = $path;
         $resource->description = $request->input('resource_description');
         $resource->save();
@@ -325,12 +327,14 @@ class DocumentController extends Controller
         if($request->hasFile('resource')){
             foreach($document->resources as $res){
                 if($res->type != 'facsim'){
-                    Storage::disk('public')->delete($res->src);
+                    $pathToDelete = str_replace('\\', '/', $res->src);
+                    Storage::disk('media')->delete($pathToDelete);
                     $res->delete();
                 }
             }
             $type = $request->input('type');
-            $path = Storage::disk('public')->putFile($type, $request->file('resource'));;
+            $path = Storage::disk('media')->putFile($type, $request->file('resource'));
+            $path = str_replace('/', '\\', $path);
             $resource->src = $path;
             $resource->description = $request->input('resource_description');
             $resource->type = $request->input('type');
@@ -341,7 +345,8 @@ class DocumentController extends Controller
         $type = $request->input('type');
 
         if($request->hasFile('facsim')){
-            $pathFacsim = Storage::disk('public')->putFile('facsim', $request->file('facsim'));
+            $pathFacsim = Storage::disk('media')->putFile('facsim', $request->file('facsim'));
+            $pathFacsim = str_replace('/', '\\', $path);
             $facsim = new Resource();
             $facsim->type = 'facsim';
             $facsim->src = $pathFacsim;
@@ -369,7 +374,8 @@ class DocumentController extends Controller
         $document = Document::with('resources')->find($id);
         $document->subtopics()->detach();
         foreach($document->resources as $resource){
-            Storage::disk('public')->delete($resource->src);
+            $pathToDelete = str_replace('\\', '/', $resource->src);
+            Storage::disk('media')->delete($pathToDelete);
             $resource->delete();
         }
         $document->delete();

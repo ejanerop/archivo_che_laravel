@@ -19,7 +19,8 @@ class Resource extends Model
     }
 
     public function getPathAttribute(){
-        return Storage::url($this->src);
+        $path = substr($this->src, strpos($this->src, '\\') + 1);
+        return $path;
     }
 
     public function getFileNameAttribute(){

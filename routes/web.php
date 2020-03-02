@@ -2,6 +2,9 @@
 
 use \Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +23,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/storage/{folder}/{filename}', 'FileController@getFile')->name('file');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/test', 'DocumentController@test')->name('test');
