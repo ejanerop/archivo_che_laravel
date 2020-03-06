@@ -38,11 +38,16 @@ class DocumentController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->canSeeAll()) {
+            $documents = Document::all();
+        } else {
+            $documents = Document::with(['subtopics', 'resources', 'access_level','document_type'])->filterAccessLevel(Auth::user()->level)->get();
+            $documentsAllowed = Auth::user()->approved_documents;
+            $documents = $documents->merge($documentsAllowed);
+        }
 
-        $documents = Document::with(['subtopics', 'resources', 'access_level','document_type'])->filterAccessLevel(Auth::user()->level)->get();
-        $documentsAllowed = Auth::user()->approved_documents;
 
-        $documents = $documents->merge($documentsAllowed);
+
 
 
         return view('document.index', ['documents' => $documents->paginate(100),
@@ -154,10 +159,12 @@ class DocumentController extends Controller
      */
     public function create()
     {
+        $accessLevels = AccessLevel::where('level','<>', 1)->get();
+
         return view('document.create', [
             'resource_types' => ResourceType::with('document_types')->get(),
             'topics' => ResearchTopic::with('subtopics')->get(),
-            'access_levels' => AccessLevel::all()
+            'access_levels' => $accessLevels
         ]);
     }
 
@@ -271,10 +278,11 @@ class DocumentController extends Controller
         foreach ($document->subtopics as $subtopic){
             $subtopics[$i] = $subtopic->id;
         }
+        $accessLevels = AccessLevel::where('level','<>', 1)->get();
         return view('document.edit', ['document'=> Document::with(['subtopics', 'resources', 'access_level','document_type'])->find($id),
             'resource_types' => ResourceType::with('document_types')->get(),
             'topics' => ResearchTopic::with('subtopics')->get(),
-            'access_levels' => AccessLevel::all(),
+            'access_levels' => $accessLevels,
             'subtopics' => $subtopics]);
     }
 

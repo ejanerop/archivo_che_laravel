@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AccessLevel;
 use App\DocumentType;
 use App\Petition;
 use App\PetitionState;
@@ -81,10 +82,12 @@ class PetitionController extends Controller
      */
     public function create()
     {
+        $accessLevels = AccessLevel::where('level','<>', 1)->get();
         return view('petition.create', [
             'resourceTypes' => ResourceType::with('document_types')->get(),
             'topics' => ResearchTopic::with('subtopics')->get(),
-            'stages' => Stage::all()
+            'stages' => Stage::all(),
+            'access_levels' => $accessLevels
         ]);
     }
 
@@ -113,6 +116,12 @@ class PetitionController extends Controller
             $petition = new Petition();
             $petition->user()->associate($user);
             $petition->petition_state()->associate(PetitionState::where('slug', 'made')->first());
+            if ($request->has('notes')){
+                $petition->notes = $request->input('notes');
+            }
+            if ($request->has('access_level')){
+                $petition->access_level()->associate(AccessLevel::where('name', $request->input('access_level'))->first());
+            }
             $petition->save();
             Logger::log('request', '', null, '');
 
@@ -164,7 +173,8 @@ class PetitionController extends Controller
      */
     public function show(Request $request, Petition $petition)
     {
-        $petition->load('subpetitions', 'user', 'petition_state');
+        $petition->load('subpetitions', 'user', 'petition_state', 'access_level');
+        $accessLevels = AccessLevel::where('level','<>', 1)->get();
         $subpetitions = $petition->subpetitions;
         $stagesSelected = [];
         $documentTypesSelected = [];
@@ -183,6 +193,7 @@ class PetitionController extends Controller
         return view('petition.show', ['petition' => $petition,
                                       'subpetitions' => $subpetitions,
                                       'stages' => Stage::all(),
+                                      'access_levels' => $accessLevels,
                                       'resourceTypes' => ResourceType::with('document_types')->get(),
                                       'topics' => ResearchTopic::with('subtopics')->get(),
                                       'stagesSelected' => $stagesSelected,

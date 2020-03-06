@@ -19,6 +19,9 @@ class CreatePetitionsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('petition_state_id');
             $table->foreign('petition_state_id')->references('id')->on('petition_states');
+            $table->unsignedBigInteger('access_level_id');
+            $table->foreign('access_level_id')->references('id')->on('access_levels');
+            $table->string('notes')->nullable();
             $table->timestamps();
         });
     }

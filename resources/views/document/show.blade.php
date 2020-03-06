@@ -9,7 +9,10 @@
     <section class="content">
         <div class="box box-primary">
             <div class="box-header">
-
+                <a href="{{URL::previous()}}" class="btn btn-primary pull-left">
+                    <span class="fa fa-reply"></span>
+                    Atrás
+                </a>
             </div>
             <div class="box-body">
                 <div class="row">
@@ -76,7 +79,7 @@
                     </video>
                 @else
                     <label for="text" hidden>Texto</label>
-                    <embed src="{{asset($mainResource->path)}}" width="100%" height="700" type="application/pdf">
+                    <embed src="{{route('file', ['folder' => $mainResource->type, 'file' => $mainResource->path])}}" width="100%" height="700" type="application/pdf">
                 @endif
             </div>
         </div>

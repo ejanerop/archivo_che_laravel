@@ -27,7 +27,7 @@
                 @endif
                 <div class="box box-primary">
                     <div class="box-header">
-                        <a href="{{route('research_topic.create')}}" class="btn btn-success pull-right"><span class="fa fa-plus"></span></a>
+                        <a href="{{route('research_topic.create')}}" class="btn btn-success pull-right"><span class="fa fa-plus"></span> Nuevo</a>
                     </div>
                     <div class="box-body">
                         <table id="table" class="table table-bordered">
@@ -35,6 +35,7 @@
                                 <tr>
                                     <th>Tema de investigación</th>
                                     <th>Descripción</th>
+                                    <th>Cantidad de documentos asociados</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -43,6 +44,7 @@
                                 <tr>
                                     <td>{{$topic->research_topic}}</td>
                                     <td>{{$topic->description}}</td>
+                                    <td>{{$topic->documents_count}}</td>
                                     <td>
                                         <form action="{{route('research_topic.destroy', ['research_topic' => $topic->id])}}" method="post">
                                             @csrf

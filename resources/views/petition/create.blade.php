@@ -31,7 +31,7 @@
                 </div>
                 <div class="box-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="subtopics">Subtemas de investigación</label>
                                 <select id="subtopics" name="subtopics[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona los temas de investigación" style="width: 100%">
@@ -45,7 +45,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="documentTypes">Tipos de documento</label>
                                 <select id="documentTypes" name="documentTypes[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona los tipos de documento" style="width: 100%">
@@ -55,6 +55,16 @@
                                         <option class="opt {{$resType->resource_type}}" id="{{$docType->id}}">{{$docType->document_type}}</option>
                                         @endforeach
                                     </optgroup>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="access_level">Nivel de acceso</label>
+                                <select id="access_level" name="access_level" class="form-control filterSelect">
+                                    @foreach($access_levels as $levels)
+                                        <option id="{{$levels->id}}" {{old('access_level')==$levels->name ? 'selected' : ''}}>{{$levels->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -97,14 +107,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-
+                                <label for="notes">Notas</label>
+                                <textarea id="notes" name="notes" rows="5" class="form-control" style="resize:none" placeholder="Notas">{{old('notes')}}</textarea>
                             </div>
-                        </div>
-                        <div class="col-md-3">
-
-                        </div>
-                        <div class="col-md-3">
-
                         </div>
                     </div>
 

@@ -25,7 +25,7 @@ class DateNow implements Rule
      */
     public function passes($attribute, $value)
     {
-        return strtotime($value) <= strtotime('9-10-1967');
+        return strtotime($value) <= strtotime('today');
     }
 
     /**

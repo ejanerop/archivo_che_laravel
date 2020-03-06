@@ -14,7 +14,7 @@
             <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <div class="form-group has-feedback">
-                    <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('name') }}" placeholder="Usuario" required autofocus>
+                    <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" placeholder="Usuario" required autofocus>
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     @if ($errors->has('username'))
                         <span class="invalid-feedback" role="alert">
@@ -52,7 +52,7 @@
                     <div class="col-xs-8"> </div><!-- /.col -->
                     <div class="col-xs-4">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">
-                            {{ __('Register') }}
+                            {{ __('Registrar') }}
                         </button>
                     </div><!-- /.col -->
                 </div>

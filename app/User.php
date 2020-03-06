@@ -64,6 +64,12 @@ class User extends Authenticatable
 
     }
 
+    public function canSeeAll(){
+
+        return $this->roles->access_level->name == 'Secreto'? true : false ;
+
+    }
+
     public function isDocumentPermitted($id){
         $permitted = false;
 

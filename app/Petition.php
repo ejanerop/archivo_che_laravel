@@ -14,6 +14,10 @@ class Petition extends Model
 		return $this->belongsTo('App\PetitionState', 'petition_state_id');
     }
 
+    public function access_level(){
+		return $this->belongsTo('App\AccessLevel', 'access_level_id');
+    }
+
     public function subpetitions(){
 		return $this->hasMany('App\Subpetition', 'petition_id');
     }

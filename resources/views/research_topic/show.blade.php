@@ -48,8 +48,8 @@
                                 </table>
                             </div>
                             <div class="box-footer">
-                                <a href="{{route('research_topic.index')}}" class="btn btn-danger pull-left">
-                                    <span class="fa fa-remove"></span>
+                                <a href="{{URL::previous()}}" class="btn btn-primary pull-left">
+                                    <span class="fa fa-reply"></span>
                                     {{ __('Atrás') }}
                                 </a>
                             </div>

@@ -42,7 +42,7 @@
             <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Top 5 documentos más consultados</h3>
+                        <h3 class="box-title">Top 5 subtemas de investigación más consultados</h3>
                     </div>
                     <div class="box-body">
                         <table id="table" class="table table-bordered table-hover">

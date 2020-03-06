@@ -39,17 +39,17 @@ class LogTypeTableSeeder extends Seeder
 
         $logType = new LogType();
         $logType->slug = 'request';
-		$logType->type = 'Petición';
+		$logType->type = 'Solicitud';
         $logType->save();
 
         $logType = new LogType();
         $logType->slug = 'permit';
-		$logType->type = 'Petición concedida';
+		$logType->type = 'Solicitud concedida';
         $logType->save();
 
         $logType = new LogType();
         $logType->slug = 'deny';
-		$logType->type = 'Petición denegada';
+		$logType->type = 'Solicitud denegada';
         $logType->save();
 
         $logType = new LogType();

@@ -64,7 +64,7 @@
                                                            @foreach($resource_types as $resType)
                                                                <optgroup class="optgroup" label="{{$resType->resource_type}}">
                                                                    @foreach($resType->document_types as $docType)
-                                                                       <option class="opt {{$resType->resource_type}}" id="{{$docType->id}}">{{$docType->document_type}}</option>
+                                                                       <option class="opt" id="{{$docType->id}}" {{old('document_type')==$docType->document_type ? 'selected' : ''}}>{{$docType->document_type}}</option>
                                                                    @endforeach
                                                                </optgroup>
                                                            @endforeach
@@ -80,7 +80,7 @@
                                                        <label for="access_level">Nivel de acceso</label>
                                                        <select id="access_level" name="access_level" class="form-control">
                                                            @foreach($access_levels as $levels)
-                                                               <option id="{{$levels->id}}">{{$levels->name}}</option>
+                                                               <option id="{{$levels->id}}" {{old('access_level')==$levels->name ? 'selected' : ''}}>{{$levels->name}}</option>
                                                            @endforeach
                                                        </select>
                                                    </div>
@@ -154,7 +154,9 @@
     <script src="{{asset('input-mask/jquery.inputmask.date.extensions.js')}}"></script>
     <script src="{{asset('input-mask/jquery.inputmask.extensions.js')}}"></script>
     <script>
-        $('#subtopics').select2();
+        $('select#subtopics').select2();
+        $('select#access_level').select2();
+        $('select#document_type').select2();
         $('li.li').removeClass('active');
         $('li#document').addClass('active');
         $('li#documentCreate').addClass('active');
@@ -172,6 +174,7 @@
             var hasFacsim = $('#hasFacsim');
             var facsim = $('input#facsim');
             var type = $('input#type');
+            inputResources.val("");
             if(optSelected.hasClass('Texto')){
                 hasFacsim.iCheck('enable');
                 hasFacsim.iCheck('uncheck');

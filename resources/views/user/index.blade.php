@@ -27,7 +27,7 @@
                 @endif
                 <div class="box box-primary">
                     <div class="box-header">
-                        <a href="{{route('user.create')}}" class="btn btn-flat btn-success pull-right"><span class="glyphicon glyphicon-plus"></span>Nuevo</a>
+                        <a href="{{route('user.create')}}" class="btn btn-flat btn-success pull-right"><span class="glyphicon glyphicon-plus"></span> Nuevo</a>
                     </div>
                     <div class="box-body">
                         <table id="table" class="table table-bordered table-striped">

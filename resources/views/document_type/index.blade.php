@@ -27,7 +27,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <a href="{{route('document_type.create')}}" class="btn btn-success pull-right"><span class="fa fa-plus"></span></a>
+                        <a href="{{route('document_type.create')}}" class="btn btn-success pull-right"><span class="fa fa-plus"></span> Nuevo</a>
                     </div>
                     <div class="box-body">
                         <table id="table" class="table table-bordered">

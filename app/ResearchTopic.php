@@ -15,4 +15,14 @@ class ResearchTopic extends Model
         return $this->morphMany('App\Log', 'object');
     }
 
+    public function getDocumentsCountAttribute(){
+        $subtopics = $this->subtopics;
+        $documents = collect();
+        foreach ($subtopics as $subtopic) {
+            $subtopic->load('documents');
+            $documents = $documents->merge($subtopic->documents);
+        }
+        $documents = $documents->unique('id');
+        return $documents->count();
+    }
 }
