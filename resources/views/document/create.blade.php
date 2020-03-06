@@ -64,7 +64,7 @@
                                                            @foreach($resource_types as $resType)
                                                                <optgroup class="optgroup" label="{{$resType->resource_type}}">
                                                                    @foreach($resType->document_types as $docType)
-                                                                       <option class="opt" id="{{$docType->id}}" {{old('document_type')==$docType->document_type ? 'selected' : ''}}>{{$docType->document_type}}</option>
+                                                                       <option class="opt {{$resType->resource_type}}" id="{{$docType->id}}" {{old('document_type')==$docType->document_type ? 'selected' : ''}}>{{$docType->document_type}}</option>
                                                                    @endforeach
                                                                </optgroup>
                                                            @endforeach

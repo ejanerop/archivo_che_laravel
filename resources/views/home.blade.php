@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@if (\Illuminate\Support\Facades\Auth::user()->hasRole('manager'))
+@if (\Auth::user()->hasRole('manager'))
     @include('home.manager')
-@elseif (\Illuminate\Support\Facades\Auth::user()->hasRole('director'))
+@elseif (\Auth::user()->hasRole('director'))
     @include('home.investigator')
 @else
     @include('home.investigator')

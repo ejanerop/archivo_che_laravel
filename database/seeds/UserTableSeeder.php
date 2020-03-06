@@ -13,29 +13,54 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        $role_guest = Role::where('name', 'Invitado')->first();
-        $role_admin = Role::where('name', 'Administrador')->first();
-        $role_gestor = Role::where('name', 'Gestor Documental')->first();
 
         $user = new User();
         $user->username = 'guest';
         $user->email = 'guest@gmail.com';
         $user->password = bcrypt('12345678');
-        $user->roles()->associate($role_guest);
-        $user->save();
-
-        $user = new User();
-        $user->username = 'admin';
-        $user->email = 'admin@gmail.com';
-        $user->password = bcrypt('12345678');
-        $user->roles()->associate($role_admin);
+        $user->roles()->associate(Role::where('slug', 'guest')->first());
         $user->save();
 
         $user = new User();
         $user->username = 'gestor';
         $user->email = 'gestor@gmail.com';
         $user->password = bcrypt('12345678');
-        $user->roles()->associate($role_gestor);
+        $user->roles()->associate(Role::where('slug', 'manager')->first());
+        $user->save();
+
+        $user = new User();
+        $user->username = 'Daina';
+        $user->email = 'daina@gmail.com';
+        $user->password = bcrypt('12345678');
+        $user->roles()->associate(Role::where('slug', 'inv.int')->first());
+        $user->save();
+
+        $user = new User();
+        $user->username = 'Eric';
+        $user->email = 'eric@gmail.com';
+        $user->password = bcrypt('12345678');
+        $user->roles()->associate(Role::where('slug', 'inv.int')->first());
+        $user->save();
+
+        $user = new User();
+        $user->username = 'Camilo';
+        $user->email = 'camilo@gmail.com';
+        $user->password = bcrypt('12345678');
+        $user->roles()->associate(Role::where('slug', 'coord.alt')->first());
+        $user->save();
+
+        $user = new User();
+        $user->username = 'Maria';
+        $user->email = 'maria@gmail.com';
+        $user->password = bcrypt('12345678');
+        $user->roles()->associate(Role::where('slug', 'coord.acad')->first());
+        $user->save();
+
+        $user = new User();
+        $user->username = 'director';
+        $user->email = 'director@gmail.com';
+        $user->password = bcrypt('12345678');
+        $user->roles()->associate(Role::where('slug', 'director')->first());
         $user->save();
 
 

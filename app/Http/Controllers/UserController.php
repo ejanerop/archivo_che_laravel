@@ -7,6 +7,7 @@ use App\Rules\CurrentPassword;
 use Illuminate\Http\Request;
 use App\User;
 use App\Util\Logger;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -82,6 +83,10 @@ class UserController extends Controller
 
     public function destroy(Request $request, $id)
     {
+        if(Auth::user()->id == $id){
+            return redirect()->route('user.index')->with('error', 'No puede eliminar su propio usuario.');
+        }
+
         $user = User::find($id);
         $name = $user->username;
         $user->delete();

@@ -85,7 +85,11 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Usuario</label>
-                                        <input type="text" class="form-control pull-right" id="name" name="name">
+                                        <select id="name" class="form-control select2 filterSelect" name="name" style="width: 100%">
+                                            @foreach($users as $user)
+                                                <option class="opt" id="{{$user->id}}">{{$user->username}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -117,6 +121,7 @@
         $(function () {
             $('#table').DataTable();
             $('#log_types').select2();
+            $('#name').select2();
             $('li.li').removeClass('active');
             $('li#log').addClass('active');
             $('li#logList').addClass('active');

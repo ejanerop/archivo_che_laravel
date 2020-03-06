@@ -14,13 +14,20 @@ class UserHasRole
      * @param $role
      * @return mixed
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next, ...$roles)
     {
         if($request->user() != null ){
-            if (! $request->user()->hasRole($role)) {
+            $hasRole = false;
+            foreach ($roles as $role) {
+                if ($request->user()->hasRole($role)) {
+                    $hasRole = true;
+                }
+            }
+            if ($hasRole) {
+                return $next($request);
+            } else {
                 abort(403, 'No tienes autorización para realizar esta acción');
             }
-            return $next($request);
         }else {
             return redirect()->route('login');
         }

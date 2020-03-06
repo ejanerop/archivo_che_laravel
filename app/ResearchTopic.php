@@ -25,4 +25,15 @@ class ResearchTopic extends Model
         $documents = $documents->unique('id');
         return $documents->count();
     }
+
+    public function getDocumentsAttribute(){
+        $subtopics = $this->subtopics;
+        $documents = collect();
+        foreach ($subtopics as $subtopic) {
+            $subtopic->load('documents');
+            $documents = $documents->merge($subtopic->documents);
+        }
+        $documents = $documents->unique('id');
+        return $documents;
+    }
 }

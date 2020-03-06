@@ -24,6 +24,10 @@ class PetitionController extends Controller
 
     public function __construct() {
         $this->middleware('auth');
+        $this->middleware('user.has.role:manager')->only('index', 'acceptPetition', 'denyPetition', 'show');
+        $this->middleware('user.has.role:guest,inv.int,inv.ext')->only('create', 'myPetitions','store');
+        $this->middleware('user.has.role:guest,inv.int,inv.ext,manager')->only('destroy');
+
     }
 
     /**
@@ -35,6 +39,19 @@ class PetitionController extends Controller
     {
         return view('petition.index',['petitions'=> Petition::with(['petition_state', 'user'])->get()]);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function myPetitions()
+    {
+        $petitions = Auth::user()->petitions;
+
+        return view('petition.myPetitions',['petitions'=> $petitions]);
+    }
+
 
 
     /**

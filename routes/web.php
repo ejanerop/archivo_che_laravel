@@ -30,7 +30,7 @@ Route::post('/test', 'DocumentController@test')->name('test');
 
 Route::resource('research_topic', 'ResearchTopicController');
 
-Route::resource('user', 'UserController')->middleware('user.has.role:admin');
+Route::resource('user', 'UserController')->middleware('user.has.role:manager');
 
 Route::resource('document', 'DocumentController');
 Route::get('/document_filter', 'DocumentController@filter')->name('document.filter');
@@ -50,6 +50,7 @@ Route::get('/log_filter', 'LogController@filter')-> name('log.filter');
 Route::resource('petition', 'PetitionController')->only(['index', 'create', 'store', 'show', 'destroy']);
 Route::get('/petition/accept/{id}', 'PetitionController@acceptPetition')->name('petition.accept');
 Route::get('/petition/deny/{id}', 'PetitionController@denyPetition')->name('petition.deny');
+Route::get('/my_petitions', 'PetitionController@myPetitions')->name('petition.myPetitions');
 
 Route::get('/profile/{id}', 'UserController@profile')->middleware('user.profile')->name('user.profile');
 

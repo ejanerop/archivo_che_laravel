@@ -6,6 +6,7 @@ use App\Document;
 use App\Log;
 use App\LogType;
 use App\Subtopic;
+use App\User;
 use Illuminate\Http\Request;
 
 class LogController extends Controller
@@ -13,6 +14,8 @@ class LogController extends Controller
 
     public function __construct() {
         $this->middleware('auth');
+        $this->middleware('user.has.role:manager,manager')->only('index', 'filter');
+        $this->middleware('user.has.role:manager,director,coord.acad,coord.alt')->only('stats');
     }
 
 
@@ -23,9 +26,11 @@ class LogController extends Controller
      */
     public function index()
     {
+        $users = User::withTrashed()->get();
         $log_types = LogType::all();
 
         return view('log.index', ['logs' => Log::all(),
+                                  'users' => $users,
                                   'log_types' => $log_types,
                                   'filtered' => false]);
     }
@@ -56,7 +61,10 @@ class LogController extends Controller
         }
 
         if ($filtered) {
+            $users = User::withTrashed()->get();
+
             return view('log.index', ['logs' => $logs->get(),
+                                      'users' => $users,
                                       'log_types' => $log_types,
                                       'filtered' => $filtered]);
         } else {

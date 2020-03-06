@@ -22,24 +22,20 @@ class RoleTableSeeder extends Seeder
         $role->save();
 
         $role = new Role();
-        $role->name = 'Administrador';
-        $role->slug = 'admin';
-        $role->access_level()->associate($accessLevel);
-        $role->save();
-
-        $role = new Role();
         $role->name = 'Investigador externo';
         $role->slug = 'inv.ext';
         $role->access_level()->associate($accessLevel);
         $role->save();
 
-        $accessLevel = AccessLevel::where('name', 'Secreto')->first();
+        $accessLevel = AccessLevel::where('name', 'Limitado')->first();
 
         $role = new Role();
-        $role->name = 'Director';
-        $role->slug = 'director';
+        $role->name = 'Investigador interno';
+        $role->slug = 'inv.int';
         $role->access_level()->associate($accessLevel);
         $role->save();
+
+        $accessLevel = AccessLevel::where('name', 'Secreto')->first();
 
         $role = new Role();
         $role->name = 'Gestor Documental';
@@ -54,20 +50,18 @@ class RoleTableSeeder extends Seeder
         $role->save();
 
         $role = new Role();
-        $role->name = 'Cordinador Académico';
+        $role->name = 'Cordinador académico';
         $role->slug = 'coord.acad';
         $role->access_level()->associate($accessLevel);
         $role->save();
 
-        $accessLevel = AccessLevel::where('name', 'Limitado')->first();
-
         $role = new Role();
-        $role->name = 'Investigador interno';
-        $role->slug = 'inv.int';
+        $role->name = 'Director';
+        $role->slug = 'director';
         $role->access_level()->associate($accessLevel);
         $role->save();
 
-        $accessLevel = AccessLevel::where('level', 2)->first();
+
 
     }
 }

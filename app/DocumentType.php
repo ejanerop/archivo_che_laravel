@@ -29,4 +29,10 @@ class DocumentType extends Model
         return Document::where('document_type_id', $this->id)->get();
 
     }
+
+    public function getRelatedDocumentsCountAttribute()
+    {
+        return Document::where('document_type_id', $this->id)->get()->count();
+
+    }
 }
