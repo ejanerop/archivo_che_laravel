@@ -4,6 +4,8 @@ namespace App\Util;
 
 use App\Document;
 use App\DocumentType;
+use App\Petition;
+use App\PetitionState;
 use App\ResearchTopic;
 use App\User;
 
@@ -71,5 +73,13 @@ class Stats
         }
 
         return $arr;
+    }
+
+    public static function last5Petitions()
+    {
+        $id = PetitionState::where('slug', 'made')->first()->id;
+        $petitions = Petition::where('petition_state_id', $id)->orderBy('created_at', 'DESC')->limit(5)->get();
+
+        return $petitions;
     }
 }

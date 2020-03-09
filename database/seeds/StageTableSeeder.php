@@ -39,6 +39,7 @@ class StageTableSeeder extends Seeder
         $stage = new Stage();
         $stage->name = '1968 en adelante';
         $stage->date_start = date('Y-m-d', strtotime('10-10-1967'));
+        $stage->date_end = date('Y-m-d', strtotime('12-12-2030'));
         $stage->save();
     }
 }

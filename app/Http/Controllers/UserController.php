@@ -24,6 +24,23 @@ class UserController extends Controller
         return view('user.index', ['users'=> User::with('roles')->get()]);
     }
 
+    public function trashed()
+    {
+        return view('user.trashed', ['users'=> User::onlyTrashed()->get()]);
+    }
+
+    public function recover(Request $request, $id)
+    {
+        $user = User::withTrashed()->find($id);
+
+        if ($user->trashed()) {
+            $user->restore();
+            return redirect()->route('user.trashed')->with('success', 'El usuario ha sido recuperado correctamente.');
+        }else {
+            return redirect()->route('user.trashed')->with('success', 'El usuario no existe o ya ha sido recuperado.');
+        }
+    }
+
     public function create()
     {
         return view('user.create', ['roles' => Role::get()]);

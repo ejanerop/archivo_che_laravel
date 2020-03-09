@@ -92,6 +92,77 @@ class PetitionController extends Controller
         return redirect()->route('petition.index')->with('success','La solicitud fue denegada correctamente.');
     }
 
+    /**
+     * Edits a petition and accepts it.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function editAcceptPetition(Request $request, $petition)
+    {
+        $petition = Petition::find($petition);
+        $petitionState = PetitionState::where('slug', 'approved')->first();
+        $accessLevel = AccessLevel::where('name', $request->input('access_level'))->first();
+        $petition->access_level()->dissociate();
+        $petition->access_level()->associate($accessLevel);
+        $petition->petition_state()->dissociate();
+        $petition->petition_state()->associate($petitionState);
+        $petition->save();
+
+        if ( !($request->has('subtopics')) && !($request->has('documentTypes')) && !($request->has('subtopics'))){
+
+            return redirect()->route('petition.index')->with('error','Debe seleccionar al menos, una etapa, tipo de documento o etapa.');
+
+        }else{
+            $subpetitions = $petition->subpetitions;
+            foreach ($subpetitions as $subpetition) {
+                $subpetition->delete();
+            }
+
+            $edited = false;
+
+            if ($request->has('subtopics')){
+                foreach ($request->input('subtopics') as $subtopic) {
+                    $topic = Subtopic::where('name', $subtopic)->first();
+                    $subpetition = new Subpetition();
+                    $subpetition->petition()->associate($petition);
+                    $subpetition->object_type ='subtopic';
+                    $subpetition->object_id = $topic->id;
+                    $subpetition->save();
+                    $edited = true;
+                }
+            }
+
+            if ($request->has('documentTypes')){
+                foreach ($request->input('documentTypes') as $documentType) {
+                    $documentType = DocumentType::where('document_type', $documentType)->first();
+                    $subpetition = new Subpetition();
+                    $subpetition->petition()->associate($petition);
+                    $subpetition->object_type = 'document_type';
+                    $subpetition->object_id = $documentType->id;
+                    $subpetition->save();
+                    $edited = true;
+                }
+            }
+
+            if ($request->has('stages')){
+                foreach ($request->input('stages') as $stage) {
+                    $stage = Stage::where('name', $stage)->first();
+                    $subpetition = new Subpetition();
+                    $subpetition->petition()->associate($petition);
+                    $subpetition->object_type = 'stage';
+                    $subpetition->object_id = $stage->id;
+                    $subpetition->save();
+                    $edited = true;
+                }
+            }
+
+            Logger::log('permit', '', null, '');
+            return redirect()->route('petition.index')->with('success','La solicitud fue aceptada correctamente.');
+
+        }
+
+    }
+
  /**
      * Show the form for creating a new resource.
      *
@@ -211,6 +282,38 @@ class PetitionController extends Controller
                                       'subpetitions' => $subpetitions,
                                       'stages' => Stage::all(),
                                       'access_levels' => $accessLevels,
+                                      'resourceTypes' => ResourceType::with('document_types')->get(),
+                                      'topics' => ResearchTopic::with('subtopics')->get(),
+                                      'stagesSelected' => $stagesSelected,
+                                      'documentTypesSelected' => $documentTypesSelected,
+                                      'subtopicsSelected' => $subtopicsSelected]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showOwn(Request $request, Petition $petition)
+    {
+        $petition->load('subpetitions', 'user', 'petition_state', 'access_level');
+        $subpetitions = $petition->subpetitions;
+        $stagesSelected = [];
+        $documentTypesSelected = [];
+        $subtopicsSelected = [];
+
+        foreach ($subpetitions as $subpetition) {
+            if ($subpetition->object_type == 'stage') {
+                array_push($stagesSelected, $subpetition->object->id);
+            } elseif ($subpetition->object_type == 'document_type') {
+                array_push($documentTypesSelected, $subpetition->object->id);
+            } else {
+                array_push($subtopicsSelected, $subpetition->object->id);
+            }
+        }
+
+        return view('petition.showOwn', ['petition' => $petition,
+                                      'subpetitions' => $subpetitions,
                                       'resourceTypes' => ResourceType::with('document_types')->get(),
                                       'topics' => ResearchTopic::with('subtopics')->get(),
                                       'stagesSelected' => $stagesSelected,

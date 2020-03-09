@@ -6,7 +6,7 @@
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-          <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+          <li><a id="homeTab" href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
           <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
         </ul>
         <!-- Tab panes -->
@@ -102,8 +102,6 @@
             </ul><!-- /.control-sidebar-menu -->
 
           </div><!-- /.tab-pane -->
-          <!-- Stats tab content -->
-          <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div><!-- /.tab-pane -->
           <!-- Settings tab content -->
           <div class="tab-pane" id="control-sidebar-settings-tab">
             <form method="post">
@@ -232,8 +230,10 @@
                                             @csrf
                                             @method('DELETE')
                                             <a href="{{route('document.show', ['document' => $document->id])}}" class="btn btn-xs btn-success"><span class="fa fa-eye" style="margin-right: 2px"></span> Mostrar</a>
-                                            <a href="{{route('document.edit', ['document' => $document->id])}}" class="btn btn-xs btn-info"><span class="fa fa-edit" style="margin-right: 2px"></span> Editar</a>
-                                            <button type="submit" onclick="return confirm('Está seguro que desea eliminar el documento {{$document->name}}?')" class="btn btn-xs btn-danger"><span class="fa fa-remove" style="margin-right: 2px"></span> Eliminar</button>
+                                            @if (\Auth::user()->hasRole('manager'))
+                                                <a href="{{route('document.edit', ['document' => $document->id])}}" class="btn btn-xs btn-info"><span class="fa fa-edit" style="margin-right: 2px"></span> Editar</a>
+                                                <button type="submit" onclick="return confirm('Está seguro que desea eliminar el documento {{$document->name}}?')" class="btn btn-xs btn-danger"><span class="fa fa-remove" style="margin-right: 2px"></span> Eliminar</button>
+                                            @endif
                                         </form>
                                     </td>
 
@@ -358,13 +358,42 @@
     <script src="{{asset('input-mask/jquery.inputmask.extensions.js')}}"></script>
     <script>
         $('#table').DataTable( {
-            "paging": false
+            "paging": false,
+            language : {
+                "sProcessing":     "Procesando...",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sZeroRecords":    "No se encontraron resultados",
+                "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+                "sInfo":           "Mostrando del _START_ al _END_ de un total de _TOTAL_ documentos",
+                "sInfoEmpty":      "Mostrando del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix":    "",
+                "sSearch":         "Buscar:",
+                "sUrl":            "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":     "Último",
+                    "sNext":     "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                },
+                "buttons": {
+                    "copy": "Copiar",
+                    "colvis": "Visibilidad"
+            }
+        }
         });
         $('li.li').removeClass('active');
         $('li#document').addClass('active');
         $('li#documentList').addClass('active');
         $('.filterSelect').select2();
         $("[data-mask]").inputmask();
+        $('a#homeTab').trigger('click');
         $('#filterByStage').on('ifToggled',function () {
             var stages = $('select#stagesFilter');
             var dateEnd = $('input#dateEndFilter');

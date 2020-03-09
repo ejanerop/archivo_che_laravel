@@ -22,6 +22,67 @@ class Petition extends Model
 		return $this->hasMany('App\Subpetition', 'petition_id');
     }
 
+    public function getCreatedDateAttribute(){
+        $year = substr($this->created_at, 0, 4);
+        $month = substr($this->created_at, 5, 2);
+        $monthText = '';
+        $day = substr($this->created_at, 8, 2);
+        switch ($month) {
+            case '01':
+                $monthText = 'enero';
+                break;
+
+            case '02':
+                $monthText = 'febrero';
+                break;
+
+            case '03':
+                $monthText = 'marzo';
+                break;
+
+            case '04':
+                $monthText = 'abril';
+                break;
+
+            case '05':
+                $monthText = 'mayo';
+                break;
+
+            case '06':
+                $monthText = 'junio';
+                break;
+
+            case '07':
+                $monthText = 'julio';
+                break;
+
+            case '08':
+                $monthText = 'agosto';
+                break;
+
+            case '09':
+                $monthText = 'septiembre';
+                break;
+
+            case '10':
+                $monthText = 'octubre';
+                break;
+
+            case '11':
+                $monthText = 'noviembre';
+                break;
+
+            case '12':
+                $monthText = 'diciembre';
+                break;
+
+            default:
+                $monthText = 'enero';
+                break;
+        }
+        return $day . ' de ' . $monthText . ' de ' . $year;
+    }
+
     public function getRelatedDocumentsAttribute(){
         $documents = collect();
         $docsByDocType = collect();

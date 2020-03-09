@@ -4,13 +4,13 @@
 
     <section class="content-header">
         <div class="container">
-            <h3>Solicitudes</h3>
+            <h3>Usuarios </h3>
         </div>
     </section>
 
     <section class="content">
         <div class="row">
-            <div id="alert-div" class="col-md-12">
+            <div class="col-md-12">
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -25,43 +25,38 @@
                         <strong>{{ session('error') }}</strong>
                     </div>
                 @endif
-            </div>
-            <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-
+                        <a href="{{route('user.create')}}" class="btn btn-flat btn-success pull-right"><span class="glyphicon glyphicon-plus"></span> Nuevo</a>
                     </div>
                     <div class="box-body">
-                        <table id="table" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Usuario</th>
-                        <th>Estado</th>
-                        <th>Acción</th>
-                    </tr>
-                 </thead>
-            @foreach($petitions as $petition)
-                <tr>
-                    <td>{{$petition->user->username}}</td>
-                    @if($petition->petition_state->slug == 'approved')
-                    <td><span class="label label-success">{{$petition->petition_state->state}}</span></td>
-                    @elseif($petition->petition_state->slug == 'denied')
-                    <td><span class="label label-danger">{{$petition->petition_state->state}}</span></td>
-                    @else
-                    <td><span class="label label-primary">{{$petition->petition_state->state}}</span></td>
-                    @endif
-                    <td>
-                        <form action="{{route('petition.destroy', ['petition' => $petition])}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <a href="{{route('petition.show' , ['petition' => $petition])}}" class="btn btn-xs btn-info"><span class="fa fa-mail-forward" style="margin-right: 2px"></span> Responder</a>
-                            <button type="submit" onclick="return confirm('Está seguro que desea eliminar la petición?')" class="btn btn-xs btn-danger"><span class="fa fa-remove" style="margin-right: 2px"></span> Eliminar</button>
-                        </form>
-                        </td>
-
-                </tr>
-            @endforeach
-        </table>
+                        <table id="table" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Correo</th>
+                                    <th>Rol</th>
+                                    <th>Fecha de borrado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($users as $user)
+                                <tr>
+                                    <td>{{$user->username}}</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>{{$user->roles->name}}</td>
+                                    <td>{{$user->deleted_at}}</td>
+                                    <td>
+                                        <form action="{{route('user.recover', ['user' => $user->id])}}" method="post">
+                                            @csrf
+                                            <button type="submit" onclick="return confirm('Está seguro que desea recuperar el usuario {{$user->username}}?')" class="btn btn-xs btn-success"><span class="fa fa-refresh" style="margin-right: 2px"></span> Recuperar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -71,12 +66,13 @@
     <script>
         $(function () {
             $('#table').DataTable({
+                paging: false,
                 language : {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",
                 "sZeroRecords":    "No se encontraron resultados",
                 "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
-                "sInfo":           "Mostrando del _START_ al _END_ de un total de _TOTAL_ solicitudes",
+                "sInfo":           "Mostrando del _START_ al _END_ de un total de _TOTAL_ usuarios",
                 "sInfoEmpty":      "Mostrando del 0 al 0 de un total de 0 registros",
                 "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
                 "sInfoPostFix":    "",
@@ -100,10 +96,10 @@
             }
         }
             });
-            $('li.li').removeClass('active');
-            $('li#petition').addClass('active');
-            $('li#petitionList').addClass('active');
         });
+        $('li.li').removeClass('active');
+        $('li#user').addClass('active');
+        $('li#userTrashed').addClass('active');
     </script>
 
 @endsection

@@ -26,7 +26,7 @@ class DocumentController extends Controller
 
     public function __construct() {
         $this->middleware('auth');
-        $this->middleware('user.has.role:manager')->except(['index','show']);
+        $this->middleware('user.has.role:manager')->except(['index','show', 'filter']);
         $this->middleware('user.has.access')->only('show');
     }
 
@@ -190,6 +190,7 @@ class DocumentController extends Controller
         $documentType = DocumentType::where('document_type', $request->input('document_type'))->first();
         $subtopics = $request->input('subtopics');
         $resource = new Resource();
+        $code = '';
 
 
         $document = new Document();
@@ -202,14 +203,47 @@ class DocumentController extends Controller
         foreach ($stages as $stage) {
             if (($date >= $stage->date_start) && ($date <= $stage->date_end)) {
                 $document->stage()->associate($stage);
+                if ($stage->id == 1) {
+                    $code = 'NA';
+                }elseif ($stage->id == 2) {
+                    $code = 'PJ';
+                }elseif ($stage->id == 3) {
+                    $code = 'AJ';
+                }elseif ($stage->id == 4) {
+                    $code = 'AD';
+                }else {
+                    $code = 'PM';
+                }
             }
         }
+
+        //-----------------------Cuando la fecha sea opcional cambiar esto-----------------------------------------
+        $code .= substr($date, 2, 2);
+
+        do {
+            $number = rand(1, 999);
+            if (($number >= 1) && ($number < 10)) {
+                $code .= '-00' . $number;
+            }elseif (($number >= 10) && ($number < 100)) {
+                $code .= '-0' . $number;
+            }else {
+                $code .= '-' . $number;
+            }
+
+            $document->code = $code;
+        } while (Document::where('code', $code)->exists());
+
+        //---------------------------------------------------------------------------------------------------------
+
+
+
 
         $document->access_level()->associate($accessLevel);
         $document->document_type()->associate($documentType);
         if($request->has('description')){
             $document->description = $request->input('description');
         }
+
         $document->save();
         foreach ($subtopics as $topic){
             $subtopic = Subtopic::where('name', $topic)->first();
@@ -220,13 +254,15 @@ class DocumentController extends Controller
         $type = $request->input('type');
         if($type == 'text'){
             if($request->hasFile('facsim')){
-                $pathFacsim = Storage::disk('media')->putFile('facsim', $request->file('facsim'));
-                str_replace('/', '\\', $pathFacsim);
-                $facsim = new Resource();
-                $facsim->type = 'facsim';
-                $facsim->src = $pathFacsim;
-                $facsim->document()->associate($document);
-                $facsim->save();
+                foreach ($request->file('facsim') as $facsimFile) {
+                    $pathFacsim = Storage::disk('media')->putFile('facsim', $facsimFile);
+                    $pathFacsim = str_replace('/', '\\', $pathFacsim);
+                    $facsim = new Resource();
+                    $facsim->type = 'facsim';
+                    $facsim->src = $pathFacsim;
+                    $facsim->document()->associate($document);
+                    $facsim->save();
+                }
             }
         }
         $path = Storage::disk('media')->putFile($type, $request->file('resource'));

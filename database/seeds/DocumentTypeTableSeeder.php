@@ -24,7 +24,27 @@ class DocumentTypeTableSeeder extends Seeder
         $type->save();
 
         $type = new DocumentType();
-        $type->document_type = 'Album';
+        $type->document_type = 'Carta';
+        $type->resource_type()->associate($resource_type_text);
+        $type->save();
+
+        $type = new DocumentType();
+        $type->document_type = 'Discurso';
+        $type->resource_type()->associate($resource_type_text);
+        $type->save();
+
+        $type = new DocumentType();
+        $type->document_type = 'Foto';
+        $type->resource_type()->associate($resource_type_image);
+        $type->save();
+
+        $type = new DocumentType();
+        $type->document_type = 'Dibujo';
+        $type->resource_type()->associate($resource_type_image);
+        $type->save();
+
+        $type = new DocumentType();
+        $type->document_type = 'Facsímil';
         $type->resource_type()->associate($resource_type_image);
         $type->save();
 
@@ -34,7 +54,27 @@ class DocumentTypeTableSeeder extends Seeder
         $type->save();
 
         $type = new DocumentType();
+        $type->document_type = 'Canción';
+        $type->resource_type()->associate($resource_type_audio);
+        $type->save();
+
+        $type = new DocumentType();
+        $type->document_type = 'Discurso (audio)';
+        $type->resource_type()->associate($resource_type_audio);
+        $type->save();
+
+        $type = new DocumentType();
         $type->document_type = 'Documental';
+        $type->resource_type()->associate($resource_type_video);
+        $type->save();
+
+        $type = new DocumentType();
+        $type->document_type = 'Película';
+        $type->resource_type()->associate($resource_type_video);
+        $type->save();
+
+        $type = new DocumentType();
+        $type->document_type = 'Videoclip';
         $type->resource_type()->associate($resource_type_video);
         $type->save();
 

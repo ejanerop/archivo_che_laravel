@@ -6,7 +6,7 @@
     <div class="login-box">
 
         <div class="login-logo">
-            <a href="/">Archivo <b>Che</b></a>
+            <a href="">Archivo <b>Che</b></a>
         </div>
 
         <div class="login-box-body">

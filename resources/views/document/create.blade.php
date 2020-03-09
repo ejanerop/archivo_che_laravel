@@ -129,7 +129,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="image">Archivo(s)</label>
-                                                    <input id="facsim" name="facsim" type="file" class="form-control" accept="image/*" multiple disabled>
+                                                    <input id="facsim" name="facsim[]" type="file" class="form-control" accept="image/*" multiple disabled>
                                                 </div>
                                             </div>
                                         </div>

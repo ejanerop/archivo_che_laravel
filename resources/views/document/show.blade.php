@@ -63,6 +63,11 @@
                         </table>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <a class="btn btn-primary" href="{{route('file', ['folder' => $mainResource->type, 'file' => $mainResource->path])}}" target="_blank">Mostrar</a>
+                    </div>
+                </div>
             </div>
             <div class="box-footer">
                 @if($document->document_type->resource_type->resource_type == 'Imagen')

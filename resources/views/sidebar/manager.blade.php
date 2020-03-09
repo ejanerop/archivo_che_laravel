@@ -6,6 +6,7 @@
         <ul class="treeview-menu">
             <li id="userCreate"><a href="{{route('user.create')}}">Nuevo Usuario <span class="fa fa-plus pull-right"></span></a></li>
             <li id="userList"><a href="{{route('user.index')}}">Lista de usuarios <span class="fa fa-list-ul pull-right"></span></a></li>
+            <li id="userTrashed"><a href="{{route('user.trashed')}}">Usuarios eliminados <span class="fa fa-recycle pull-right"></span></a></li>
         </ul>
     </li>
     <li class="header">Gestión</li>
@@ -48,9 +49,7 @@
     <li id="petition" class="li treeview">
         <a href="#"><span>Solicitudes</span> <span class="fa fa-book pull-right"></span></a>
         <ul class="treeview-menu">
-            <li id="petitionCreate"><a href="{{route('petition.create')}}">Realizar solicitud <span class="fa fa-send pull-right"></span></a></li>
             <li id="petitionList"><a href="{{route('petition.index')}}">Lista de solicitudes <span class="fa fa-list-ul pull-right"></span></a></li>
-            <li id="petitionOwn"><a href="{{route('petition.myPetitions')}}">Mis solicitudes <span class="fa fa-user pull-right"></span></a></li>
         </ul>
     </li>
 

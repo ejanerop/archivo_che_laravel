@@ -129,7 +129,8 @@
                   <h4 class="modal-title">Editar petición</h4>
                 </div>
                 <div class="modal-body">
-                  <form action="" method="POST">
+                    <form action="{{route('petition.editAccept', ['petition' => $petition->id])}}" method="POST">
+                    @csrf
                     <div class="container-fluid">
                       <div class="row">
                         <div class="col-md-12">
@@ -144,8 +145,8 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="document_types">Tipos de documento</label>
-                                <select id="document_types" name="document_types[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona los tipos de documento" style="width: 100%">
+                                <label for="documentTypes">Tipos de documento</label>
+                                <select id="documentTypes" name="documentTypes[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona los tipos de documento" style="width: 100%">
                                   @foreach($resourceTypes as $resType)
                                   <optgroup class="optgroup" label="{{$resType->resource_type}}">
                                     @foreach($resType->document_types as $docType)
