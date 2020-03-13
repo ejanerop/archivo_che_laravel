@@ -99,20 +99,23 @@ class PetitionController extends Controller
      */
     public function editAcceptPetition(Request $request, $petition)
     {
-        $petition = Petition::find($petition);
-        $petitionState = PetitionState::where('slug', 'approved')->first();
-        $accessLevel = AccessLevel::where('name', $request->input('access_level'))->first();
-        $petition->access_level()->dissociate();
-        $petition->access_level()->associate($accessLevel);
-        $petition->petition_state()->dissociate();
-        $petition->petition_state()->associate($petitionState);
-        $petition->save();
 
         if ( !($request->has('subtopics')) && !($request->has('documentTypes')) && !($request->has('subtopics'))){
 
-            return redirect()->route('petition.index')->with('error','Debe seleccionar al menos, una etapa, tipo de documento o etapa.');
+            return redirect()->route('petition.index')->with('error','Debe seleccionar, al menos, un subtema de investigación, tipo de documento o etapa.');
 
         }else{
+
+            $petition = Petition::find($petition);
+            $petitionState = PetitionState::where('slug', 'approved')->first();
+            $accessLevel = AccessLevel::where('name', $request->input('access_level'))->first();
+            $petition->access_level()->dissociate();
+            $petition->access_level()->associate($accessLevel);
+            $petition->petition_state()->dissociate();
+            $petition->petition_state()->associate($petitionState);
+            $petition->save();
+
+
             $subpetitions = $petition->subpetitions;
             foreach ($subpetitions as $subpetition) {
                 $subpetition->delete();

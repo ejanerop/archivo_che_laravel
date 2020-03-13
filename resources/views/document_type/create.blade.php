@@ -13,6 +13,15 @@
                 </ul>
             </div>
         @endif
+        <h1>
+            Tipos de documentos
+            <small>Crear</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a href="{{route('document_type.index')}}"><i class="fa fa-tags"></i> Tipos de documento</a></li>
+            <li class="active">Nuevo</li>
+        </ol>
     </section>
 
     <section class="content">
@@ -21,7 +30,6 @@
             <div class="col-md-4">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h4>Nuevo tipo de documento</h4>
                     </div>
                     <form id="doctype" method="POST" action="{{route('document_type.store')}}">
                         @csrf

@@ -13,6 +13,15 @@
                 </ul>
             </div>
         @endif
+        <h1>
+            Tipos de documentos
+            <small>Editar</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a href="{{route('document_type.index')}}"><i class="fa fa-tags"></i> Tipos de documento</a></li>
+            <li class="active">Editar {{$document_type->document_type}}</li>
+        </ol>
     </section>
 
     <section class="content">

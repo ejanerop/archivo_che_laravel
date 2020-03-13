@@ -48,6 +48,18 @@
     </script>
 
     <section class="content-header">
+        <h1>
+            Usuarios
+            <small>Crear</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><i class="fa fa-users"></i> Usuarios</li>
+            <li class="active"> Nuevo</li>
+        </ol>
+    </section>
+
+    <section class="content">
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -58,10 +70,6 @@
                 </ul>
             </div>
         @endif
-
-    </section>
-
-    <section class="content">
         <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-4">

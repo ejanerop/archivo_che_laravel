@@ -3,7 +3,15 @@
 @section('content')
 
     <section class="content-header">
-
+        <h1>
+            Documentos
+            <small>Mostrar</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><i class="fa fa-file-text"></i> Documentos</li>
+            <li class="active"> {{$document->name}}</li>
+        </ol>
     </section>
 
     <section class="content">

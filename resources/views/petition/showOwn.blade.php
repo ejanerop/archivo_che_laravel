@@ -3,15 +3,15 @@
 @section('content')
 
     <section class="content-header">
-        <ul>
-        @foreach($errors->all() as $error)
-            <li class="text-red">
-            <span class="text-red">
-                <strong class="text-red">{{ $error }}</strong>
-            </span>
-            </li>
-        @endforeach
-        </ul>
+        <h1>
+            Solicitudes
+            <small>Mis solicitudes</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a href="{{route('petition.myPetitions')}}"><i class="fa fa-book"></i> Solicitudes</a></li>
+            <li class="active">Mis solicitudes</li>
+        </ol>
     </section>
 
     <section class="content">

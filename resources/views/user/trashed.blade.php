@@ -2,11 +2,17 @@
 
 @section('content')
 
-    <section class="content-header">
-        <div class="container">
-            <h3>Usuarios </h3>
-        </div>
-    </section>
+<section class="content-header">
+    <h1>
+        Usuarios
+        <small>Usuarios eliminados</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</a></li>
+        <li><i class="fa fa-users"></i> Usuarios</li>
+        <li class="active"> Usuarios eliminados</li>
+    </ol>
+</section>
 
     <section class="content">
         <div class="row">

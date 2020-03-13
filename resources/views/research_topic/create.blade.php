@@ -3,6 +3,18 @@
 @section('content')
 
     <section class="content-header">
+        <h1>
+            Temas de investigación
+            <small>Nuevo tema</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a href="{{route('research_topic.index')}}"><i class="fa fa-book"></i> Temas de investigación</a></li>
+            <li class="active">Nuevo tema</li>
+        </ol>
+    </section>
+
+    <section class="content">
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -13,15 +25,11 @@
                 </ul>
             </div>
         @endif
-    </section>
-
-    <section class="content">
         <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-4">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h4>Nuevo tema de investigación</h4>
                     </div>
                     <form id="topic" method="POST" action="{{route('research_topic.store')}}">
                         @csrf
@@ -35,7 +43,7 @@
                                 <textarea id="description" name="description" class="form-control" rows="4" style="resize: none" placeholder="Descripción del tema"></textarea>
                             </div>
                             <div class="box-footer">
-                                <a href="{{route('subtopic.index')}}" class="btn btn-danger pull-left">
+                                <a href="{{route('research_topic.index')}}" class="btn btn-danger pull-left">
                                     <span class="fa fa-remove"></span>
                                     {{ __('Cancelar') }}
                                 </a>

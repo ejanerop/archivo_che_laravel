@@ -25,14 +25,27 @@
                 <a href="{{route('user.index')}}" class="small-box-footer">Ir a usuarios <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <div class="col-lg-6 col-xs-12">
+        <div class="col-lg-3 col-xs-6">
+
+        </div>
+        <div class="col-lg-3 col-xs-6">
+
+        </div>
+
+
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-xs-12">
+
+        </div>
+        <div class="col-lg-5 col-xs-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Últimas solicitudes sin responder</h3>
-                    <a class="btn-sm btn-info pull-right" href="{{route('petition.index')}}">Lista de solicitudes <i class="fa fa-arrow-circle-right"></i></a>
+                    <a class="btn-sm btn-primary pull-right" href="{{route('petition.index')}}">Lista de solicitudes <i class="fa fa-arrow-circle-right"> </i></a>
                 </div>
                 <div class="box-body">
-                    <table id="table" class="table table-bordered table-hover">
+                    <table id="table" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Posición</th>
@@ -56,4 +69,43 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $('table#table').DataTable({
+                paging : false,
+                sort : false,
+                language : {
+                    "sProcessing":     "Procesando...",
+                    "sLengthMenu":     "Mostrar _MENU_ registros",
+                    "sZeroRecords":    "No se encontraron resultados",
+                    "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+                    "sInfo":           "Mostrando _TOTAL_ solicitudes",
+                    "sInfoEmpty":      "Mostrando del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix":    "",
+                    "sSearch":         "Buscar:",
+                    "sUrl":            "",
+                    "sInfoThousands":  ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst":    "Primero",
+                        "sLast":     "Último",
+                        "sNext":     "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    },
+                    "buttons": {
+                        "copy": "Copiar",
+                        "colvis": "Visibilidad"
+                }
+            }
+            });
+    </script>
+
+
 @endsection
+
+

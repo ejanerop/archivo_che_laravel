@@ -3,9 +3,15 @@
 @section('content')
 
 <section class="content-header">
-    <div class="container">
-        <h3>Actividad</h3>
-    </div>
+    <h1>
+        Registro de actividad
+        <small>Datos de uso</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</a></li>
+        <li><a href="{{route('log.index')}}"><i class="fa fa-exchange"></i> Registro de actividad</a></li>
+        <li class="active">Datos de uso</li>
+    </ol>
 </section>
 
 <section class="content">

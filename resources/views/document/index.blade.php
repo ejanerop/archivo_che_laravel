@@ -161,17 +161,22 @@
             </form>
           </div><!-- /.tab-pane -->
         </div>
-      </aside><!-- /.control-sidebar -->
-      <!-- Add the sidebar's background. This div must be placed
-           immediately after the control sidebar -->
-      <div class="control-sidebar-bg"></div>
+    </aside><!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
 
 
 
-      <section class="content-header">
-        <div class="container">
-            <h3>Documentos</h3>
-        </div>
+    <section class="content-header">
+        <h1>
+            Documentos
+            <small>Lista</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><i class="fa fa-file-text"></i> Documentos</li>
+            <li class="active"> Lista de documentos</li>
+        </ol>
     </section>
 
     <section class="content">

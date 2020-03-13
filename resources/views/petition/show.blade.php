@@ -3,18 +3,28 @@
 @section('content')
 
     <section class="content-header">
-        <ul>
-        @foreach($errors->all() as $error)
-            <li class="text-red">
-            <span class="text-red">
-                <strong class="text-red">{{ $error }}</strong>
-            </span>
-            </li>
-        @endforeach
-        </ul>
+        <h1>
+            Solicitudes
+            <small>Responder solicitud</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a href="{{route('petition.index')}}"><i class="fa fa-book"></i> Solicitudes</a></li>
+            <li class="active">Responder solicitud</li>
+        </ol>
     </section>
 
     <section class="content">
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="box box-primary">
             <div class="box-header">
                 <a href="{{route('petition.index')}}" class="btn btn-primary pull-left">

@@ -3,9 +3,15 @@
 @section('content')
 
     <section class="content-header">
-        <div class="container">
-            <h3> Subtemas de investigación</h3>
-        </div>
+        <h1>
+            Subtemas de investigación
+            <small>Lista de subtemas</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a href="{{route('subtopic.index')}}"><i class="fa fa-book"></i> Subtemas de investigación</a></li>
+            <li class="active">Lista de subtemas</li>
+        </ol>
     </section>
 
     <section class="content">

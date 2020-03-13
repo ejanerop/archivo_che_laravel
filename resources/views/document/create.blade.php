@@ -3,18 +3,28 @@
 @section('content')
 
     <section class="content-header">
-        <ul>
-        @foreach($errors->all() as $error)
-            <li class="text-red">
-            <span class="text-red">
-                <strong class="text-red">{{ $error }}</strong>
-            </span>
-            </li>
-        @endforeach
-        </ul>
+        <h1>
+            Documentos
+            <small>Crear</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a href="{{route('document.index')}}"><i class="fa fa-file-text"></i> Documentos</a></li>
+            <li class="active"> Nuevo</li>
+        </ol>
     </section>
 
     <section class="content">
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="box box-primary">
             <form id="docCreate" method="POST" action="{{route('document.store')}}" enctype="multipart/form-data">
                 @csrf

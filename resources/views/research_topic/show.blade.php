@@ -3,16 +3,15 @@
 @section('content')
 
     <section class="content-header">
-        @if ($errors->any())
-            <div class="alert alert-danger alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        <h1>
+            Temas de investigación
+            <small>Lista de temas</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a href="{{route('research_topic.index')}}"><i class="fa fa-book"></i> Temas de investigación</a></li>
+            <li class="active">{{$researchTopic->research_topic}}</li>
+        </ol>
     </section>
 
     <section class="content">

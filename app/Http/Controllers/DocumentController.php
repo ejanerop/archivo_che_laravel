@@ -11,13 +11,11 @@ use App\ResourceType;
 use App\Rules\DateString;
 use App\Rules\DateNow;
 use App\Subtopic;
-use App\Text;
 use App\Stage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use phpDocumentor\Reflection\File;
 use App\Util\Logger;
 use \Illuminate\Support\Facades\Auth;
 

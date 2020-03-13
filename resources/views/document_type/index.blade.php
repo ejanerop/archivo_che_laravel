@@ -3,7 +3,15 @@
 @section('content')
 
     <section class="content-header">
-        <div class="container"><h3>Tipos de documento</h3></div>
+        <h1>
+        Tipos de documentos
+        <small>Lista</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i> Inicio</a></li>
+            <li><i class="fa fa-tags"></i> Tipos de documento</li>
+            <li class="active"> Lista de tipos</li>
+        </ol>
     </section>
 
     <section class="content">
