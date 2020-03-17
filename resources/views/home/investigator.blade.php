@@ -4,7 +4,7 @@
             <!-- small box -->
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>20</h3>
+                    <h3>21</h3>
                     <p>Cantidad de usuarios</p>
                 </div>
                 <div class="icon">

@@ -14,9 +14,9 @@ class FileController extends Controller
         $this->middleware('auth');
     }
 
+
     public function getFile($folder, $file)
     {
-        //This method will look for the file and get it from drive
         $path = storage_path('app\media\\' . $folder . '\\' . $file);
         try {
             $file = File::get($path);

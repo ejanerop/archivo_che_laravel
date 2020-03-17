@@ -30,20 +30,43 @@
                 <div class="inner">
                   <h3>{{\Stats::topicsCount()}}</h3>
                   <p>Cantidad de temas de investigación</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="{{route('research_topic.index')}}" class="small-box-footer">Ir a temas de investigación <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
         </div>
         <div class="col-lg-3 col-xs-6">
-
+            <div class="small-box bg-red">
+                <div class="inner">
+                  <h3>{{\Stats::visitorsToday()}}</h3>
+                  <p>Cantidad de visitantes hoy</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="{{route('log.index')}}" class="small-box-footer">Ir registro de actividad <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
         </div>
 
 
     </div>
     <div class="row justify-content-center">
         <div class="col-lg-7 col-xs-12">
-
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Cantidad de acceso a documentos por tema de investigación</h3>
+                    </div>
+                <div class="box-body">
+                    <canvas id="topicsWithAccess"></canvas>
+                </div>
+            </div>
         </div>
         <div class="col-lg-5 col-xs-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
+                    <p id="time"></p>
                     <h3 class="box-title">Últimas solicitudes sin responder</h3>
                     <a class="btn-sm btn-primary pull-right" href="{{route('petition.index')}}">Lista de solicitudes <i class="fa fa-arrow-circle-right"> </i></a>
                 </div>
@@ -72,6 +95,9 @@
             </div>
         </div>
     </div>
+
+
+    <script src="{{asset('chart-js/Chart.min.js')}}"></script>
 
     <script>
         $('table#table').DataTable({
@@ -108,6 +134,60 @@
             });
     </script>
 
+    <script>
+        var timestamp = '<?=time();?>';
+        function updateTime(){
+        $('#time').html(Date(timestamp));
+        timestamp++;
+        }
+        $(function(){
+        setInterval(updateTime, 1000);
+        });
+    </script>
+
+<script>
+    var ctx = document.getElementById('topicsWithAccess').getContext('2d');
+    var typesWithAccess = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [
+            @foreach (\Stats::topicsWithAccess()->keys() as $item)
+            "{{ $item }}",
+            @endforeach
+            ],
+            datasets: [{
+                label: 'Cantidad de accesos',
+                data: {{\Stats::topicsWithAccess()->values()}},
+                backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
 
 @endsection
 

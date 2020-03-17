@@ -60,6 +60,12 @@ class UserController extends Controller
         $user->username = $request->input('username');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
+        if ($request->has('full_name')) {
+            $user->full_name = $request->input('full_name');
+        }
+        if ($request->has('entity')) {
+            $user->entity = $request->input('entity');
+        }
         $user->roles()->associate($role);
         $user->save();
 
@@ -87,6 +93,12 @@ class UserController extends Controller
         $user = User::find($id);
         $user->username = $request->input('username');
         $user->email = $request->input('email');
+        if ($request->has('full_name')) {
+            $user->full_name = $request->input('full_name');
+        }
+        if ($request->has('entity')) {
+            $user->entity = $request->input('entity');
+        }
         if($request->input('password') != null){
             $user->password = Hash::make($request->input('password'));
         }

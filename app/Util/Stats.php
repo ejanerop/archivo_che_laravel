@@ -4,6 +4,7 @@ namespace App\Util;
 
 use App\Document;
 use App\DocumentType;
+use App\Log;
 use App\Petition;
 use App\PetitionState;
 use App\ResearchTopic;
@@ -13,14 +14,17 @@ class Stats
 {
 	public static function documentsCount()
     {
-        $count = Document::all()->count();
-        return $count;
+        return Document::all()->count();
+    }
+
+    public static function topicsCount()
+    {
+        return ResearchTopic::all()->count();
     }
 
     public static function usersCount()
     {
-        $count = User::all()->count();
-        return $count;
+        return User::all()->count();
     }
 
     public static function typesWithAccess()
@@ -82,4 +86,15 @@ class Stats
 
         return $petitions;
     }
+
+    public static function visitorsToday()
+    {
+        $logs = Log::filterToday()->get();
+
+        $logs = $logs->unique('user');
+        return $logs->count();
+
+    }
+
+
 }

@@ -12,7 +12,8 @@ use App\Util\Logger;
 class DocumentTypeController extends Controller
 {
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
         $this->middleware('user.has.role:manager');
     }
@@ -28,6 +29,7 @@ class DocumentTypeController extends Controller
         return view('document_type.index', ['document_types' => DocumentType::withCount('documents')->get()]);
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -37,6 +39,7 @@ class DocumentTypeController extends Controller
     {
         return view('document_type.create', ['resource_types' => ResourceType::all()]);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -62,6 +65,7 @@ class DocumentTypeController extends Controller
         return redirect()->route('document_type.index')->with('success', 'Tipo de documento creado correctamente.');
     }
 
+
     /**
      * Display the specified resource.
      *
@@ -73,6 +77,7 @@ class DocumentTypeController extends Controller
         //todo
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -83,6 +88,7 @@ class DocumentTypeController extends Controller
     {
         return view('document_type.edit',['document_type' => $documentType, 'resource_types' => ResourceType::all()]);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -109,6 +115,7 @@ class DocumentTypeController extends Controller
         return redirect()->route('document_type.index', ['document_types' => DocumentType::all()])->with('success', 'Tipo de documento editado correctamente.');
 
     }
+
 
     /**
      * Remove the specified resource from storage.

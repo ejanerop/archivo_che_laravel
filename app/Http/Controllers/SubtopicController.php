@@ -18,6 +18,7 @@ class SubtopicController extends Controller
         $this->middleware('user.has.role:manager');
     }
 
+
     /**
      * Display a listing of the resource.
      *
@@ -28,6 +29,7 @@ class SubtopicController extends Controller
         return view('subtopic.index', ['subtopics' => Subtopic::with('research_topic')->withCount('documents')->get()]);
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -37,6 +39,7 @@ class SubtopicController extends Controller
     {
         return view('subtopic.create', ['research_topics'=>ResearchTopic::get()]);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -75,6 +78,7 @@ class SubtopicController extends Controller
         //todo
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -85,6 +89,7 @@ class SubtopicController extends Controller
     {
         return view('subtopic.edit', ['subtopic'=>Subtopic::find($id), 'research_topics'=>ResearchTopic::get()]);
     }
+
 
     /**
      * Update the specified resource in storage.

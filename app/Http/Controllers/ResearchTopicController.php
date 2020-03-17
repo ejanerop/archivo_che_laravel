@@ -16,6 +16,7 @@ class ResearchTopicController extends Controller
         $this->middleware('user.has.role:manager');
     }
 
+
     /**
      * Display a listing of the resource.
      *
@@ -26,6 +27,7 @@ class ResearchTopicController extends Controller
         return view('research_topic.index', ['research_topics'=> ResearchTopic::with('subtopics')->get()]);
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -35,6 +37,7 @@ class ResearchTopicController extends Controller
     {
         return view('research_topic.create');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -58,6 +61,7 @@ class ResearchTopicController extends Controller
         return redirect()->route('research_topic.index')->with('success', 'Tema de investigación creado correctamente.');
     }
 
+
     /**
      * Display the specified resource.
      *
@@ -71,6 +75,7 @@ class ResearchTopicController extends Controller
                                             'subtopics' => $subtopics]);
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -81,6 +86,7 @@ class ResearchTopicController extends Controller
     {
         return view('research_topic.edit', ['researchTopic' => $researchTopic]);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -105,6 +111,7 @@ class ResearchTopicController extends Controller
         return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()]);
     }
 
+
     /**
      * Remove the specified resource from storage.
      *
@@ -114,15 +121,15 @@ class ResearchTopicController extends Controller
      */
     public function destroy(Request $request, ResearchTopic $researchTopic)
     {
-
         if($researchTopic->subtopics()->count() != 0){
             return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()])->with('error', 'No se puede eliminar, existen subtemas pertenecientes a este tema.');
         }else{
             $name = $researchTopic->research_topic;
             $researchTopic->delete();
-            Logger::log('delete', 'research_topic', $researchTopic->id, $name);
-            return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()])->with('success', 'Eliminado correctamente');
 
+            Logger::log('delete', 'research_topic', $researchTopic->id, $name);
+
+            return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()])->with('success', 'Eliminado correctamente');
         }
     }
 }

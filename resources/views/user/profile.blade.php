@@ -32,15 +32,20 @@
                         <h3 class="profile-username text-center">{{$user->username}}</h3>
                         <p class="text-muted text-center">{{$user->roles->name}}</p>
                         <ul class="list-group list-group-unbordered">
+                            @if ($user->full_name != '')
                             <li class="list-group-item">
-                              <b>Nombre</b> <a class="pull-right">Venao</a>
+                              <b>Nombre</b> <a class="pull-right">{{$user->full_name}}</a>
                             </li>
+                            @endif
                             <li class="list-group-item">
                               <b>Correo</b> <a class="pull-right">{{$user->email}}</a>
                             </li>
+                            @if ($user->entity != '')
                             <li class="list-group-item">
-                              <b>Entidad</b> <a class="pull-right">CUJAE</a>
+                                <b>Entidad</b> <a class="pull-right">{{$user->entity}}</a>
                             </li>
+                            @endif
+
                         </ul>
                         <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalPassChange">
                             <i class="fa fa-edit"></i>

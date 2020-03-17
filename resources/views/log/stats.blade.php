@@ -79,7 +79,7 @@
                 <ul class="nav nav-tabs">
                     <li id="liType1" class="active"><a href="#tabType_1" data-toggle="tab" aria-expanded="true" onclick="toggleTabType(1)">Cantidad de accesos por tipo de documento</a></li>
                     <li id="liType2" class=""><a href="#tabType_2" data-toggle="tab" aria-expanded="false" onclick="toggleTabType(2)">Cantidad de documentos por tipo</a></li>
-                    <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
+                    <li class="pull-right"><a href="" id="saveTypes" class="text-muted"><i class="fa fa-download"></i></a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tabType_1">
@@ -96,7 +96,7 @@
                 <ul class="nav nav-tabs">
                     <li id="liTopic1" class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true" onclick="toggleTabTopic(1)">Cantidad de accesos por tema</a></li>
                     <li id="liTopic2" class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false" onclick="toggleTabTopic(2)">Cantidad de documentos por tema</a></li>
-                    <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
+                    <li class="pull-right"><a href="" id="saveTopics" class="text-muted"><i class="fa fa-download"></i></a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1">
@@ -111,6 +111,7 @@
     </div>
 </section>
 
+<script src="{{asset('filesaver/FileSaver.min.js')}}"></script>
 <script src="{{asset('chart-js/Chart.min.js')}}"></script>
 <script>
     $(function () {
@@ -149,7 +150,18 @@
     }
 </script>
 
+
 <script>
+
+    var backgroundColor = 'white';
+    Chart.plugins.register({
+        beforeDraw: function(c) {
+            var ctx = c.chart.ctx;
+            ctx.fillStyle = backgroundColor;
+            ctx.fillRect(0, 0, c.chart.width, c.chart.height);
+        }
+    });
+
     var ctx = document.getElementById('typesWithAccess').getContext('2d');
     var typesWithAccess = new Chart(ctx, {
         type: 'bar',
@@ -190,6 +202,17 @@
                 }]
             }
         }
+    });
+
+    $('#saveTypes').click(function() {
+        if ($('#liType1').hasClass('active')) {
+            var graph = document.getElementById('typesWithAccess');
+        } else {
+            var graph = document.getElementById('typesWithCant');
+        }
+        graph.toBlob(function(blob) {
+        saveAs(blob, "Gráfico.png");
+    });
     });
 </script>
 <script>
@@ -320,6 +343,17 @@
                 }]
             }
         }
+    });
+
+    $('#saveTopics').click(function() {
+        if ($('#liTopic1').hasClass('active')) {
+            var graph = document.getElementById('topicsWithAccess');
+        } else {
+            var graph = document.getElementById('topicsWithCant');
+        }
+        graph.toBlob(function(blob) {
+        saveAs(blob, "Gráfico.png");
+    });
     });
 </script>
 

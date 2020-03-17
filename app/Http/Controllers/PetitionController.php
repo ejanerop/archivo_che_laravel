@@ -30,6 +30,7 @@ class PetitionController extends Controller
 
     }
 
+
     /**
      * Display a listing of the resource.
      *
@@ -91,6 +92,7 @@ class PetitionController extends Controller
 
         return redirect()->route('petition.index')->with('success','La solicitud fue denegada correctamente.');
     }
+
 
     /**
      * Edits a petition and accepts it.
@@ -166,7 +168,8 @@ class PetitionController extends Controller
 
     }
 
- /**
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -181,6 +184,7 @@ class PetitionController extends Controller
             'access_levels' => $accessLevels
         ]);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -248,7 +252,7 @@ class PetitionController extends Controller
                     $subpetition->save();
                 }
             }elseif($request->has('dateStart')){
-                //
+                //TODO
             }
 
             return redirect()->route('home');
@@ -292,6 +296,7 @@ class PetitionController extends Controller
                                       'subtopicsSelected' => $subtopicsSelected]);
     }
 
+
     /**
      * Display the specified resource.
      *
@@ -323,6 +328,7 @@ class PetitionController extends Controller
                                       'documentTypesSelected' => $documentTypesSelected,
                                       'subtopicsSelected' => $subtopicsSelected]);
     }
+
 
     /**
      * Remove the specified resource from storage.

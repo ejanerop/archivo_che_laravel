@@ -26,6 +26,10 @@ class Log extends Model
             });
     }
 
+    public function scopeFilterToday($query){
+        return $query->whereDate('created_at',  date('Y-m-d', strtotime('today')));
+    }
+
     public function scopeFilterDay($query, $date){
         return $query->whereDate('created_at',  $date);
     }

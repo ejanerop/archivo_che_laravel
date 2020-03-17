@@ -22,7 +22,8 @@ use \Illuminate\Support\Facades\Auth;
 class DocumentController extends Controller
 {
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
         $this->middleware('user.has.role:manager')->except(['index','show', 'filter']);
         $this->middleware('user.has.access')->only('show');
@@ -44,10 +45,6 @@ class DocumentController extends Controller
             $documents = $documents->merge($documentsAllowed);
         }
 
-
-
-
-
         return view('document.index', ['documents' => $documents->paginate(100),
                                        'resource_types' => ResourceType::with('document_types')->get(),
                                        'topics' => ResearchTopic::with('subtopics')->get(),
@@ -55,6 +52,12 @@ class DocumentController extends Controller
                                        'filtered' => false]);
     }
 
+
+    /**
+     * Display a listing of the resource filtered.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function filter(Request $request)
     {
 
@@ -178,6 +181,8 @@ class DocumentController extends Controller
             'name' => 'required|unique:documents',
             'subtopics' => 'required',
             'author' => 'required',
+            'access_level' => 'required',
+            'document_type' => 'required',
             'date' =>['required' , new DateString(), new DateNow()],
             'facsim' => 'required_with:hasFacsim',
             'resource' => 'required|mimetypes:video/*,audio/*,image/*,application/pdf'
@@ -216,8 +221,10 @@ class DocumentController extends Controller
         }
 
         //-----------------------Cuando la fecha sea opcional cambiar esto-----------------------------------------
+
         $code .= substr($date, 2, 2);
 
+        //---------------------------------------------------------------------------------------------------------
         do {
             $number = rand(1, 999);
             if (($number >= 1) && ($number < 10)) {
@@ -230,10 +237,6 @@ class DocumentController extends Controller
 
             $document->code = $code;
         } while (Document::where('code', $code)->exists());
-
-        //---------------------------------------------------------------------------------------------------------
-
-
 
 
         $document->access_level()->associate($accessLevel);
@@ -273,6 +276,7 @@ class DocumentController extends Controller
 
         return redirect()->route('document.index')->with('success','El documento fue creado correctamente.');
     }
+
 
     /**
      * Display the specified resource.

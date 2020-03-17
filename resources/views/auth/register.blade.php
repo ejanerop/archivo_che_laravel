@@ -17,9 +17,9 @@
                     <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" placeholder="Usuario" required autofocus>
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     @if ($errors->has('username'))
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('username') }}</strong>
-                        </span>
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('username') }}</strong>
+                    </span>
                     @endif
                 </div>
 
@@ -27,9 +27,29 @@
                     <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="Correo" required>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     @if ($errors->has('email'))
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </span>
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                    @endif
+                </div>
+
+                <div class="form-group has-feedback">
+                    <input id="full_name" type="text" class="form-control{{ $errors->has('full_name') ? ' is-invalid' : '' }}" name="full_name" value="{{ old('full_name') }}" placeholder="Nombre (opcional)">
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    @if ($errors->has('full_name'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('full_name') }}</strong>
+                    </span>
+                    @endif
+                </div>
+
+                <div class="form-group has-feedback">
+                    <input id="entity" type="text" class="form-control{{ $errors->has('entity') ? ' is-invalid' : '' }}" name="entity" value="{{ old('entity') }}" placeholder="Entidad (opcional)">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    @if ($errors->has('entity'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('entity') }}</strong>
+                    </span>
                     @endif
                 </div>
 
@@ -37,9 +57,9 @@
                     <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Contraseña" required>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     @if ($errors->has('password'))
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('password') }}</strong>
-                        </span>
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('password') }}</strong>
+                    </span>
                     @endif
                 </div>
 

@@ -21,9 +21,9 @@
                     <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" placeholder="Usuario" required autofocus>
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     @if ($errors->has('username'))
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('username') }}</strong>
-                        </span>
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('username') }}</strong>
+                    </span>
                     @endif
                 </div>
 
@@ -38,7 +38,7 @@
                             <label>
                               <input type="checkbox"> Remember Me
                             </label>
-                          </div>
+                        </div>
                     </div><!-- /.col -->
                     <div class="col-xs-4">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar <i class="fa fa-sign-in"></i></button>
@@ -49,7 +49,6 @@
             <div class="box-footer">
                 <a href="{{route('register')}}" class="text-center">No tengo cuenta</a>
             </div>
-
 
         </div>
     </div>

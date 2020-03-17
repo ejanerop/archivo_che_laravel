@@ -3,16 +3,6 @@
 @section('content')
 
     <section class="content-header">
-        @if ($errors->any())
-            <div class="alert alert-danger alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
         <h1>
             Tipos de documentos
             <small>Editar</small>
@@ -25,6 +15,16 @@
     </section>
 
     <section class="content">
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-4">
@@ -66,10 +66,6 @@
         </div>
     </section>
 
-    <script>
-        $('li.li').removeClass('active');
-        $('li#document_type').addClass('active');
-        $('li#typeList').addClass('active');
-    </script>
+    <script src="{{asset('js/scripts/document_type/edit.js')}}"></script>
 
 @endsection

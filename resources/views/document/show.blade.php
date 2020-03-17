@@ -98,8 +98,6 @@
         </div>
     </section>
 
-    <script>
-
-    </script>
+    <script src="{{asset('js/scripts/document/show.js')}}"></script>
 
 @endsection
