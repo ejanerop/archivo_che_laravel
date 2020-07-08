@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Document;
 use App\Log;
 use App\LogType;
-use App\Subtopic;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -28,8 +26,9 @@ class LogController extends Controller
     {
         $users = User::withTrashed()->get();
         $log_types = LogType::all();
+        $logs = Log::orderBy('created_at','DESC')->get();
 
-        return view('log.index', ['logs' => Log::all(),
+        return view('log.index', ['logs' => $logs,
                                   'users' => $users,
                                   'log_types' => $log_types,
                                   'filtered' => false]);
@@ -87,15 +86,8 @@ class LogController extends Controller
 
     public function stats()
     {
-        $top5Docs = Document::withCount(['logs as visits' => function ($query) {
-            $query->where('log_type_id', '2');
-        }])->orderBy('visits', 'DESC')->limit(5)->get();
 
-        $top5Subtopics = Subtopic::all();
-        $top5Subtopics = $top5Subtopics->sortByDesc('visits')->take(5);
-
-        return view('log.stats', ['top5Docs' => $top5Docs,
-                                  'top5Subtopics' => $top5Subtopics]);
+        return view('log.stats');
     }
 
 }

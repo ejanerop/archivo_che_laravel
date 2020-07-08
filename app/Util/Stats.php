@@ -8,6 +8,7 @@ use App\Log;
 use App\Petition;
 use App\PetitionState;
 use App\ResearchTopic;
+use App\Subtopic;
 use App\User;
 
 class Stats
@@ -17,15 +18,18 @@ class Stats
         return Document::all()->count();
     }
 
+
     public static function topicsCount()
     {
         return ResearchTopic::all()->count();
     }
 
+
     public static function usersCount()
     {
         return User::all()->count();
     }
+
 
     public static function typesWithAccess()
     {
@@ -42,6 +46,7 @@ class Stats
         return $arr;
     }
 
+
     public static function typesWithCant()
     {
         $arr = collect();
@@ -52,6 +57,7 @@ class Stats
 
         return $arr;
     }
+
 
     public static function topicsWithAccess()
     {
@@ -68,6 +74,7 @@ class Stats
         return $arr;
     }
 
+
     public static function topicsWithCant()
     {
         $arr = collect();
@@ -79,6 +86,7 @@ class Stats
         return $arr;
     }
 
+
     public static function last5Petitions()
     {
         $id = PetitionState::where('slug', 'made')->first()->id;
@@ -87,13 +95,32 @@ class Stats
         return $petitions;
     }
 
+
+    public static function top5Subtopics()
+    {
+        $top5Subtopics = Subtopic::all();
+        $top5Subtopics = $top5Subtopics->sortByDesc('visits')->take(5);
+
+        return $top5Subtopics;
+    }
+
+
+    public static function top5Docs()
+    {
+        $top5Docs = Document::withCount(['logs as visits' => function ($query) {
+            $query->where('log_type_id', '2');
+        }])->orderBy('visits', 'DESC')->limit(5)->get();
+
+        return $top5Docs;
+    }
+
+
     public static function visitorsToday()
     {
         $logs = Log::filterToday()->get();
-
         $logs = $logs->unique('user');
-        return $logs->count();
 
+        return $logs->count();
     }
 
 

@@ -7,15 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class ResearchTopic extends Model
 {
 
-    public function subtopics(){
+    public function subtopics()
+    {
         return $this->hasMany('App\Subtopic', 'research_topic_id');
     }
 
-    public function logs(){
+    public function logs()
+    {
         return $this->morphMany('App\Log', 'object');
     }
 
-    public function getDocumentsCountAttribute(){
+    public function getDocumentsCountAttribute()
+    {
         $subtopics = $this->subtopics;
         $documents = collect();
         foreach ($subtopics as $subtopic) {
@@ -26,7 +29,8 @@ class ResearchTopic extends Model
         return $documents->count();
     }
 
-    public function getDocumentsAttribute(){
+    public function getDocumentsAttribute()
+    {
         $subtopics = $this->subtopics;
         $documents = collect();
         foreach ($subtopics as $subtopic) {

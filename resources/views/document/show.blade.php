@@ -75,6 +75,12 @@
                     <div class="col-md-3">
                         <a class="btn btn-primary" href="{{route('file', ['folder' => $mainResource->type, 'file' => $mainResource->path])}}" target="_blank">Mostrar</a>
                     </div>
+                    <div class="col-md-6"></div>
+                    @if($document->document_type->resource_type->resource_type == 'Texto')
+                    <div class="col-md-3">
+                        <a class="btn btn-primary pull-right" href="" target="_blank">Mostrar facsímiles</a>
+                    </div>
+                    @endif
                 </div>
             </div>
             <div class="box-footer">

@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Document extends Model
 {
 
-    protected $table = 'documents';
-
     public function resources(){
         return $this->hasMany('App\Resource');
     }
@@ -23,10 +21,6 @@ class Document extends Model
 
     public function access_level(){
         return $this->belongsTo('App\AccessLevel', 'access_level_id');
-    }
-
-    public function petitions(){
-        return $this->hasMany('App\Petition');
     }
 
     public function stage(){

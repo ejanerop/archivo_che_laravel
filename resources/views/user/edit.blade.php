@@ -70,6 +70,7 @@
                                     <input id="entity" type="text" class="form-control" name="entity" placeholder="Entidad perteneciente (opcional)" value="{{$user->entity}}">
                                     </div>
                             </div>
+                            @if (\Auth::user()->id != $user->id)
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-users" style="width: 14px; height: 14px"></i></span>
@@ -80,6 +81,7 @@
                                     </select>
                                 </div>
                             </div>
+                            @endif
                             <div class="box box-primary box-solid collapsed-box">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Cambiar contraseña</h3>

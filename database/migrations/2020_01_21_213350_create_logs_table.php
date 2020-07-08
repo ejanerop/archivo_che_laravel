@@ -15,8 +15,9 @@ class CreateLogsTable extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('user');
             $table->ipAddress('ip_address');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('log_type_id');
             $table->foreign('log_type_id')->references('id')->on('log_types');
             $table->string('object_type')->nullable($value = true);

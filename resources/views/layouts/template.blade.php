@@ -63,8 +63,8 @@
             enableBSToppltip: true
         };
     </script>
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="{{asset('js/app.js') }}"></script>
+    <script src="{{asset('js/bootstrap.js') }}"></script>
     <script src="{{asset('js/jQuery-2.1.4.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/adminLTE/app.min.js')}}"></script>

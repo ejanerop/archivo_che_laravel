@@ -6,7 +6,6 @@ use App\AccessLevel;
 use App\DocumentType;
 use App\Petition;
 use App\PetitionState;
-use App\PetitionType;
 use App\ResourceType;
 use App\ResearchTopic;
 use App\Stage;
@@ -266,7 +265,7 @@ class PetitionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Petition $petition)
+    public function show(Petition $petition)
     {
         $petition->load('subpetitions', 'user', 'petition_state', 'access_level');
         $accessLevels = AccessLevel::where('level','<>', 1)->get();
@@ -302,7 +301,7 @@ class PetitionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showOwn(Request $request, Petition $petition)
+    public function showOwn(Petition $petition)
     {
         $petition->load('subpetitions', 'user', 'petition_state', 'access_level');
         $subpetitions = $petition->subpetitions;
@@ -335,7 +334,7 @@ class PetitionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Petition $petition)
+    public function destroy(Petition $petition)
     {
         $subpetitions = $petition->subpetitions;
         foreach ($subpetitions as $subpetition) {

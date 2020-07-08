@@ -29,7 +29,7 @@ class UserController extends Controller
         return view('user.trashed', ['users'=> User::onlyTrashed()->get()]);
     }
 
-    public function recover(Request $request, $id)
+    public function recover($id)
     {
         $user = User::withTrashed()->find($id);
 
@@ -88,7 +88,6 @@ class UserController extends Controller
             'password' => 'nullable|string|min:8|confirmed'
         ])->validate();
 
-        $role = Role::where('name', $request->input('role'))->first();
 
         $user = User::find($id);
         $user->username = $request->input('username');
@@ -102,7 +101,12 @@ class UserController extends Controller
         if($request->input('password') != null){
             $user->password = Hash::make($request->input('password'));
         }
-        $user->roles()->associate($role);
+
+        if ($request->has('role')) {
+            $role = Role::where('name', $request->input('role'))->first();
+            $user->roles()->associate($role);
+        }
+
         $user->save();
 
         Logger::log('update', 'user', $user->id, $user->username);

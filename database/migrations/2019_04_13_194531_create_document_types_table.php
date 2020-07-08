@@ -17,7 +17,7 @@ class CreateDocumentTypesTable extends Migration
             $table->bigIncrements('id');
             $table->string('document_type');
             $table->unsignedBigInteger('resource_type_id');
-            $table->foreign('resource_type_id')->references('id')->on('resource_type');
+            $table->foreign('resource_type_id')->references('id')->on('resource_types');
             $table->timestamps();
         });
     }

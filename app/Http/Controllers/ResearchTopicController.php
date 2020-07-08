@@ -119,7 +119,7 @@ class ResearchTopicController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Request $request, ResearchTopic $researchTopic)
+    public function destroy(ResearchTopic $researchTopic)
     {
         if($researchTopic->subtopics()->count() != 0){
             return redirect()->route('research_topic.index', ['research_topics'=> ResearchTopic::withCount('subtopics')->get()])->with('error', 'No se puede eliminar, existen subtemas pertenecientes a este tema.');

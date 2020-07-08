@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Log extends Model
 {
+
+    public function user(){
+        return $this->belongsTo('App\User', 'user_id')->withTrashed();
+    }
+
     public function log_type(){
         return $this->belongsTo('App\LogType', 'log_type_id');
     }
@@ -16,7 +21,9 @@ class Log extends Model
     }
 
     public function scopeFilterUser($query, $user){
-        return $query->where('user', 'like', '%'. $user .'%');
+        return $query->whereHas('user', function ($q) use ($user) {
+            $q->where('username', $user);
+        });
     }
 
     public function scopeFilterLogTypes($query, $logTypes)

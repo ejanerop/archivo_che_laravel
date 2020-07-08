@@ -32,7 +32,7 @@
                                 <th>Visitas</th>
                             </tr>
                         </thead>
-                        @foreach($top5Docs as $index => $doc)
+                        @foreach(\Stats::top5Docs() as $index => $doc)
                         <tr>
                             <td>{{$index + 1}}</td>
                             <td>{{$doc->name}}</td>
@@ -60,7 +60,7 @@
                                 <th>Visitas</th>
                             </tr>
                         </thead>
-                        @foreach($top5Subtopics as $index => $subtopic)
+                        @foreach(\Stats::top5Subtopics() as $index => $subtopic)
                         <tr>
                             <td>{{$index + 1}}</td>
                             <td>{{$subtopic->name}}</td>

@@ -61,7 +61,7 @@
                             @foreach($logs as $log)
                                 <tr>
                                     <td>{{$log->created_at}}</td>
-                                    <td>{{$log->user}}</td>
+                                    <td>{{$log->user->username}}</td>
                                     <td>{{$log->log_type->type}}</td>
                                     <td>{{$log->table_name}}</td>
                                     <td>{{$log->object_name}}</td>
