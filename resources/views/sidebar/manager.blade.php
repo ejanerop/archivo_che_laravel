@@ -17,6 +17,13 @@
             <li id="documentList"><a href="{{route('document.index')}}">Lista de documentos <span class="fa fa-list-ul pull-right"></span></a></li>
         </ul>
     </li>
+    <li id="author" class="li treeview">
+        <a href="#"><span>Autores</span> <span class="fa fa-file-text pull-right"></span></a>
+        <ul class="treeview-menu">
+            <li id="authorCreate"><a href="{{route('author.create')}}">Nuevo autor <span class="fa fa-plus pull-right"></span></a></li>
+            <li id="authorList"><a href="{{route('author.index')}}">Lista de autores <span class="fa fa-list-ul pull-right"></span></a></li>
+        </ul>
+    </li>
     <li id="topic" class="li treeview">
         <a href="#"><span>Temas de investigación</span> <span class="fa fa-book pull-right"></span></a>
         <ul class="treeview-menu">

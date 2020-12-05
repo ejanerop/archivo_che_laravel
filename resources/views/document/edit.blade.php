@@ -80,7 +80,11 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group {{$errors->has('author')?'has-error':''}}">
                                                         <label for="date">Autor</label>
-                                                        <input type="text" id="author" name="author" class="form-control" placeholder="Autor del documento" value="{{$document->author}}">
+                                                        <select id="author"  name="author" class="form-control">
+                                                            @foreach($authors as $author)
+                                                                <option class="opt" id="{{$author->id}}" {{$document->author->name==$author->name ? 'selected' : ''}}>{{$author->name}}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="access_level">Nivel de acceso</label>

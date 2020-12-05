@@ -59,7 +59,7 @@
 
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li class="user-header">
-                                    <img src="/user.png" class="img-circle" alt="User Image">
+                                    <img src="{{asset('user.png')}}" class="img-circle" alt="User Image">
                                     <p>
                                         {{Auth::user()->username}}
                                         <small>{{\App\User::where('username', Auth::user()->username)->first()->roles->name}}</small>

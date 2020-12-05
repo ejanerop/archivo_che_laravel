@@ -30,6 +30,8 @@ Route::post('/test', 'DocumentController@test')->name('test');
 
 Route::resource('research_topic', 'ResearchTopicController');
 
+Route::resource('author', 'AuthorController');
+
 Route::resource('user', 'UserController')->middleware('user.has.role:manager');
 Route::get('/trashed_users', 'UserController@trashed')->name('user.trashed')->middleware('user.has.role:manager');
 Route::post('/trashed_users/{id}', 'UserController@recover')->name('user.recover')->middleware('user.has.role:manager');

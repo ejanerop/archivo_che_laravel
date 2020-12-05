@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AccessLevel;
+use App\Author;
 use App\Document;
 use App\DocumentType;
 use App\ResearchTopic;
@@ -48,6 +49,7 @@ class DocumentController extends Controller
         return view('document.index', ['documents' => $documents->paginate(100),
                                        'resource_types' => ResourceType::with('document_types')->get(),
                                        'topics' => ResearchTopic::with('subtopics')->get(),
+                                       'authors' => Author::all(),
                                        'stages' => Stage::all(),
                                        'filtered' => false]);
     }
@@ -71,6 +73,7 @@ class DocumentController extends Controller
 
 
 
+
         $filtered = false;
 
         if ($request->has('nameFilter')) {
@@ -81,13 +84,13 @@ class DocumentController extends Controller
                 $filtered = true;
             }
         }
-        if ($request->has('authorFilter')) {
-            $author = $request->input('authorFilter');
-            if (trim($author) != '') {
-                $documents->filterAuthor($author);
-                $documentsAllowed = $documentsAllowed->where('author', 'like', '%'. $name .'%');
-                $filtered = true;
-            }
+        if ($request->has('authorsFilter')) {
+            $authors = $request->input('authorsFilter');
+            $documents->filterAuthors($authors);
+            $documentsAllowed = $documentsAllowed->filter(function($item) use($authors){
+                return  in_array($item->author->name, $authors);
+            });
+            $filtered = true;
         }
         if ($request->has('document_typesFilter')) {
             $document_types = $request->input('document_typesFilter');
@@ -143,6 +146,7 @@ class DocumentController extends Controller
             return view('document.index', ['documents' => $result->paginate(50),
                                            'resource_types' => ResourceType::with('document_types')->get(),
                                            'topics' => ResearchTopic::with('subtopics')->get(),
+                                           'authors' => Author::all(),
                                            'stages' => Stage::all(),
                                            'filtered' => $filtered]);
         }else{
@@ -165,7 +169,8 @@ class DocumentController extends Controller
         return view('document.create', [
             'resource_types' => ResourceType::with('document_types')->get(),
             'topics' => ResearchTopic::with('subtopics')->get(),
-            'access_levels' => $accessLevels
+            'access_levels' => $accessLevels,
+            'authors' => Author::all()
         ]);
     }
 
@@ -180,6 +185,7 @@ class DocumentController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => 'required|unique:documents',
             'subtopics' => 'required',
+            'description' => 'required',
             'author' => 'required',
             'access_level' => 'required',
             'document_type' => 'required',
@@ -191,6 +197,7 @@ class DocumentController extends Controller
 
         $accessLevel = AccessLevel::where('name', $request->input('access_level'))->first();
         $documentType = DocumentType::where('document_type', $request->input('document_type'))->first();
+        $author = Author::where('name', $request->input('author'))->first();
         $subtopics = $request->input('subtopics');
         $resource = new Resource();
         $code = '';
@@ -198,7 +205,6 @@ class DocumentController extends Controller
 
         $document = new Document();
         $document->name = $request->input('name');
-        $document->author = $request->input('author');
 
         $date = date('Y-m-d', strtotime($request->input('date')));
         $document->date = $date;
@@ -241,6 +247,8 @@ class DocumentController extends Controller
 
         $document->access_level()->associate($accessLevel);
         $document->document_type()->associate($documentType);
+        $document->author()->associate($author);
+
         if($request->has('description')){
             $document->description = $request->input('description');
         }
@@ -293,7 +301,7 @@ class DocumentController extends Controller
                 $mainResource = $resource;
             }
         }
-        $document->load('subtopics', 'resources', 'access_level','document_type', 'document_type.resource_type');
+        $document->load('subtopics', 'resources', 'author', 'access_level','document_type', 'document_type.resource_type');
 
         Logger::log('read', 'document', $document->id, $document->name);
 
@@ -319,6 +327,7 @@ class DocumentController extends Controller
         $accessLevels = AccessLevel::where('level','<>', 1)->get();
         return view('document.edit', ['document'=> Document::with(['subtopics', 'resources', 'access_level','document_type'])->find($id),
             'resource_types' => ResourceType::with('document_types')->get(),
+            'authors' => Author::all(),
             'topics' => ResearchTopic::with('subtopics')->get(),
             'access_levels' => $accessLevels,
             'subtopics' => $subtopics]);
@@ -336,6 +345,8 @@ class DocumentController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => ['required',  Rule::unique('documents')->ignore($id)],
             'subtopics' => 'required',
+            'author' => 'required',
+            'description' => 'required',
             'date' =>['required' , new DateString(), new DateNow()],
             'facsim' => 'required_with:hasFacsim|mimetypes:image/*',
             'resource' => 'mimetypes:video/*,audio/*,image/*,application/pdf'
@@ -345,6 +356,7 @@ class DocumentController extends Controller
         $document = Document::find($id);
         $accessLevel = AccessLevel::where('name', $request->input('access_level'))->first();
         $documentType = DocumentType::where('document_type', $request->input('document_type'))->first();
+        $author = Author::where('name', $request->input('author'))->first();
         $subtopics = $request->input('subtopics');
 
 
@@ -364,6 +376,9 @@ class DocumentController extends Controller
 
         $document->access_level()->dissociate();
         $document->access_level()->associate($accessLevel);
+
+        $document->author()->dissociate();
+        $document->author()->associate($author);
 
         $document->document_type()->dissociate();
         $document->document_type()->associate($documentType);

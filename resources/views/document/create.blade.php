@@ -51,7 +51,7 @@
                                         </div>
                                         <div class="form-group {{$errors->has('description')?'has-error':''}}">
                                             <label for="description">Descripción</label>
-                                            <textarea id="description" name="description" rows="5" class="form-control" style="resize:none" placeholder="Descripción">{{old('description')}}</textarea>
+                                            <textarea id="description" name="description" rows="5" class="form-control" style="resize:none" placeholder="Descripción" required>{{old('description')}}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -76,8 +76,12 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="date">Autor</label>
-                                            <input type="text" id="author" name="author" class="form-control" placeholder="Autor del documento" value="{{old('author')}}" required>
+                                            <label for="author">Autor</label>
+                                            <select id="author"  name="author" class="form-control">
+                                                @foreach($authors as $author)
+                                                    <option class="opt" id="{{$author->id}}" {{old('author')==$author->name ? 'selected' : ''}}>{{$author->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="access_level">Nivel de acceso</label>

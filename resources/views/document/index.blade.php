@@ -204,9 +204,13 @@
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                            <label for="authorFilter">Autor del documento</label>
-                            <input id="authorFilter" name="authorFilter" type="text" class="form-control" placeholder="Nombre del autor">
-                          </div>
+                            <label for="authorsFilter">Autor del documento</label>
+                            <select id="authorsFilter" name="authorsFilter[]" class="form-control select2 filterSelect" multiple = "multiple" data-placeholder="Selecciona el(los) autor(es)" style="width: 100%">
+                                @foreach($authors as $author)
+                                  <option class="opt" id="{{$author->id}}">{{$author->name}}</option>
+                                @endforeach
+                            </select>
+                            </div>
                       </div>
                     </div>
                     <div class="row">

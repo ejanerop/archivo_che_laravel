@@ -15,6 +15,10 @@ class Document extends Model
         return $this->belongsToMany('App\Subtopic', 'document_subtopic');
     }
 
+    public function author(){
+        return $this->belongsTo('App\Author', 'author_id');
+    }
+
     public function document_type(){
         return $this->belongsTo('App\DocumentType', 'document_type_id');
     }
@@ -106,9 +110,12 @@ class Document extends Model
         return $query->where('name', 'like', '%'. $name .'%');
     }
 
-    public function scopeFilterAuthor($query, $author)
+    public function scopeFilterAuthors($query, $authors)
     {
-        return $query->where('author', 'like', '%'. $author .'%');
+        $query = $query->whereHas('author', function ($q) use ($authors) {
+            $q->whereIn('name', $authors);
+        });
+    return $query;
     }
 
     public function scopeFilterStages($query, $stages)

@@ -51,7 +51,7 @@
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="access_level">Autor</label>
-                            <input type="text" id="author" name="author" class="form-control" value="{{$document->author}}" readonly>
+                            <input type="text" id="author" name="author" class="form-control" value="{{$document->author->name}}" readonly>
                         </div>
                     </div>
                 </div>

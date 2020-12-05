@@ -69,6 +69,11 @@ class Log extends Model
                 $tableName ='Usuarios';
                 break;
 
+            case 'author':
+                $tableName ='Autores';
+                break;
+
+
             default:
                 $tableName ='';
                 break;
