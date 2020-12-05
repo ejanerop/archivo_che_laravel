@@ -20,8 +20,12 @@ class User extends Authenticatable
         return $this->hasMany('App\Petition');
     }
 
-    public function logs(){
+    public function editLogs(){
         return $this->morphMany('App\Log', 'object');
+    }
+
+    public function logs(){
+        return $this->hasMany('App\Log', 'user_id');
     }
 
     public function getLevelAttribute(){

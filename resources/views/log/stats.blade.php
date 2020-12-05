@@ -6,6 +6,7 @@
     <h1>
         Registro de actividad
         <small>Datos de uso</small>
+        <a href="{{route('stats.report')}}" class="btn btn-xs btn-primary"><span class="fa fa-download" style="margin-right: 2px"></span> Exportar a PDF</a>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Inicio</a></li>
@@ -19,7 +20,7 @@
         <div class="col-md-6">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Top 5 documentos más consultados</h3>
+                <h3 class="box-title">Top 5 documentos más consultados</h3>
                 </div>
                 <div class="box-body">
                     <table id="table" class="table table-bordered table-hover">
@@ -73,6 +74,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-6">
             <div class="nav-tabs-custom">
@@ -109,6 +111,96 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                <h3 class="box-title">Información general</h3>
+                </div>
+                <div class="box-body">
+                    <table id="table" class="table table-bordered table-hover">
+                        <tr>
+                            <th>Cantidad de documentos</th>
+                            <td>{{\Stats::documentsCount()}}</td>
+                        </tr>
+                        <tr>
+                            <th>Cantidad de temas de investigación</th>
+                            <td>{{\Stats::topicsCount()}}</td>
+                        </tr>
+                        <tr>
+                            <th>Cantidad de subtemas de investigación</th>
+                            <td>{{\Stats::subtopicsCount()}}</td>
+                        </tr>
+                        <tr>
+                            <th>Cantidad de usuarios</th>
+                            <td>{{\Stats::usersCount()}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Información de usuarios</h3>
+                </div>
+                <div class="box-body">
+                    <table id="table" class="table table-bordered table-hover">
+                        <tr>
+                            <th>Usuario con más consultas</th>
+                            <td>{{\Stats::userMostVisits()->username}}</td>
+                        </tr>
+                        <tr>
+                            <th>Investigadores internos</th>
+                            <td>{{\Stats::userCountByRole('inv.int')}}</td>
+                        </tr>
+                        <tr>
+                            <th>Investigadores externos</th>
+                            <td>{{\Stats::userCountByRole('inv.ext')}}</td>
+                        </tr>
+                        <tr>
+                            <th>Invitados</th>
+                            <td>{{\Stats::userCountByRole('guest')}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Información de acceso a documentos</h3>
+                </div>
+                <div class="box-body">
+                    <table id="table" class="table table-bordered table-hover">
+                        <tr>
+                            <th>Cantidad de consultas a documentos</th>
+                            <td>{{\Stats::docsAccessCount()}}</td>
+                        </tr>
+                        <tr>
+                            <th>Documentos únicos consultados</th>
+                            <td>{{\Stats::accessedDocsCount()}}</td>
+                        </tr>
+                        <tr>
+                            <th>Consultas por investigadores internos</th>
+                            <td>{{\Stats::docsAccessCountByRole('inv.int')}}</td>
+                        </tr>
+                        <tr>
+                            <th>Consultas por investigadores internos</th>
+                            <td>{{\Stats::docsAccessCountByRole('inv.ext')}}</td>
+                        </tr>
+                        <tr>
+                            <th>Consultas por invitados</th>
+                            <td>{{\Stats::docsAccessCountByRole('guest')}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </section>
 
 <script src="{{asset('filesaver/FileSaver.min.js')}}"></script>

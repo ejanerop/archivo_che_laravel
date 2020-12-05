@@ -35,8 +35,8 @@
                         {{ __('Cancelar') }}
                     </a>
                     <button type="submit" class="btn btn-success pull-right">
-                        <i class="fa fa-save"></i>
-                        {{ __('Guardar') }}
+                        <i class="fa fa-send"></i>
+                        {{ __('Enviar') }}
                     </button>
                 </div>
                 <div class="box-body">
@@ -81,15 +81,23 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="notes">Notas</label>
+                                <textarea id="notes" name="notes" rows="5" class="form-control" style="resize:none" placeholder="Notas">{{old('notes')}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="radio" name="filterTime" id="filterByStage">
+                                <input type="checkbox" name="filterTime" id="filterByStage">
                                 <label for="filterByStage">Filtrar por etapa cronológica</label>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 invisible">
                             <div class="form-group">
-                                <input type="radio" name="filterTime" id="filterByDate">
+                                <input type="checkbox" name="filterTime" id="filterByDate">
                                 <label for="filterByDate">Filtrar por fechas</label>
                             </div>
                         </div>
@@ -105,23 +113,16 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 invisible">
                             <label for="dateStart">Fecha de inicio</label>
                             <input type="text" id="dateStart" name="dateStart" class="form-control" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask disabled>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 invisible">
                             <label for="dateEndFilter">Fecha de fin</label>
                             <input type="text" id="dateEnd" name="dateEnd" class="form-control" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask disabled>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="notes">Notas</label>
-                                <textarea id="notes" name="notes" rows="5" class="form-control" style="resize:none" placeholder="Notas">{{old('notes')}}</textarea>
-                            </div>
-                        </div>
-                    </div>
+
 
                     </div>
                 </div>

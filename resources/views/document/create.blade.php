@@ -42,115 +42,93 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="nav-tabs-custom">
-                                <ul class="nav nav-tabs">
-                                    <li id="li1" class="active"><a href="#tab_1" onclick="toggleTab(1)" data-toggle="tab" aria-expanded="false">General</a></li>
-                                    <li id="li3"><a href="#tab_3" onclick="toggleTab(3)" data-toggle="tab" aria-expanded="true">Recursos</a></li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="tab_1">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="col-md-12">
-                                                    <div class="form-group {{$errors->has('name')?'has-error':''}}">
-                                                        <label for="name">Nombre</label>
-                                                    <input id="name" name="name" type="text" class="form-control" placeholder="Título del documento" value="{{old('name')}}" required>
-                                                    </div>
-                                                    <div class="form-group {{$errors->has('description')?'has-error':''}}">
-                                                        <label for="description">Descripción</label>
-                                                        <textarea id="description" name="description" rows="5" class="form-control" style="resize:none" placeholder="Descripción">{{old('description')}}</textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="col-md-6">
-                                                    <div class="form-group {{$errors->has('date')?'has-error':''}}">
-                                                        <label for="date">Fecha</label>
-                                                        <input type="text" id="date" name="date" class="form-control" data-inputmask="'alias': 'dd-mm-yyyy'" value="{{old('date')}}" data-mask>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="document_type">Tipo de documento</label>
-                                                        <select id="document_type"  name="document_type" class="form-control" onchange="modifyResource()">
-                                                            @foreach($resource_types as $resType)
-                                                                <optgroup class="optgroup" label="{{$resType->resource_type}}">
-                                                                    @foreach($resType->document_types as $docType)
-                                                                        <option class="opt {{$resType->resource_type}}" id="{{$docType->id}}" {{old('document_type')==$docType->document_type ? 'selected' : ''}}>{{$docType->document_type}}</option>
-                                                                    @endforeach
-                                                                </optgroup>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="date">Autor</label>
-                                                        <input type="text" id="author" name="author" class="form-control" placeholder="Autor del documento" value="{{old('author')}}" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="access_level">Nivel de acceso</label>
-                                                        <select id="access_level" name="access_level" class="form-control">
-                                                            @foreach($access_levels as $levels)
-                                                                <option id="{{$levels->id}}" {{old('access_level')==$levels->name ? 'selected' : ''}}>{{$levels->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="form-group {{$errors->has('subtopics')?'has-error':''}}">
-                                                        <label for="subtopics">Subtemas de investigación</label>
-                                                        <select id="subtopics" name="subtopics[]" class="form-control select2" multiple = "multiple" data-placeholder="Selecciona los temas de investigación" style="width: 100%">
-                                                            @foreach($topics as $topic)
-                                                                <optgroup label="{{$topic->research_topic}}">
-                                                                    @foreach($topic->subtopics as $subtopic)
-                                                                        <option id="{{$subtopic->id}}" {{ (collect(old('subtopics'))->contains($subtopic->name)) ? 'selected':''}}>{{$subtopic->name}}</option>
-                                                                    @endforeach
-                                                                </optgroup>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <div class="form-group {{$errors->has('name')?'has-error':''}}">
+                                            <label for="name">Nombre</label>
+                                            <input id="name" name="name" type="text" class="form-control" placeholder="Título del documento" value="{{old('name')}}" required>
                                         </div>
-                                        <div class="row">
-                                            <!--  Recursos secundarios -->
+                                        <div class="form-group {{$errors->has('description')?'has-error':''}}">
+                                            <label for="description">Descripción</label>
+                                            <textarea id="description" name="description" rows="5" class="form-control" style="resize:none" placeholder="Descripción">{{old('description')}}</textarea>
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="tab_3">
-                                        <div class="row">
-                                            <div class="col-md-6"></div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <input id="hasFacsim" name="hasFacsim" type="checkbox" class="form-control">
-                                                    <label for="hasFacsim">Facsimil</label>
-                                                </div>
-                                            </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-6">
+                                        <div class="form-group {{$errors->has('date')?'has-error':''}}">
+                                                <label for="date">Fecha</label>
+                                                <input type="text" id="date" name="date" class="form-control" data-inputmask="'alias': 'dd-mm-yyyy'" value="{{old('date')}}" data-mask>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group {{$errors->has('resource')?'has-error':''}}">
-                                                    <label for="resource">Recurso principal</label>
-                                                    <input id="resource" name="resource" type="file" class="form-control" accept="application/pdf">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="resource_description">Descripción del recurso</label>
-                                                    <textarea id="resource_description" name="resource_description" class="form-control" style="resize: none"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="image">Archivo(s)</label>
-                                                    <input id="facsim" name="facsim[]" type="file" class="form-control" accept="image/*" multiple disabled>
-                                                </div>
-                                            </div>
+                                        <div class="form-group">
+                                            <label for="document_type">Tipo de documento</label>
+                                            <select id="document_type"  name="document_type" class="form-control" onchange="modifyResource()">
+                                                @foreach($resource_types as $resType)
+                                                <optgroup class="optgroup" label="{{$resType->resource_type}}">
+                                                    @foreach($resType->document_types as $docType)
+                                                        <option class="opt {{$resType->resource_type}}" id="{{$docType->id}}" {{old('document_type')==$docType->document_type ? 'selected' : ''}}>{{$docType->document_type}}</option>
+                                                    @endforeach
+                                                </optgroup>
+                                                 @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="date">Autor</label>
+                                            <input type="text" id="author" name="author" class="form-control" placeholder="Autor del documento" value="{{old('author')}}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="access_level">Nivel de acceso</label>
+                                            <select id="access_level" name="access_level" class="form-control">
+                                            @foreach($access_levels as $levels)
+                                                <option id="{{$levels->id}}" {{old('access_level')==$levels->name ? 'selected' : ''}}>{{$levels->name}}</option>
+                                            @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group {{$errors->has('subtopics')?'has-error':''}}">
+                                            <label for="subtopics">Subtemas de investigación</label>
+                                            <select id="subtopics" name="subtopics[]" class="form-control select2" multiple = "multiple" data-placeholder="Selecciona los temas de investigación" style="width: 100%">
+                                            @foreach($topics as $topic)
+                                                <optgroup label="{{$topic->research_topic}}">
+                                                @foreach($topic->subtopics as $subtopic)
+                                                    <option id="{{$subtopic->id}}" {{ (collect(old('subtopics'))->contains($subtopic->name)) ? 'selected':''}}>{{$subtopic->name}}</option>
+                                                @endforeach
+                                                </optgroup>
+                                            @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                                <div class="col-md-6"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input id="hasFacsim" name="hasFacsim" type="checkbox" class="form-control">
+                                        <label for="hasFacsim">Facsimil</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group {{$errors->has('resource')?'has-error':''}}">
+                                        <label for="resource">Recurso principal</label>
+                                        <input id="resource" name="resource" type="file" class="form-control" accept="application/pdf">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="resource_description">Descripción del recurso</label>
+                                        <textarea id="resource_description" name="resource_description" class="form-control" style="resize: none"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="image">Archivo(s)</label>
+                                        <input id="facsim" name="facsim[]" type="file" class="form-control" accept="image/*" multiple disabled>
+                                    </div>
+                                </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-
                 </div>
                 <div class="box-footer">
 

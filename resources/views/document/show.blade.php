@@ -32,20 +32,26 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="document_type">Tipo de documento</label>
-                            <input type="text" id="document_type" name="document_type" class="form-control" value="{{$document->document_type->document_type}}" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
                             <label for="date">Fecha</label>
                             <input type="text" id="date" name="date" class="form-control" value="{{$document->date_formated}}" readonly>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="document_type">Tipo de documento</label>
+                            <input type="text" id="document_type" name="document_type" class="form-control" value="{{$document->document_type->document_type}}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="access_level">Nivel de acceso</label>
                             <input type="text" id="access_level" name="access_level" class="form-control" value="{{$document->access_level->name}}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="access_level">Autor</label>
+                            <input type="text" id="author" name="author" class="form-control" value="{{$document->author}}" readonly>
                         </div>
                     </div>
                 </div>

@@ -43,27 +43,20 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="nav-tabs-custom">
-                                <ul class="nav nav-tabs">
-                                    <li id="li1" class="active"><a href="#tab_1" onclick="toggleTab(1)" data-toggle="tab" aria-expanded="false">General</a></li>
-                                    <li id="li3"><a href="#tab_3" onclick="toggleTab(3)" data-toggle="tab" aria-expanded="true">Recursos</a></li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="tab_1">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="col-md-12">
-                                                    <div class="form-group {{$errors->has('name')?'has-error':''}}">
-                                                        <label for="name">Nombre</label>
-                                                        <input id="name" name="name" type="text" class="form-control" placeholder="Título del documento" value="{{$document->name}}">
-                                                    </div>
-                                                    <div class="form-group {{$errors->has('description')?'has-error':''}}">
-                                                        <label for="description">Descripción</label>
-                                                        <textarea id="description" name="description" rows="5" class="form-control" style="resize:none" placeholder="Descripción">{{$document->description}}</textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <div class="form-group {{$errors->has('name')?'has-error':''}}">
+                                            <label for="name">Nombre</label>
+                                            <input id="name" name="name" type="text" class="form-control" placeholder="Título del documento" value="{{$document->name}}">
+                                        </div>
+                                        <div class="form-group {{$errors->has('description')?'has-error':''}}">
+                                            <label for="description">Descripción</label>
+                                            <textarea id="description" name="description" rows="5" class="form-control" style="resize:none" placeholder="Descripción">{{$document->description}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                                 <div class="col-md-6">
                                                     <div class="form-group {{$errors->has('date')?'has-error':''}}">
                                                         <label for="date">Fecha</label>
@@ -117,9 +110,7 @@
                                         <div class="row">
                                             <!--  Recursos secundarios -->
                                         </div>
-                                    </div>
 
-                                    <div class="tab-pane" id="tab_3">
                                         <div class="row">
                                             <div class="col-md-6"></div>
                                             <div class="col-md-6">
@@ -148,9 +139,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

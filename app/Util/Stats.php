@@ -5,9 +5,11 @@ namespace App\Util;
 use App\Document;
 use App\DocumentType;
 use App\Log;
+use App\LogType;
 use App\Petition;
 use App\PetitionState;
 use App\ResearchTopic;
+use App\Role;
 use App\Subtopic;
 use App\User;
 
@@ -24,11 +26,50 @@ class Stats
         return ResearchTopic::all()->count();
     }
 
+    public static function subtopicsCount()
+    {
+        return Subtopic::all()->count();
+    }
+
 
     public static function usersCount()
     {
         return User::all()->count();
     }
+
+    public static function userCountByRole(String $slug)
+    {
+        $count = User::where('role_id', Role::where('slug', $slug)->first()->id)->count();
+
+        return $count;
+    }
+
+    public static function docsAccessCount()
+    {
+        $count = Log::where('log_type_id', LogType::where('slug', 'read')->first()->id)->where('object_type', 'document')->count();
+
+        return $count;
+    }
+
+    public static function docsAccessCountByRole(String $role)
+    {
+        $count = Log::whereHas('user', function ($q) use ($role) {
+            $q->where('role_id', Role::where('slug', $role)->first()->id);
+        })->where('log_type_id', LogType::where('slug', 'read')->first()->id)->where('object_type', 'document')->count();
+
+        return $count;
+    }
+
+    // TODO
+    public static function accessedDocsCount()
+    {
+        $count = Log::where('log_type_id', LogType::where('slug', 'read')->first()->id)->where('object_type', 'document')->get();
+
+
+        return $count->unique('object_id')->count();
+    }
+
+
 
 
     public static function typesWithAccess()
@@ -122,6 +163,16 @@ class Stats
 
         return $logs->count();
     }
+
+    public static function userMostVisits()
+    {
+        $user = User::withCount(['logs as visits' => function ($query) {
+            $query->where('log_type_id', LogType::where('slug', 'read')->first()->id);
+        }])->orderBy('visits', 'DESC')->first();
+
+        return $user;
+    }
+
 
 
 }

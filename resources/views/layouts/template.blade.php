@@ -21,7 +21,7 @@
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset('iCheck/square/blue.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('datatables/datatables.bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('datatables/dataTables.bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('select2/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/adminLTE/AdminLTE.min.css') }}">
     <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}">

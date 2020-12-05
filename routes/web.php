@@ -45,6 +45,7 @@ Route::resource('log', 'LogController')->only([
     'index', 'show'
 ]);
 Route::get('/log_stats', 'LogController@stats')-> name('log.stats');
+Route::get('/stats_report', 'LogController@makeReport')-> name('stats.report');
 Route::get('/log_filter', 'LogController@filter')-> name('log.filter');
 
 

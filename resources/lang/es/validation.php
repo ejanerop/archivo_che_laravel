@@ -62,8 +62,8 @@ return [
     "required_unless"  => "El campo :attribute es requerido mientras no sea :values",
     "required_with"    => "El campo :attribute es obligatorio cuando :values está presente.",
     "required_with_all" => "El campo :attribute es obligatorio cuando :values está presente.",
-    "required_without" => "El campo :attribute es obligatorio cuando :values no está presente.",
-    "required_without_all" => "El campo :attribute es obligatorio cuando ninguno de :values estén presentes.",
+    "required_without" => "El campo :attribute es obligatorio cuando no está presente alguno de estos campos: :values.",
+    "required_without_all" => "El campo :attribute es obligatorio cuando no están presentes estos campos: :values.",
     "same"             => ":attribute y :other deben coincidir.",
     "size"             => [
         "numeric" => "El tamaño de :attribute debe ser :size.",
@@ -108,12 +108,17 @@ return [
     'attributes' => [
         'research_topic' => 'tema de investigación',
         'document_type' => 'tipo de documento',
+        'documentTypes' => 'tipos de documento',
         'name' => 'nombre',
+        'stages' => 'etapas',
         'subtopics' => 'subtemas de investigación',
         'date' => 'fecha',
+        'dateStart' => 'fecha de inicio',
+        'dateEnd' => 'fecha de fin',
         'password' => 'contraseña',
         'username' => 'nombre de usuario',
-        'resource' => 'recurso principal'
+        'resource' => 'recurso principal',
+        'full_name' => 'nombre completo'
     ],
 
 ];

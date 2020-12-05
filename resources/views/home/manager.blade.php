@@ -66,7 +66,6 @@
         <div class="col-lg-5 col-xs-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <p id="time"></p>
                     <h3 class="box-title">Últimas solicitudes sin responder</h3>
                     <a class="btn-sm btn-primary pull-right" href="{{route('petition.index')}}">Lista de solicitudes <i class="fa fa-arrow-circle-right"> </i></a>
                 </div>
@@ -135,6 +134,7 @@
     </script>
 
     <script>
+        /*
         var timestamp = '<?=time();?>';
         function updateTime(){
         $('#time').html(Date(timestamp));
@@ -143,6 +143,7 @@
         $(function(){
         setInterval(updateTime, 1000);
         });
+        */
     </script>
 
 <script>

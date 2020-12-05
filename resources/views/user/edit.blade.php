@@ -61,13 +61,13 @@
                             <div class="form-group has-feedback">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user" style="width: 14px; height: 14px"></i></span>
-                                    <input id="full_name" type="text" class="form-control" name="full_name" placeholder="Nombre (opcional)" value="{{$user->full_name}}">
+                                    <input id="full_name" type="text" class="form-control" name="full_name" placeholder="Nombre" value="{{$user->full_name}}">
                                     </div>
                             </div>
                             <div class="form-group has-feedback">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-university" style="width: 14px; height: 14px"></i></span>
-                                    <input id="entity" type="text" class="form-control" name="entity" placeholder="Entidad perteneciente (opcional)" value="{{$user->entity}}">
+                                    <input id="entity" type="text" class="form-control" name="entity" placeholder="Entidad (opcional)" value="{{$user->entity}}">
                                     </div>
                             </div>
                             @if (\Auth::user()->id != $user->id)

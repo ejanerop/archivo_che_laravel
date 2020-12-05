@@ -1,3 +1,4 @@
+
 @extends('layouts.auth')
 
 @section('content')
@@ -34,7 +35,7 @@
                 </div>
 
                 <div class="form-group has-feedback">
-                    <input id="full_name" type="text" class="form-control{{ $errors->has('full_name') ? ' is-invalid' : '' }}" name="full_name" value="{{ old('full_name') }}" placeholder="Nombre (opcional)">
+                    <input id="full_name" type="text" class="form-control{{ $errors->has('full_name') ? ' is-invalid' : '' }}" name="full_name" value="{{ old('full_name') }}" placeholder="Nombre">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     @if ($errors->has('full_name'))
                     <span class="invalid-feedback" role="alert">

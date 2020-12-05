@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Log;
 use App\LogType;
 use App\User;
+use PDF;
 use Illuminate\Http\Request;
 
 class LogController extends Controller
@@ -13,7 +14,7 @@ class LogController extends Controller
     public function __construct() {
         $this->middleware('auth');
         $this->middleware('user.has.role:manager,manager')->only('index', 'filter');
-        $this->middleware('user.has.role:manager,director,coord.acad,coord.alt')->only('stats');
+        $this->middleware('user.has.role:manager,director,coord.acad,coord.alt')->only('stats', 'makeReport');
     }
 
 
@@ -88,6 +89,12 @@ class LogController extends Controller
     {
 
         return view('log.stats');
+    }
+
+    public function makeReport()
+    {
+        $pdf = PDF::loadView('log.report');
+        return $pdf->download('medium.pdf');
     }
 
 }

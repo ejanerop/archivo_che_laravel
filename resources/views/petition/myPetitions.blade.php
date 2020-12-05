@@ -41,14 +41,13 @@
                         <table id="table" class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Usuario</th>
                         <th>Estado</th>
+                        <th>Solicitud</th>
                         <th>Acción</th>
                     </tr>
                  </thead>
             @foreach($petitions as $petition)
                 <tr>
-                    <td>{{$petition->user->username}}</td>
                     @if($petition->petition_state->slug == 'approved')
                     <td><span class="label label-success">{{$petition->petition_state->state}}</span></td>
                     @elseif($petition->petition_state->slug == 'denied')
@@ -56,6 +55,17 @@
                     @else
                     <td><span class="label label-primary">{{$petition->petition_state->state}}</span></td>
                     @endif
+                    <td>
+                        @foreach($petition->subpetitions as $subpetition)
+                            @if($subpetition->object_type == 'stage')
+                                <span class="label label-primary">{{$subpetition->object->name}}</span>
+                            @elseif($subpetition->object_type == 'subtopic')
+                                <span class="label label-warning">{{$subpetition->object->name}}</span>
+                            @elseif($subpetition->object_type == 'document_type')
+                                <span class="label label-info">{{$subpetition->object->document_type}}</span>
+                            @endif
+                        @endforeach
+                    </td>
                     <td>
                         <form action="{{route('petition.destroy', ['petition' => $petition])}}" method="post">
                             @csrf
