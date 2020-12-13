@@ -40,99 +40,150 @@
                     </button>
                 </div>
                 <div class="box-body">
-                    <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group {{$errors->has('name')?'has-error':''}}">
+                                <label for="name">Nombre</label>
+                                <input id="name" name="name" type="text" class="form-control" placeholder="Título del documento" value="{{old('name')}}" required>
+                            </div>
+                            <div class="form-group {{$errors->has('description')?'has-error':''}}">
+                                <label for="description">Descripción</label>
+                                <textarea id="description" name="description" rows="5" class="form-control" style="resize:none" placeholder="Descripción" required>{{old('description')}}</textarea>
+                            </div>
+                            <div class="form-group {{$errors->has('resource')?'has-error':''}}">
+                                <label for="resource">Recurso principal</label>
+                                <input id="resource" name="resource" type="file" class="form-control" accept="application/pdf">
+                            </div>
+                            <div class="form-group">
+                                <label for="resource_description">Descripción del recurso</label>
+                                <textarea id="resource_description" name="resource_description" class="form-control" style="resize: none"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="col-md-12">
-                                        <div class="form-group {{$errors->has('name')?'has-error':''}}">
-                                            <label for="name">Nombre</label>
-                                            <input id="name" name="name" type="text" class="form-control" placeholder="Título del documento" value="{{old('name')}}" required>
-                                        </div>
-                                        <div class="form-group {{$errors->has('description')?'has-error':''}}">
-                                            <label for="description">Descripción</label>
-                                            <textarea id="description" name="description" rows="5" class="form-control" style="resize:none" placeholder="Descripción" required>{{old('description')}}</textarea>
-                                        </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="date_type">Tipo de fecha</label>
+                                        <select id="date_type"  name="date_type" class="form-control" onchange="toggleDate()"  style="width: 100%">
+                                            <option class="optDate" id="full_date" value="full_date">Fecha completa</option>
+                                            <option class="optDate" id="month_year" value="month_year">Mes y año</option>
+                                            <option class="optDate" id="year" value="year">Año</option>
+                                            <option class="optDate" id="lapse" value="lapse">Lapso</option>
+                                            <option class="optDate" id="year_lapse" value="year_lapse">Período de años</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="col-md-6">
-                                        <div class="form-group {{$errors->has('date')?'has-error':''}}">
-                                                <label for="date">Fecha</label>
-                                                <input type="text" id="date" name="date" class="form-control" data-inputmask="'alias': 'dd-mm-yyyy'" value="{{old('date')}}" data-mask>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="document_type">Tipo de documento</label>
-                                            <select id="document_type"  name="document_type" class="form-control" onchange="modifyResource()">
-                                                @foreach($resource_types as $resType)
-                                                <optgroup class="optgroup" label="{{$resType->resource_type}}">
-                                                    @foreach($resType->document_types as $docType)
-                                                        <option class="opt {{$resType->resource_type}}" id="{{$docType->id}}" {{old('document_type')==$docType->document_type ? 'selected' : ''}}>{{$docType->document_type}}</option>
-                                                    @endforeach
-                                                </optgroup>
-                                                 @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="author">Autor</label>
-                                            <select id="author"  name="author" class="form-control">
-                                                @foreach($authors as $author)
-                                                    <option class="opt" id="{{$author->id}}" {{old('author')==$author->name ? 'selected' : ''}}>{{$author->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="access_level">Nivel de acceso</label>
-                                            <select id="access_level" name="access_level" class="form-control">
-                                            @foreach($access_levels as $levels)
-                                                <option id="{{$levels->id}}" {{old('access_level')==$levels->name ? 'selected' : ''}}>{{$levels->name}}</option>
-                                            @endforeach
-                                            </select>
+                                <div class="col-md-8">
+                                    <div class="form-group {{$errors->has('date')?'has-error':''}}">
+                                        <label for="date">Fecha inicio</label>
+                                        <div class="input-group">
+                                            <input id='dayStart' name='dayStart' type="number" class="form-control" placeholder="Día" min="1" max="31"/>
+                                            <span class="input-group-addon"></span>
+                                            <select id='monthStart' name='monthStart' class="form-control">
+                                                <option {{old('monthStart') == 1 ? 'selected' : ''}} value='1'>Enero</option>
+                                                <option {{old('monthStart') == 2 ? 'selected' : ''}} value='2'>Febrero</option>
+                                                <option {{old('monthStart') == 3 ? 'selected' : ''}} value='3'>Marzo</option>
+                                                <option {{old('monthStart') == 4 ? 'selected' : ''}} value='4'>Abril</option>
+                                                <option {{old('monthStart') == 5 ? 'selected' : ''}} value='5'>Mayo</option>
+                                                <option {{old('monthStart') == 6 ? 'selected' : ''}} value='6'>Junio</option>
+                                                <option {{old('monthStart') == 7 ? 'selected' : ''}} value='7'>Julio</option>
+                                                <option {{old('monthStart') == 8 ? 'selected' : ''}} value='8'>Augosto</option>
+                                                <option {{old('monthStart') == 9 ? 'selected' : ''}} value='9'>Septiembre</option>
+                                                <option {{old('monthStart') == 10 ? 'selected' : ''}} value='10'>Octubre</option>
+                                                <option {{old('monthStart') == 11 ? 'selected' : ''}} value='11'>Noviembre</option>
+                                                <option {{old('monthStart') == 12 ? 'selected' : ''}} value='12'>Diciembre</option>
+                                             </select>
+                                            <span class="input-group-addon"></span>
+                                            <input type="number" id='yearStart' name='yearStart' class="form-control" placeholder="Año" min="1928" max="2099"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group {{$errors->has('subtopics')?'has-error':''}}">
-                                            <label for="subtopics">Subtemas de investigación</label>
-                                            <select id="subtopics" name="subtopics[]" class="form-control select2" multiple = "multiple" data-placeholder="Selecciona los temas de investigación" style="width: 100%">
-                                            @foreach($topics as $topic)
-                                                <optgroup label="{{$topic->research_topic}}">
-                                                @foreach($topic->subtopics as $subtopic)
-                                                    <option id="{{$subtopic->id}}" {{ (collect(old('subtopics'))->contains($subtopic->name)) ? 'selected':''}}>{{$subtopic->name}}</option>
-                                                @endforeach
-                                                </optgroup>
-                                            @endforeach
+                                    <div id="date_end" class="form-group hidden">
+                                        <label for="date">Fecha fin</label>
+                                        <div class="input-group">
+                                            <input id='dayEnd' name='dayEnd' type="number" class="form-control" placeholder="Día" min="1" max="31"/>
+                                            <span class="input-group-addon"></span>
+                                            <select id='monthEnd' name='monthEnd' class="form-control">
+                                                <option {{old('monthEnd') == 1 ? 'selected' : ''}} value='1'>Enero</option>
+                                                <option {{old('monthEnd') == 2 ? 'selected' : ''}} value='2'>Febrero</option>
+                                                <option {{old('monthEnd') == 3 ? 'selected' : ''}} value='3'>Marzo</option>
+                                                <option {{old('monthEnd') == 4 ? 'selected' : ''}} value='4'>Abril</option>
+                                                <option {{old('monthEnd') == 5 ? 'selected' : ''}} value='5'>Mayo</option>
+                                                <option {{old('monthEnd') == 6 ? 'selected' : ''}} value='6'>Junio</option>
+                                                <option {{old('monthEnd') == 7 ? 'selected' : ''}} value='7'>Julio</option>
+                                                <option {{old('monthEnd') == 8 ? 'selected' : ''}} value='8'>Augosto</option>
+                                                <option {{old('monthEnd') == 9 ? 'selected' : ''}} value='9'>Septiembre</option>
+                                                <option {{old('monthEnd') == 10 ? 'selected' : ''}} value='10'>Octubre</option>
+                                                <option {{old('monthEnd') == 11 ? 'selected' : ''}} value='11'>Noviembre</option>
+                                                <option {{old('monthEnd') == 12 ? 'selected' : ''}} value='12'>Diciembre</option>
                                             </select>
+                                            <span class="input-group-addon"></span>
+                                            <input type="number" id='yearEnd' name='yearEnd' class="form-control" placeholder="Año" min="1928" max="2099">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                                <div class="col-md-6"></div>
-                                <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <input id="hasFacsim" name="hasFacsim" type="checkbox" class="form-control">
-                                        <label for="hasFacsim">Facsimil</label>
+                                        <label for="document_type">Tipo de documento</label>
+                                        <select id="document_type"  name="document_type" class="form-control" onchange="modifyResource()" style="width: 100%">
+                                            @foreach($resource_types as $resType)
+                                            <optgroup class="optgroup" label="{{$resType->resource_type}}">
+                                                @foreach($resType->document_types as $docType)
+                                                    <option class="opt {{$resType->resource_type}}" id="{{$docType->id}}" {{old('document_type')==$docType->document_type ? 'selected' : ''}}>{{$docType->document_type}}</option>
+                                                @endforeach
+                                            </optgroup>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group {{$errors->has('resource')?'has-error':''}}">
-                                        <label for="resource">Recurso principal</label>
-                                        <input id="resource" name="resource" type="file" class="form-control" accept="application/pdf">
-                                    </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="resource_description">Descripción del recurso</label>
-                                        <textarea id="resource_description" name="resource_description" class="form-control" style="resize: none"></textarea>
+                                        <label for="author">Autor</label>
+                                        <select id="author"  name="author" class="form-control" style="width: 100%">
+                                            @foreach($authors as $author)
+                                                <option class="opt" id="{{$author->id}}" {{old('author')==$author->name ? 'selected' : ''}}>{{$author->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="image">Archivo(s)</label>
-                                        <input id="facsim" name="facsim[]" type="file" class="form-control" accept="image/*" multiple disabled>
+                                        <label for="access_level">Nivel de acceso</label>
+                                        <select id="access_level" name="access_level" class="form-control" style="width: 100%">
+                                        @foreach($access_levels as $levels)
+                                            <option id="{{$levels->id}}" {{old('access_level')==$levels->name ? 'selected' : ''}}>{{$levels->name}}</option>
+                                        @endforeach
+                                        </select>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group {{$errors->has('subtopics')?'has-error':''}}">
+                                        <label for="subtopics">Subtemas de investigación</label>
+                                        <select id="subtopics" name="subtopics[]" class="form-control select2" multiple = "multiple" data-placeholder="Selecciona los temas de investigación" style="width: 100%">
+                                        @foreach($topics as $topic)
+                                            <optgroup label="{{$topic->research_topic}}">
+                                            @foreach($topic->subtopics as $subtopic)
+                                                <option id="{{$subtopic->id}}" {{ (collect(old('subtopics'))->contains($subtopic->name)) ? 'selected':''}}>{{$subtopic->name}}</option>
+                                            @endforeach
+                                            </optgroup>
+                                        @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input id="hasFacsim" name="hasFacsim" type="checkbox" class="form-control">
+                                    <label for="hasFacsim">Facsimil</label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="image">Archivo(s)</label>
+                                    <input id="facsim" name="facsim[]" type="file" class="form-control" accept="image/*" multiple disabled>
+                                </div>
+                            </div>
                         </div>
-                    </div>
                 </div>
                 <div class="box-footer">
 

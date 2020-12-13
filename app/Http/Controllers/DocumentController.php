@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\AccessLevel;
 use App\Author;
+use App\CustomDate;
+use App\DateType;
 use App\Document;
 use App\DocumentType;
 use App\ResearchTopic;
@@ -189,7 +191,12 @@ class DocumentController extends Controller
             'author' => 'required',
             'access_level' => 'required',
             'document_type' => 'required',
-            'date' =>['required' , new DateString(), new DateNow()],
+            'date_type' => 'required',
+            'yearStart' => 'required',
+            'monthStart' => 'required_if:date_type,month_year,full_date',
+            'dayStart' => 'required_if:date_type,full_date',
+            'yearEnd' => 'required_if:date_type,lapse,year_lapse',
+            'monthEnd' => 'required_if:date_type,lapse',
             'facsim' => 'required_with:hasFacsim',
             'resource' => 'required|mimetypes:video/*,audio/*,image/*,application/pdf'
         ])->validate();
@@ -206,11 +213,40 @@ class DocumentController extends Controller
         $document = new Document();
         $document->name = $request->input('name');
 
-        $date = date('Y-m-d', strtotime($request->input('date')));
-        $document->date = $date;
+        //-------------------Fecha----------------------------------------------------------------------------------
+
+        $customDate = new CustomDate();
+        $dateType = DateType::where('slug', $request->input('date_type'))->first();
+        $customDate->date_type()->associate($dateType);
+
+        if ($dateType->slug == 'full_date') {
+            $customDate->dayStart = $request->input('dayStart');
+            $customDate->monthStart = $request->input('monthStart');
+            $customDate->yearStart = $request->input('yearStart');
+        } else if ($dateType->slug == 'month_year') {
+            $customDate->monthStart = $request->input('monthStart');
+            $customDate->yearStart = $request->input('yearStart');
+        } else if ($dateType->slug == 'year') {
+            $customDate->yearStart = $request->input('yearStart');
+        } else if ($dateType->slug == 'lapse') {
+            if ($request->has('dayStart')) { $customDate->dayStart = $request->input('dayStart');}
+            $customDate->monthStart = $request->input('monthStart');
+            $customDate->yearStart = $request->input('yearStart');
+            if ($request->has('dayEnd')) { $customDate->dayEnd = $request->input('dayEnd');}
+            $customDate->monthEnd = $request->input('monthEnd');
+            $customDate->yearEnd = $request->input('yearEnd');
+        }else {
+            $customDate->yearStart = $request->input('yearStart');
+            $customDate->yearEnd = $request->input('yearEnd');
+        }
+
+        $customDate->save();
+
+        //--------------Etapa---------------------------------------------------------------------------------------
+
         $stages = Stage::all();
         foreach ($stages as $stage) {
-            if (($date >= $stage->date_start) && ($date <= $stage->date_end)) {
+            if (($customDate->dateStart >= $stage->date_start) && ($customDate->dateStart <= $stage->date_end)) {
                 $document->stage()->associate($stage);
                 if ($stage->id == 1) {
                     $code = 'NA';
@@ -226,11 +262,9 @@ class DocumentController extends Controller
             }
         }
 
-        //-----------------------Cuando la fecha sea opcional cambiar esto-----------------------------------------
 
-        $code .= substr($date, 2, 2);
+        $code .= substr($customDate->dateStart, 2, 2);
 
-        //---------------------------------------------------------------------------------------------------------
         do {
             $number = rand(1, 999);
             if (($number >= 1) && ($number < 10)) {
@@ -248,6 +282,7 @@ class DocumentController extends Controller
         $document->access_level()->associate($accessLevel);
         $document->document_type()->associate($documentType);
         $document->author()->associate($author);
+        $document->custom_date()->associate($customDate);
 
         if($request->has('description')){
             $document->description = $request->input('description');
@@ -347,7 +382,12 @@ class DocumentController extends Controller
             'subtopics' => 'required',
             'author' => 'required',
             'description' => 'required',
-            'date' =>['required' , new DateString(), new DateNow()],
+            'date_type' => 'required',
+            'yearStart' => 'required',
+            'monthStart' => 'required_if:date_type,month_year,full_date',
+            'dayStart' => 'required_if:date_type,full_date',
+            'yearEnd' => 'required_if:date_type,lapse,year_lapse',
+            'monthEnd' => 'required_if:date_type,lapse',
             'facsim' => 'required_with:hasFacsim|mimetypes:image/*',
             'resource' => 'mimetypes:video/*,audio/*,image/*,application/pdf'
         ])->validate();
@@ -357,11 +397,58 @@ class DocumentController extends Controller
         $accessLevel = AccessLevel::where('name', $request->input('access_level'))->first();
         $documentType = DocumentType::where('document_type', $request->input('document_type'))->first();
         $author = Author::where('name', $request->input('author'))->first();
+        $dateType = DateType::where('slug', $request->input('date_type'))->first();
+        $customDate = $document->custom_date;
         $subtopics = $request->input('subtopics');
+
+        $dateType = DateType::where('slug', $request->input('date_type'))->first();
+        $customDate->date_type()->dissociate();
+        $customDate->date_type()->associate($dateType);
+
+        if ($dateType->slug == 'full_date') {
+            $customDate->dayStart = $request->input('dayStart');
+            $customDate->monthStart = $request->input('monthStart');
+            $customDate->yearStart = $request->input('yearStart');
+        } else if ($dateType->slug == 'month_year') {
+            $customDate->monthStart = $request->input('monthStart');
+            $customDate->yearStart = $request->input('yearStart');
+        } else if ($dateType->slug == 'year') {
+            $customDate->yearStart = $request->input('yearStart');
+        } else if ($dateType->slug == 'lapse') {
+            if ($request->has('dayStart')) { $customDate->dayStart = $request->input('dayStart');}
+            $customDate->monthStart = $request->input('monthStart');
+            $customDate->yearStart = $request->input('yearStart');
+            if ($request->has('dayEnd')) { $customDate->dayEnd = $request->input('dayEnd');}
+            $customDate->monthEnd = $request->input('monthEnd');
+            $customDate->yearEnd = $request->input('yearEnd');
+        }else {
+            $customDate->yearStart = $request->input('yearStart');
+            $customDate->yearEnd = $request->input('yearEnd');
+        }
+
+        $customDate->save();
+
+        $stages = Stage::all();
+        $document->stage()->dissociate();
+        foreach ($stages as $stage) {
+            if (($customDate->dateStart >= $stage->date_start) && ($customDate->dateStart <= $stage->date_end)) {
+                $document->stage()->associate($stage);
+                if ($stage->id == 1) {
+                    $code = 'NA';
+                }elseif ($stage->id == 2) {
+                    $code = 'PJ';
+                }elseif ($stage->id == 3) {
+                    $code = 'AJ';
+                }elseif ($stage->id == 4) {
+                    $code = 'AD';
+                }else {
+                    $code = 'PM';
+                }
+            }
+        }
 
 
         $document->name = $request->input('name');
-        $document->date = date('Y-m-d', strtotime($request->input('date')));
         if($request->has('description')){
             $document->description = $request->input('description');
         }else{
@@ -439,9 +526,10 @@ class DocumentController extends Controller
             Storage::disk('media')->delete($pathToDelete);
             $resource->delete();
         }
+        $document->custom_date->delete();
         $document->delete();
 
-        Logger::log('update', 'document', $document->id, $document->name);
+        Logger::log('delete', 'document', $document->id, $document->name);
 
         return redirect()->route('document.index')->with('success','El documento fue eliminado correctamente.');
 

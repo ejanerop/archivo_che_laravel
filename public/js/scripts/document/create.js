@@ -2,6 +2,8 @@
 $('select#subtopics').select2();
 $('select#access_level').select2();
 $('select#document_type').select2();
+$('select#date_type').select2();
+$('select#author').select2();
 $('li.li').removeClass('active');
 $('li#document').addClass('active');
 $('li#documentCreate').addClass('active');
@@ -11,6 +13,49 @@ $("[data-mask]").inputmask();
 $('#hasFacsim').on('ifToggled',function () {
     $('input#facsim').attr("disabled", !this.checked);
 });
+
+function toggleDate() {
+    var dayStart = $('input#dayStart');
+    var dayEnd = $('input#dayEnd');
+    var monthStart = $('select#monthStart');
+    var monthEnd = $('select#monthEnd');
+    var yearStart = $('input#yearStart');
+    var yearEnd = $('input#yearEnd');
+    var optSelected = $('.optDate:selected');
+    var date_end = $('div#date_end');
+
+    if (optSelected.attr('id') == 'full_date') {
+        dayStart.attr("disabled", false);
+        monthStart.attr("disabled", false);
+        date_end.addClass('hidden');
+    }else if (optSelected.attr('id') == 'month_year') {
+        dayStart.val("");
+        dayStart.attr("disabled", true);
+        monthStart.attr("disabled", false);
+        yearStart.attr("disabled", false);
+        date_end.addClass('hidden');
+    }else if (optSelected.attr('id') == 'year') {
+        dayStart.val("");
+        dayStart.attr("disabled", true);
+        monthStart.attr("disabled", true);
+        yearStart.attr("disabled", false);
+        date_end.addClass('hidden');
+    }else if (optSelected.attr('id') == 'lapse') {
+        date_end.removeClass('hidden');
+        dayStart.attr("disabled", false);
+        monthStart.attr("disabled", false);
+        dayEnd.attr("disabled", false);
+        monthEnd.attr("disabled", false);
+
+    }else{
+        date_end.removeClass('hidden');
+        dayStart.attr("disabled", true);
+        monthStart.attr("disabled", true);
+        dayEnd.attr("disabled", true);
+        monthEnd.attr("disabled", true);
+
+    }
+}
 
 function modifyResource() {
     var inputResources = $('input#resource');
@@ -110,4 +155,5 @@ function toggleTab(tab) {
 }
 
 modifyResource();
+toggleDate();
 

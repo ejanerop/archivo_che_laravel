@@ -35,70 +35,26 @@ class Document extends Model
         return $this->morphMany('App\Log', 'object');
     }
 
+    public function custom_date(){
+        return $this->belongsTo('App\CustomDate', 'custom_date_id');
+    }
+
     public function getDateFormatedAttribute(){
-        $date = $this->date;
 
-        $year = substr($date, 0, 4);
-        $month = substr($date, 5, 2);
-        $monthText = '';
-        $day = substr($date, 8, 2);
+        return $this->custom_date->dateFormatted;
 
-        switch ($month) {
-            case '01':
-                $monthText = 'enero';
-                break;
+    }
 
-            case '02':
-                $monthText = 'febrero';
-                break;
+    public function getDateStartAttribute(){
 
-            case '03':
-                $monthText = 'marzo';
-                break;
+        return $this->custom_date->dateStart;
 
-            case '04':
-                $monthText = 'abril';
-                break;
+    }
 
-            case '05':
-                $monthText = 'mayo';
-                break;
+    public function getDateEndAttribute(){
 
-            case '06':
-                $monthText = 'junio';
-                break;
+        return $this->custom_date->dateEnd;
 
-            case '07':
-                $monthText = 'julio';
-                break;
-
-            case '08':
-                $monthText = 'agosto';
-                break;
-
-            case '09':
-                $monthText = 'septiembre';
-                break;
-
-            case '10':
-                $monthText = 'octubre';
-                break;
-
-            case '11':
-                $monthText = 'noviembre';
-                break;
-
-            case '12':
-                $monthText = 'diciembre';
-                break;
-
-            default:
-                $monthText = 'enero';
-                break;
-        }
-
-
-        return $day . ' de ' . $monthText . ' de ' . $year;
     }
 
     public function getVisitsAttribute(){

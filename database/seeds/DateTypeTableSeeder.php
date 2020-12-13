@@ -31,5 +31,10 @@ class DateTypeTableSeeder extends Seeder
         $dateType->slug = 'lapse';
         $dateType->type = 'Período de tiempo';
         $dateType->save();
+
+        $dateType = new DateType();
+        $dateType->slug = 'year_lapse';
+        $dateType->type = 'Intervalo de años';
+        $dateType->save();
     }
 }
