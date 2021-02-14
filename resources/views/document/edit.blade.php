@@ -64,7 +64,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="date_type">Tipo de fecha</label>
+                                    <label for="date_type">Tipo de fecha </label>
                                     <select id="date_type"  name="date_type" class="form-control" onchange="toggleDate()" onload="toggleDate()"  style="width: 100%">
                                         <option {{$document->custom_date->date_type->slug == 'full_date' ? 'selected' : ''}} class="optDate" id="full_date" value="full_date">Fecha completa</option>
                                         <option {{$document->custom_date->date_type->slug == 'month_year' ? 'selected' : ''}} class="optDate" id="month_year" value="month_year">Mes y año</option>

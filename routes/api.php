@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,8 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
-Route::get('logs/top5docs', 'LogController@top5docs');
+
+Route::resource('author', 'API\ApiAuthorController')->only(['index', 'store', 'update', 'destroy']);
+Route::resource('user', 'API\ApiUserController')->only(['index', 'store', 'show', 'update', 'destroy'])->middleware('cors');
+Route::resource('document_type', 'API\ApiDocumentTypeController')->only(['index', 'store', 'show', 'update', 'destroy']);
+Route::resource('research_topic', 'API\ApiResearchTopicController')->only(['index', 'store', 'show', 'update', 'destroy']);
+
+//Users routes------------------------------------------------------------------------------------------
+Route::get('/trashed', 'API\ApiUserController@trashed');
+Route::post('/trashed/{id}', 'API\ApiUserController@recover');
+Route::post('/pass_change/{id}', 'API\ApiUserController@changePassword');
+Route::get('/role', 'API\ApiUserController@roles');

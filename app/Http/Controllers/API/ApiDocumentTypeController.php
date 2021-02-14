@@ -1,24 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\DocumentType;
-use App\ResourceType;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\ResourceType;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use App\Util\Logger;
 
-class DocumentTypeController extends Controller
+class ApiDocumentTypeController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('user.has.role:manager');
-    }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -26,18 +18,7 @@ class DocumentTypeController extends Controller
      */
     public function index()
     {
-        return view('document_type.index', ['document_types' => DocumentType::withCount('documents')->get()]);
-    }
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('document_type.create', ['resource_types' => ResourceType::all()]);
+        return DocumentType::withCount('documents')->get();
     }
 
 
@@ -61,9 +42,10 @@ class DocumentTypeController extends Controller
         $documentType->resource_type()->associate($resource_type);
         $documentType->save();
 
-        Logger::log('create', 'document_type', $documentType->id, $documentType->document_type);
+        //Logger::log('create', 'document_type', $documentType->id, $documentType->document_type);
 
-        return redirect()->route('document_type.index')->with('success', 'Tipo de documento creado correctamente.');
+        return response()->json('Tipo de documento creado correctamente.', 201);
+
     }
 
 
@@ -73,21 +55,9 @@ class DocumentTypeController extends Controller
      * @param  \App\DocumentType  $documentType
      * @return \Illuminate\Http\Response
      */
-    public function show(DocumentType $documentType)
+    public function show(Request $request, DocumentType $documentType)
     {
         //todo
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\DocumentType  $documentType
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(DocumentType $documentType)
-    {
-        return view('document_type.edit',['document_type' => $documentType, 'resource_types' => ResourceType::all()]);
     }
 
 
@@ -111,9 +81,9 @@ class DocumentTypeController extends Controller
         $documentType->resource_type()->associate($resource_type);
         $documentType->save();
 
-        Logger::log('update', 'document_type', $documentType->id, $documentType->document_type);
+        //Logger::log('update', 'document_type', $documentType->id, $documentType->document_type);
 
-        return redirect()->route('document_type.index', ['document_types' => DocumentType::all()])->with('success', 'Tipo de documento editado correctamente.');
+        return response()->json('Tipo de documento editado correctamente.', 204);
 
     }
 
@@ -128,17 +98,15 @@ class DocumentTypeController extends Controller
     public function destroy(Request $request, DocumentType $documentType)
     {
         if($documentType->documents()->count() != 0){
-            return redirect()->route('document_type.index', ['document_types' => DocumentType::all()])->with('error', 'No se puede eliminar. Existen documentos de este tipo.');
+            return response()->json('No se puede eliminar. Existen documentos de este tipo.', 422);//TODO codigo
         }else{
             $name = $documentType->document_type;
             $documentType->delete();
 
-            Logger::log('delete', 'document_type', $documentType->id, $name);
+            //Logger::log('delete', 'document_type', $documentType->id, $name);
 
-            return redirect()->route('document_type.index', ['document_types' => DocumentType::all()])->with('success', 'Eliminado correctamente');
-
+            return response()->json('Eliminado correctamente', 204);
         }
-
 
     }
 }
